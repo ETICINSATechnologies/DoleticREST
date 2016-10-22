@@ -46,6 +46,32 @@ class UserController extends FOSRestController
     }
 
     /**
+     * Get all the users
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Get current user",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/user/current")
+     */
+    public function getCurrentUserAction(){
+
+        $user = $this->getUser();
+
+        return array('user' => $user);
+    }
+
+    /**
      * Get a user by ID
      * @param User $user
      * @return array
@@ -72,10 +98,80 @@ class UserController extends FOSRestController
      *
      * @View()
      * @ParamConverter("user", class="KernelBundle:User")
-     * @Get("/user/{id}",)
+     * @Get("/user/{id}", requirements={"id" = "\d+"})
      */
     public function getUserAction(User $user){
 
+        return array('user' => $user);
+
+    }
+
+    /**
+     * Get a user by email
+     * @param string $email
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Get a user",
+     *  requirements={
+     *      {
+     *          "name"="email",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="user email"
+     *      }
+     *  },
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/user/{email}", requirements={"email" = "\S+@\S+\.\S+"})
+     */
+    public function getUserByMailAction($email){
+
+        $user = $this->getDoctrine()->getRepository('KernelBundle:User')->findOneBy(['email' => $email]);
+        return array('user' => $user);
+
+    }
+
+    /**
+     * Get a user by email
+     * @param string $username
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Get a user",
+     *  requirements={
+     *      {
+     *          "name"="username",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="user email"
+     *      }
+     *  },
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/user/{username}")
+     */
+    public function getUserByUsernameAction($username){
+
+        $user = $this->getDoctrine()->getRepository('KernelBundle:User')->findOneBy(['username' => $username]);
         return array('user' => $user);
 
     }
