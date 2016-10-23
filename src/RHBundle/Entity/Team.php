@@ -3,8 +3,6 @@
 namespace RHBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping as ORM;
 use KernelBundle\Entity\Division;
 
@@ -57,10 +55,10 @@ class Team
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="UserData")
-     * @JoinTable(
+     * @ORM\JoinTable(
      *     name="rh_team_members",
-     *     joinColumns={@JoinColumn(name="team_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@JoinColumn(name="user_data_id", referencedColumnName="id")}
+     *     joinColumns={@ORM\JoinColumn(name="team_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="user_data_id", referencedColumnName="id")}
      * )
      *
      */
