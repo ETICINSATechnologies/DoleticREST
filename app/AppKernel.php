@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new RHBundle\RHBundle(),
             new UABundle\UABundle(),
             new GRCBundle\GRCBundle(),
+            new SupportBundle\SupportBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
