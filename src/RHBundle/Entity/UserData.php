@@ -13,6 +13,7 @@ use KernelBundle\Entity\User;
  *
  * @ORM\Table(name="rh_user_data")
  * @ORM\Entity(repositoryClass="RHBundle\Repository\UserDataRepository")
+ * @ORM\EntityListeners({ "RHBundle\Listener\UserDataListener" })
  */
 class UserData
 {

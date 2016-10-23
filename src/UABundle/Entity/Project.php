@@ -12,6 +12,7 @@ use RHBundle\Entity\UserData;
  *
  * @ORM\Table(name="ua_project")
  * @ORM\Entity(repositoryClass="UABundle\Repository\ProjectRepository")
+ * @ORM\EntityListeners({ "UABundle\Listener\ProjectListener" })
  */
 class Project
 {

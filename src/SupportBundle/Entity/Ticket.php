@@ -10,6 +10,7 @@ use RHBundle\Entity\UserData;
  *
  * @ORM\Table(name="support_ticket")
  * @ORM\Entity(repositoryClass="SupportBundle\Repository\TicketRepository")
+ * @ORM\EntityListeners({ "SupportBundle\Listener\TicketListener" })
  */
 class Ticket
 {

@@ -11,6 +11,7 @@ use RHBundle\Entity\UserData;
  *
  * @ORM\Table(name="ua_consultant")
  * @ORM\Entity(repositoryClass="UABundle\Repository\ConsultantRepository")
+ * @ORM\EntityListeners({ "UABundle\Listener\ConsultantListener" })
  */
 class Consultant
 {

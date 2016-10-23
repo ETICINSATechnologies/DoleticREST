@@ -11,6 +11,7 @@ use KernelBundle\Entity\User;
  *
  * @ORM\Table(name="grc_contact")
  * @ORM\Entity(repositoryClass="GRCBundle\Repository\ContactRepository")
+ * @ORM\EntityListeners({ "GRCBundle\Listener\ContactListener" })
  */
 class Contact
 {

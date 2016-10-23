@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="ua_task")
  * @ORM\Entity(repositoryClass="UABundle\Repository\TaskRepository")
+ * @ORM\EntityListeners({ "UABundle\Listener\TaskListener" })
  */
 class Task
 {

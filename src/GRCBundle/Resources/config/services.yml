@@ -1,0 +1,6 @@
+services:
+    contact_listener:
+        class: GRCBundle\Listener\ContactListener
+        tags:
+            - { name: doctrine.orm.entity_listener }
+            - { name: doctrine.orm.entity_listener, entity_manager: custom }

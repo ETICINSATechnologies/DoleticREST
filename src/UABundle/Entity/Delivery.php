@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="ua_delivery")
  * @ORM\Entity(repositoryClass="UABundle\Repository\DeliveryRepository")
+ * @ORM\EntityListeners({ "UABundle\Listener\DeliveryListener" })
  */
 class Delivery
 {
