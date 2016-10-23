@@ -1,12 +1,12 @@
 <?php
 
-namespace RHBundle\Form;
+namespace UABundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DepartmentType extends AbstractType
+class DocumentType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,9 +15,10 @@ class DepartmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', 'text')
-            ->add('detail', 'text')
-            ->add('disabled', 'checkbox');
+            ->add('project', 'entity', ['choice_label' => 'name'])
+            ->add('template', 'entity', ['choice_label' => 'label'])
+            ->add('auditor', 'entity', ['choice_label' => 'fullname'])
+            ->add('valid', 'checkbox');
     }
 
     /**
@@ -27,7 +28,7 @@ class DepartmentType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'RHBundle\Entity\Department'
+            'data_class' => 'UABundle\Entity\Document'
         ));
     }
 

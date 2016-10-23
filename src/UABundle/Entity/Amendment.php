@@ -49,6 +49,19 @@ class Amendment
      */
     private $date;
 
+    /**
+     * @var array
+     *
+     * @ORM\ManyToMany(targetEntity="AmendmentType")
+     * @ORM\JoinTable(
+     *     name="ua_amendment_types_assoc",
+     *     joinColumns={@ORM\JoinColumn(name="amendment_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="amendment_type_id", referencedColumnName="id")}
+     * )
+     *
+     */
+    private $types;
+
 
     /**
      * Get id
@@ -144,6 +157,25 @@ class Amendment
     public function setProject($project)
     {
         $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTypes()
+    {
+        return $this->types;
+    }
+
+    /**
+     * @param array $types
+     * @return Amendment
+     */
+    public function setTypes($types)
+    {
+        $this->types = $types;
 
         return $this;
     }

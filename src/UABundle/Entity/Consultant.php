@@ -35,7 +35,7 @@ class Consultant
      *
      * @ORM\ManyToOne(targetEntity="RHBundle\Entity\UserData")
      */
-    private $user_data;
+    private $userData;
 
     /**
      * @var int
@@ -162,16 +162,16 @@ class Consultant
      */
     public function getUserData()
     {
-        return $this->user_data;
+        return $this->userData;
     }
 
     /**
-     * @param UserData $user_data
+     * @param UserData $userData
      * @return Consultant
      */
-    public function setUserData($user_data)
+    public function setUserData($userData)
     {
-        $this->user_data = $user_data;
+        $this->userData = $userData;
 
         return $this;
     }

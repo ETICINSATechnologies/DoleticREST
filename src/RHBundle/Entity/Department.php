@@ -31,9 +31,9 @@ class Department
     /**
      * @var string
      *
-     * @ORM\Column(name="details", type="string", length=255, nullable=true)
+     * @ORM\Column(name="detail", type="string", length=255, nullable=true)
      */
-    private $details;
+    private $detail;
 
     /**
      * @var bool
@@ -79,12 +79,12 @@ class Department
     /**
      * Set details
      *
-     * @param string $details
+     * @param string $detail
      * @return Department
      */
-    public function setDetails($details)
+    public function setDetail($detail)
     {
-        $this->details = $details;
+        $this->detail = $detail;
 
         return $this;
     }
@@ -94,9 +94,9 @@ class Department
      *
      * @return string 
      */
-    public function getDetails()
+    public function getDetail()
     {
-        return $this->details;
+        return $this->detail;
     }
 
     /**
