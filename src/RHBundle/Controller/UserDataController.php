@@ -81,40 +81,6 @@ class UserDataController extends FOSRestController
     }
 
     /**
-     * Get a user_data by label
-     * @param string $label
-     * @return array
-     *
-     * @ApiDoc(
-     *  section="UserData",
-     *  description="Get a user_data",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="user_data label"
-     *      }
-     *  },
-     *  statusCodes={
-     *         200="Returned when successful"
-     *  },
-     *  tags={
-     *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  }
-     * )
-     *
-     * @View()
-     * @Get("/user_data/{label}")
-     */
-    public function getUserDataByLabelAction($label){
-
-        $user_data = $this->getDoctrine()->getRepository('RHBundle:UserData')->findOneBy(['label' => $label]);
-        return array('user_data' => $user_data);
-    }
-
-    /**
      * Create a new UserData
      * @var Request $request
      * @return View|array

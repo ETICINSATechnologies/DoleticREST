@@ -81,40 +81,6 @@ class ConsultantMembershipController extends FOSRestController
     }
 
     /**
-     * Get a consultant_membership by label
-     * @param string $label
-     * @return array
-     *
-     * @ApiDoc(
-     *  section="ConsultantMembership",
-     *  description="Get a consultant_membership",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="consultant_membership label"
-     *      }
-     *  },
-     *  statusCodes={
-     *         200="Returned when successful"
-     *  },
-     *  tags={
-     *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  }
-     * )
-     *
-     * @View()
-     * @Get("/consultant_membership/{label}")
-     */
-    public function getConsultantMembershipByLabelAction($label){
-
-        $consultant_membership = $this->getDoctrine()->getRepository('RHBundle:ConsultantMembership')->findOneBy(['label' => $label]);
-        return array('consultant_membership' => $consultant_membership);
-    }
-
-    /**
      * Create a new ConsultantMembership
      * @var Request $request
      * @return View|array

@@ -81,40 +81,6 @@ class AdministratorMembershipController extends FOSRestController
     }
 
     /**
-     * Get a administrator_membership by label
-     * @param string $label
-     * @return array
-     *
-     * @ApiDoc(
-     *  section="AdministratorMembership",
-     *  description="Get a administrator_membership",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="administrator_membership label"
-     *      }
-     *  },
-     *  statusCodes={
-     *         200="Returned when successful"
-     *  },
-     *  tags={
-     *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  }
-     * )
-     *
-     * @View()
-     * @Get("/administrator_membership/{label}")
-     */
-    public function getAdministratorMembershipByLabelAction($label){
-
-        $administrator_membership = $this->getDoctrine()->getRepository('RHBundle:AdministratorMembership')->findOneBy(['label' => $label]);
-        return array('administrator_membership' => $administrator_membership);
-    }
-
-    /**
      * Create a new AdministratorMembership
      * @var Request $request
      * @return View|array

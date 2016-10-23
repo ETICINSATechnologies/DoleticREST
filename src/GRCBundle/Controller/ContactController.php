@@ -81,40 +81,6 @@ class ContactController extends FOSRestController
     }
 
     /**
-     * Get a contact by label
-     * @param string $label
-     * @return array
-     *
-     * @ApiDoc(
-     *  section="Contact",
-     *  description="Get a contact",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact label"
-     *      }
-     *  },
-     *  statusCodes={
-     *         200="Returned when successful"
-     *  },
-     *  tags={
-     *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  }
-     * )
-     *
-     * @View()
-     * @Get("/contact/{label}")
-     */
-    public function getContactByLabelAction($label){
-
-        $contact = $this->getDoctrine()->getRepository('GRCBundle:Contact')->findOneBy(['label' => $label]);
-        return array('contact' => $contact);
-    }
-
-    /**
      * Create a new Contact
      * @var Request $request
      * @return View|array

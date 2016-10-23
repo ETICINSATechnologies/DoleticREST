@@ -81,40 +81,6 @@ class TicketController extends FOSRestController
     }
 
     /**
-     * Get a ticket by label
-     * @param string $label
-     * @return array
-     *
-     * @ApiDoc(
-     *  section="Ticket",
-     *  description="Get a ticket",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="ticket label"
-     *      }
-     *  },
-     *  statusCodes={
-     *         200="Returned when successful"
-     *  },
-     *  tags={
-     *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  }
-     * )
-     *
-     * @View()
-     * @Get("/ticket/{label}")
-     */
-    public function getTicketByLabelAction($label){
-
-        $ticket = $this->getDoctrine()->getRepository('SupportBundle:Ticket')->findOneBy(['label' => $label]);
-        return array('ticket' => $ticket);
-    }
-
-    /**
      * Create a new Ticket
      * @var Request $request
      * @return View|array

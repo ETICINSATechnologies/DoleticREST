@@ -81,8 +81,8 @@ class FirmController extends FOSRestController
     }
 
     /**
-     * Get a firm by label
-     * @param string $label
+     * Get a firm by name
+     * @param string $name
      * @return array
      *
      * @ApiDoc(
@@ -90,10 +90,10 @@ class FirmController extends FOSRestController
      *  description="Get a firm",
      *  requirements={
      *      {
-     *          "name"="label",
+     *          "name"="name",
      *          "dataType"="string",
      *          "requirement"="*",
-     *          "description"="firm label"
+     *          "description"="firm name"
      *      }
      *  },
      *  statusCodes={
@@ -106,11 +106,11 @@ class FirmController extends FOSRestController
      * )
      *
      * @View()
-     * @Get("/firm/{label}")
+     * @Get("/firm/{name}")
      */
-    public function getFirmByLabelAction($label){
+    public function getFirmByLabelAction($name){
 
-        $firm = $this->getDoctrine()->getRepository('GRCBundle:Firm')->findOneBy(['label' => $label]);
+        $firm = $this->getDoctrine()->getRepository('GRCBundle:Firm')->findOneBy(['name' => $name]);
         return array('firm' => $firm);
     }
 

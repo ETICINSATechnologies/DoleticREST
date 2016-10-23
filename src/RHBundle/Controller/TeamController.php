@@ -81,8 +81,8 @@ class TeamController extends FOSRestController
     }
 
     /**
-     * Get a team by label
-     * @param string $label
+     * Get a team by name
+     * @param string $name
      * @return array
      *
      * @ApiDoc(
@@ -90,10 +90,10 @@ class TeamController extends FOSRestController
      *  description="Get a team",
      *  requirements={
      *      {
-     *          "name"="label",
+     *          "name"="name",
      *          "dataType"="string",
      *          "requirement"="*",
-     *          "description"="team label"
+     *          "description"="team name"
      *      }
      *  },
      *  statusCodes={
@@ -106,11 +106,11 @@ class TeamController extends FOSRestController
      * )
      *
      * @View()
-     * @Get("/team/{label}")
+     * @Get("/team/{name}")
      */
-    public function getTeamByLabelAction($label){
+    public function getTeamByLabelAction($name){
 
-        $team = $this->getDoctrine()->getRepository('RHBundle:Team')->findOneBy(['label' => $label]);
+        $team = $this->getDoctrine()->getRepository('RHBundle:Team')->findOneBy(['name' => $name]);
         return array('team' => $team);
     }
 
