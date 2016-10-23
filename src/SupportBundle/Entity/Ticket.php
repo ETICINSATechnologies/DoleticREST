@@ -69,7 +69,14 @@ class Ticket
      *
      * @ORM\Column(name="archived_since", type="datetime", nullable=true)
      */
-    private $archived_since;
+    private $archivedSince;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creation_date", type="datetime")
+     */
+    private $creationDate;
 
     /**
      * Get id
@@ -208,18 +215,45 @@ class Ticket
      */
     public function getArchivedSince()
     {
-        return $this->archived_since;
+        return $this->archivedSince;
     }
 
     /**
-     * @param \DateTime $archived_since
+     * @param \DateTime $archivedSince
      * @return Ticket
      */
-    public function setArchivedSince($archived_since)
+    public function setArchivedSince($archivedSince)
     {
-        $this->archived_since = $archived_since;
+        $this->archivedSince = $archivedSince;
 
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * @param \DateTime $creationDate
+     * @return Ticket
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreationDateValue()
+    {
+        $this->creationDate = new \DateTime();
     }
 
 }

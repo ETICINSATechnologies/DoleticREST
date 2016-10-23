@@ -93,7 +93,7 @@ class UserData
      *
      * @ORM\ManyToOne(targetEntity="SchoolYear")
      */
-    private $school_year;
+    private $schoolYear;
 
     /**
      * @var Department
@@ -355,16 +355,16 @@ class UserData
      */
     public function getSchoolYear()
     {
-        return $this->school_year;
+        return $this->schoolYear;
     }
 
     /**
-     * @param SchoolYear $school_year
+     * @param SchoolYear $schoolYear
      * @return UserData
      */
-    public function setSchoolYear($school_year)
+    public function setSchoolYear($schoolYear)
     {
-        $this->school_year = $school_year;
+        $this->schoolYear = $schoolYear;
 
         return $this;
     }

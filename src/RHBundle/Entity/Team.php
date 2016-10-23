@@ -10,6 +10,7 @@ use KernelBundle\Entity\Division;
  * Team
  *
  * @ORM\Table(name="rh_team")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="RHBundle\Repository\TeamRepository")
  */
 class Team
@@ -175,5 +176,13 @@ class Team
         $this->members = $members;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreationDateValue()
+    {
+        $this->creationDate = new \DateTime();
     }
 }

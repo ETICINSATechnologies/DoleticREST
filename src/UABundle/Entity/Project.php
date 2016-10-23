@@ -866,4 +866,21 @@ class Project
         return $this;
     }
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreationDateValue()
+    {
+        $this->creationDate = new \DateTime();
+        $this->lastUpdate = $this->creationDate;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setLastUpdateValue()
+    {
+        $this->lastUpdate = new \DateTime();
+    }
+
 }
