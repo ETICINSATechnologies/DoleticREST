@@ -8,7 +8,7 @@ use FOS\UserBundle\Entity\User as BaseUser;
 /**
  * User
  *
- * @ORM\Table(name="user")
+ * @ORM\Table(name="kernel_user")
  * @ORM\Entity(repositoryClass="KernelBundle\Repository\UserRepository")
  */
 class User extends BaseUser
@@ -22,6 +22,10 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\OneToOne(targetEntity="RHBundle\Entity\UserData", inversedBy="user")
+     */
+    private $user_data;
 
     /**
      * Get id
