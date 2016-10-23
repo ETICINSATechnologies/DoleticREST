@@ -26,7 +26,7 @@ class ConsultantMembership
      *
      * @ORM\OneToOne(targetEntity="UserData", inversedBy="consultant_membership"))
      */
-    private $user_data;
+    private $userData;
 
     /**
      * @var \DateTime
@@ -34,6 +34,13 @@ class ConsultantMembership
      * @ORM\Column(name="start_date", type="date")
      */
     private $startDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="social_number", type="string", length=15, nullable=true)
+     */
+    private $socialNumber;
 
     /**
      * @var bool
@@ -95,6 +102,29 @@ class ConsultantMembership
     public function getStartDate()
     {
         return $this->startDate;
+    }
+
+    /**
+     * Set socialNumber
+     *
+     * @param string $socialNumber
+     * @return ConsultantMembership
+     */
+    public function setSocialNumber($socialNumber)
+    {
+        $this->socialNumber = $socialNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get socialNumber
+     *
+     * @return string
+     */
+    public function getSocialNumber()
+    {
+        return $this->socialNumber;
     }
 
     /**
@@ -194,16 +224,16 @@ class ConsultantMembership
      */
     public function getUserData()
     {
-        return $this->user_data;
+        return $this->userData;
     }
 
     /**
-     * @param UserData $user_data
+     * @param UserData $userData
      * @return ConsultantMembership
      */
-    public function setUserData($user_data)
+    public function setUserData($userData)
     {
-        $this->user_data = $user_data;
+        $this->userData = $userData;
 
         return $this;
     }

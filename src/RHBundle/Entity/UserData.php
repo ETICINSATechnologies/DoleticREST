@@ -121,21 +121,21 @@ class UserData
      *
      * @ORM\ManyToOne(targetEntity="RecruitmentEvent")
      */
-    private $recruitment_event;
+    private $recruitmentEvent;
 
     /**
      * @var ConsultantMembership
      *
-     * @ORM\OneToOne(targetEntity="ConsultantMembership", mappedBy="user_data"))
+     * @ORM\OneToOne(targetEntity="ConsultantMembership", mappedBy="userData"))
      */
-    private $consultant_membership;
+    private $consultantMembership;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="AdministratorMembership", mappedBy="user_data"))
+     * @ORM\OneToMany(targetEntity="AdministratorMembership", mappedBy="userData"))
      */
-    private $administrator_memberships;
+    private $administratorMemberships;
 
     /**
      * Get id
@@ -191,6 +191,16 @@ class UserData
     public function getLastname()
     {
         return $this->lastname;
+    }
+
+    /**
+     * Get full name
+     *
+     * @return string
+     */
+    public function getFullname()
+    {
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     /**
@@ -431,16 +441,16 @@ class UserData
      */
     public function getRecruitmentEvent()
     {
-        return $this->recruitment_event;
+        return $this->recruitmentEvent;
     }
 
     /**
-     * @param RecruitmentEvent $recruitment_event
+     * @param RecruitmentEvent $recruitmentEvent
      * @return UserData
      */
-    public function setRecruitmentEvent($recruitment_event)
+    public function setRecruitmentEvent($recruitmentEvent)
     {
-        $this->recruitment_event = $recruitment_event;
+        $this->recruitmentEvent = $recruitmentEvent;
 
         return $this;
     }
@@ -450,16 +460,16 @@ class UserData
      */
     public function getConsultantMembership()
     {
-        return $this->consultant_membership;
+        return $this->consultantMembership;
     }
 
     /**
-     * @param ConsultantMembership $consultant_membership
+     * @param ConsultantMembership $consultantMembership
      * @return UserData
      */
-    public function setConsultantMembership($consultant_membership)
+    public function setConsultantMembership($consultantMembership)
     {
-        $this->consultant_membership = $consultant_membership;
+        $this->consultantMembership = $consultantMembership;
 
         return $this;
     }
@@ -469,17 +479,17 @@ class UserData
      */
     public function getAdministratorMemberships()
     {
-        return $this->administrator_memberships;
+        return $this->administratorMemberships;
     }
 
     /**
-     * @param ArrayCollection $administrator_memberships
+     * @param ArrayCollection $administratorMemberships
      * @return UserData
      */
-    public function setAdministratorMemberships($administrator_memberships)
+    public function setAdministratorMemberships($administratorMemberships)
     {
 
-        $this->administrator_memberships = $administrator_memberships;
+        $this->administratorMemberships = $administratorMemberships;
         return $this;
     }
 

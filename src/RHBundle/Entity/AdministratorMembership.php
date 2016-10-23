@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * AdministratorMembership
  *
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="rh_administrator_membership")
  * @ORM\Entity(repositoryClass="RHBundle\Repository\AdministratorMembershipRepository")
  */
@@ -26,7 +27,7 @@ class AdministratorMembership
      *
      * @ORM\ManyToOne(targetEntity="UserData", inversedBy="administrator_memberships"))
      */
-    private $user_data;
+    private $userData;
 
     /**
      * @var \DateTime
@@ -164,18 +165,29 @@ class AdministratorMembership
      */
     public function getUserData()
     {
-        return $this->user_data;
+        return $this->userData;
     }
 
     /**
-     * @param UserData $user_data
+     * @param UserData $userData
      * @return AdministratorMembership
      */
-    public function setUserData($user_data)
+    public function setUserData($userData)
     {
-        $this->user_data = $user_data;
+        $this->userData = $userData;
 
         return $this;
     }
 
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setDefaultEndDate()
+    {
+        if(!isset($this->endDate)) {
+            $this->endDate = $this->startDate;
+            $this->endDate->modify('+1 year');
+        }
+    }
 }

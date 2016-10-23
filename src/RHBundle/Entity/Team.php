@@ -2,7 +2,6 @@
 
 namespace RHBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use KernelBundle\Entity\Division;
 
@@ -53,7 +52,7 @@ class Team
     private $division;
 
     /**
-     * @var ArrayCollection
+     * @var array
      *
      * @ORM\ManyToMany(targetEntity="UserData")
      * @ORM\JoinTable(
@@ -160,7 +159,7 @@ class Team
     }
 
     /**
-     * @return ArrayCollection
+     * @return array
      */
     public function getMembers()
     {
@@ -168,7 +167,7 @@ class Team
     }
 
     /**
-     * @param ArrayCollection $members
+     * @param array $members
      * @return Team
      */
     public function setMembers($members)
@@ -184,5 +183,14 @@ class Team
     public function setCreationDateValue()
     {
         $this->creationDate = new \DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setLeaderAsMember()
+    {
+        $this->members = array_unique(array_merge($this->members,[$this->leader]));
     }
 }
