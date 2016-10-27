@@ -15,9 +15,9 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type', 'entity', ['choice_label' => 'label'])
-            ->add('gender', 'entity', ['choice_label' => 'label'])
-            ->add('firm', 'entity', ['choice_label' => 'name'])
+            ->add('type', 'entity', ['class' => 'GRCBundle\Entity\ContactType', 'choice_label' => 'label'])
+            ->add('gender', 'entity', ['class' => 'KernelBundle\Entity\Gender', 'choice_label' => 'label'])
+            ->add('firm', 'entity', ['class' => 'GRCBundle\Entity\Firm', 'choice_label' => 'name'])
             ->add('firstname', 'text')
             ->add('lastname', 'text')
             ->add('phone', 'integer', ['required' => false])

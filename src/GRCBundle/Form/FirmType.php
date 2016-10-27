@@ -15,8 +15,8 @@ class FirmType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type', 'entity', ['choice_label' => 'label'])
-            ->add('country', 'entity', ['choice_label' => 'label'])
+            ->add('type', 'entity', ['class' => 'GRCBundle\Entity\FirmType', 'choice_label' => 'label'])
+            ->add('country', 'entity', ['class' => 'KernelBundle\Entity\Country', 'choice_label' => 'label'])
             ->add('siret', 'text', ['required' => false])
             ->add('name', 'text')
             ->add('address', 'text', ['required' => false])

@@ -4,14 +4,16 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-
-services:
     user_data_listener:
         class: RHBundle\Listener\UserDataListener
         arguments: ['@service_container']
         tags:
             - { name: doctrine.orm.entity_listener }
             - { name: doctrine.orm.entity_listener, entity_manager: custom }
+
+    contact_listener:
+            class: GRCBundle\Listener\ContactListener
+            arguments: ['@service_container']
+            tags:
+                - { name: doctrine.orm.entity_listener }
+                - { name: doctrine.orm.entity_listener, entity_manager: custom }
