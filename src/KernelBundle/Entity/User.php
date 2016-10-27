@@ -23,7 +23,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="RHBundle\Entity\UserData", inversedBy="user")
+     * @ORM\OneToOne(targetEntity="RHBundle\Entity\UserData")
      */
     private $user_data;
 
@@ -36,4 +36,25 @@ class User extends BaseUser
     {
         return $this->id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUserData()
+    {
+        return $this->user_data;
+    }
+
+    /**
+     * @param mixed $user_data
+     * @return User
+     */
+    public function setUserData($user_data)
+    {
+        $this->user_data = $user_data;
+
+        return $this;
+    }
+
+
 }

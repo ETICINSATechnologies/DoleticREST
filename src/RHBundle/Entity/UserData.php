@@ -27,13 +27,6 @@ class UserData
     private $id;
 
     /**
-     * @var User
-     *
-     * @ORM\OneToOne(targetEntity="KernelBundle\Entity\User", mappedBy="user_data")
-     */
-    private $user;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255)
@@ -46,6 +39,13 @@ class UserData
      * @ORM\Column(name="lastname", type="string", length=255)
      */
     private $lastname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
 
     /**
      * @var \DateTime
@@ -205,6 +205,25 @@ class UserData
     }
 
     /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     * @return UserData
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
      * Set birthdate
      *
      * @param \DateTime $birthdate
@@ -340,25 +359,6 @@ class UserData
     public function getOld()
     {
         return $this->old;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param mixed $user
-     * @return UserData
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     /**

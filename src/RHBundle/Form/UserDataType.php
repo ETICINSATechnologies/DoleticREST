@@ -15,18 +15,20 @@ class UserDataType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('gender', 'entity', ['choice_label' => 'label'])
+            ->add('gender', 'entity', ['class' => 'KernelBundle\Entity\Gender', 'choice_label' => 'label'])
             ->add('firstname', 'text')
             ->add('lastname', 'text')
+            ->add('email', 'email')
             ->add('birthdate', 'date', ['required' => false])
-            ->add('department', 'entity', ['choice_label' => 'label'])
-            ->add('schoolYear', 'entity', ['choice_label' => 'label'])
-            ->add('recruitmentEvent', 'entity', ['choice_label' => 'label', 'required' => false])
+            ->add('department', 'entity', ['class' => 'RHBundle\Entity\Department', 'choice_label' => 'label'])
+            ->add('schoolYear', 'entity', ['class' => 'RHBundle\Entity\SchoolYear', 'choice_label' => 'label'])
+            ->add('recruitmentEvent', 'entity', ['class' => 'RHBundle\Entity\RecruitmentEvent', 'choice_label' => 'label', 'required' => false])
             ->add('tel', 'integer', ['required' => false])
             ->add('address', 'text', ['required' => false])
             ->add('city', 'text', ['required' => false])
             ->add('postalCode', 'integer', ['required' => false])
-            ->add('country', 'entity', ['choice_label' => 'label']);
+            ->add('old', 'checkbox', ['read_only' => true, 'value' => false])
+            ->add('country', 'entity', ['class' => 'KernelBundle\Entity\Country', 'choice_label' => 'label']);
     }
 
     /**
