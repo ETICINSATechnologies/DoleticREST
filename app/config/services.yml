@@ -17,3 +17,10 @@ services:
             tags:
                 - { name: doctrine.orm.entity_listener }
                 - { name: doctrine.orm.entity_listener, entity_manager: custom }
+
+    ticket_listener:
+            class: SupportBundle\Listener\TicketListener
+            arguments: ['@service_container']
+            tags:
+                - { name: doctrine.orm.entity_listener }
+                - { name: doctrine.orm.entity_listener, entity_manager: custom }

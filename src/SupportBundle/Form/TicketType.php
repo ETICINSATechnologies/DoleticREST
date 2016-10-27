@@ -15,9 +15,8 @@ class TicketType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type', 'entity', ['choice_label' => 'label'])
-            ->add('status', 'entity', ['choice_label' => 'label'])
-            ->add('author', 'entity', ['choice_label' => 'fullname'])
+            ->add('type', 'entity', ['class' => 'SupportBundle\Entity\TicketType', 'choice_label' => 'label'])
+            ->add('status', 'entity', ['class' => 'SupportBundle\Entity\TicketStatus', 'choice_label' => 'label'])
             ->add('title', 'text')
             ->add('content', 'textarea');
     }
