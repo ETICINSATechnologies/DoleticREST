@@ -1,24 +1,21 @@
 services:
     project_listener:
         class: UABundle\Listener\ProjectListener
+        arguments: ['@service_container']
         tags:
             - { name: doctrine.orm.entity_listener }
             - { name: doctrine.orm.entity_listener, entity_manager: custom }
 
-    project_listener:
+    task_listener:
         class: UABundle\Listener\TaskListener
+        arguments: ['@service_container']
         tags:
             - { name: doctrine.orm.entity_listener }
             - { name: doctrine.orm.entity_listener, entity_manager: custom }
 
-    project_listener:
-        class: UABundle\Listener\DeliveryListener
-        tags:
-            - { name: doctrine.orm.entity_listener }
-            - { name: doctrine.orm.entity_listener, entity_manager: custom }
-
-    project_listener:
+    consultant_listener:
         class: UABundle\Listener\ConsultantListener
+        arguments: ['@service_container']
         tags:
             - { name: doctrine.orm.entity_listener }
             - { name: doctrine.orm.entity_listener, entity_manager: custom }

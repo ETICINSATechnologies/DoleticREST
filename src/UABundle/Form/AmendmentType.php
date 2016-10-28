@@ -15,8 +15,8 @@ class AmendmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('project', 'entity', ['choice_label' => 'name'])
-            ->add('types', 'entity', ['choice_label' => 'label', 'multiple' => true])
+            ->add('project', 'entity', ['class' => 'UABundle\Entity\Project', 'choice_label' => 'name'])
+            ->add('types', 'entity', ['class' => 'UABundle\Entity\AmendmentType', 'choice_label' => 'label', 'multiple' => true])
             ->add('content', 'textarea')
             ->add('attributable', 'checkbox')
             ->add('date', 'date');

@@ -15,15 +15,14 @@ class TaskType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('project', 'entity', ['choice_label' => 'name'])
-            ->add('number', 'integer')
+            ->add('project', 'entity', ['class' => 'UABundle\Entity\Project', 'choice_label' => 'name'])
             ->add('name', 'text')
             ->add('description', 'textarea')
             ->add('jehAmount', 'integer')
             ->add('jehCost', 'integer')
-            ->add('startDate', 'date')
-            ->add('endDate', 'date')
-            ->add('ended', 'checkbox');
+            ->add('startDate', 'date', ['widget' => 'single_text', 'format' => 'dd/MM/yyyy'])
+            ->add('endDate', 'date', ['widget' => 'single_text', 'format' => 'dd/MM/yyyy'])
+            ->add('ended', 'checkbox', ['read_only' => true, 'value' => false]);
     }
 
     /**

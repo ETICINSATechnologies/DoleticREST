@@ -15,9 +15,8 @@ class ConsultantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('project', 'entity', ['choice_label' => 'name'])
-            ->add('userData', 'entity', ['choice_label' => 'fullname'])
-            ->add('number', 'integer')
+            ->add('project', 'entity', ['class' => 'UABundle\Entity\Project', 'choice_label' => 'name'])
+            ->add('userData', 'entity', ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname'])
             ->add('jehAssigned', 'integer')
             ->add('payByJeh', 'integer');
     }

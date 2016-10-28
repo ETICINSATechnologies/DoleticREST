@@ -15,7 +15,7 @@ class DeliveryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('task', 'entity', ['choice_label' => 'name'])
+            ->add('task', 'entity', ['class' => 'UABundle\Entity\Task', 'choice_label' => 'name'])
             ->add('number', 'integer')
             ->add('name', 'text')
             ->add('content', 'textarea')
