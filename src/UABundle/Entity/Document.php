@@ -4,7 +4,7 @@ namespace UABundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use KernelBundle\Entity\DocumentTemplate;
-use RHBundle\Entity\UserData;
+use KernelBundle\Entity\User;
 
 /**
  * Document
@@ -38,9 +38,9 @@ class Document
     private $template;
 
     /**
-     * @var UserData
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="RHBundle\Entity\UserData")
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
      */
     private $auditor;
 
@@ -55,7 +55,7 @@ class Document
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -78,7 +78,7 @@ class Document
     /**
      * Get valid
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getValid()
     {
@@ -124,7 +124,7 @@ class Document
     }
 
     /**
-     * @return UserData
+     * @return User
      */
     public function getAuditor()
     {
@@ -132,7 +132,7 @@ class Document
     }
 
     /**
-     * @param UserData $auditor
+     * @param User $auditor
      * @return Document
      */
     public function setAuditor($auditor)

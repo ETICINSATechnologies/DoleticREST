@@ -10,9 +10,11 @@ use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use RHBundle\Entity\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use UABundle\Entity\Consultant;
+use UABundle\Entity\Project;
 use UABundle\Form\ConsultantType;
 
 class ConsultantController extends FOSRestController
@@ -37,10 +39,71 @@ class ConsultantController extends FOSRestController
      * @View()
      * @Get("/consultants")
      */
-    public function getConsultantsAction(){
+    public function getConsultantsAction()
+    {
 
         $consultants = $this->getDoctrine()->getRepository("UABundle:Consultant")
-            ->findAll();
+            ->findBy([], ['number' => 'ASC']);
+
+        return array('consultants' => $consultants);
+    }
+
+    /**
+     * Get all the consultants in a project
+     * @param Project $project
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Consultant",
+     *  description="Get all consultants in a project",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project", class="UABundle:Project")
+     * @Get("/consultants/project/{id}", requirements={"id" = "\d+"})
+     */
+    public function getConsultantsByProjectAction(Project $project)
+    {
+
+        $consultants = $this->getDoctrine()->getRepository("UABundle:Consultant")
+            ->findBy(['project' => $project]);
+
+        return array('consultants' => $consultants);
+    }
+
+    /**
+     * Get all the consultants linked to a user data
+     * @param UserData $userData
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Consultant",
+     *  description="Get all consultants linked to a user data",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("userData", class="KernelBundle:UserData")
+     * @Get("/consultants/user_data/{id}", requirements={"id" = "\d+"})
+     */
+    public function getConsultantsByUserDataAction(UserData $userData)
+    {
+
+        $consultants = $this->getDoctrine()->getRepository("UABundle:Consultant")
+            ->findBy(['userData' => $userData]);
 
         return array('consultants' => $consultants);
     }
@@ -74,7 +137,8 @@ class ConsultantController extends FOSRestController
      * @ParamConverter("consultant", class="UABundle:Consultant")
      * @Get("/consultant/{id}", requirements={"id" = "\d+"})
      */
-    public function getConsultantAction(Consultant $consultant){
+    public function getConsultantAction(Consultant $consultant)
+    {
 
         return array('consultant' => $consultant);
 

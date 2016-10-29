@@ -37,7 +37,8 @@ class ProjectFieldController extends FOSRestController
      * @View()
      * @Get("/project_fields")
      */
-    public function getProjectFieldsAction(){
+    public function getProjectFieldsAction()
+    {
 
         $project_fields = $this->getDoctrine()->getRepository("UABundle:ProjectField")
             ->findAll();
@@ -74,7 +75,8 @@ class ProjectFieldController extends FOSRestController
      * @ParamConverter("project_field", class="UABundle:ProjectField")
      * @Get("/project_field/{id}", requirements={"id" = "\d+"})
      */
-    public function getProjectFieldAction(ProjectField $project_field){
+    public function getProjectFieldAction(ProjectField $project_field)
+    {
 
         return array('project_field' => $project_field);
 
@@ -108,7 +110,8 @@ class ProjectFieldController extends FOSRestController
      * @View()
      * @Get("/project_field/{label}")
      */
-    public function getProjectFieldByLabelAction($label){
+    public function getProjectFieldByLabelAction($label)
+    {
 
         $project_field = $this->getDoctrine()->getRepository('UABundle:ProjectField')->findOneBy(['label' => $label]);
         return array('project_field' => $project_field);

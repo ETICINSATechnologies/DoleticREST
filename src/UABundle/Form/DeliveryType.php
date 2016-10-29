@@ -2,7 +2,13 @@
 
 namespace UABundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,15 +21,15 @@ class DeliveryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('task', 'entity', ['class' => 'UABundle\Entity\Task', 'choice_label' => 'name'])
-            ->add('number', 'integer')
-            ->add('name', 'text')
-            ->add('content', 'textarea')
-            ->add('delivered', 'checkbox')
-            ->add('deliveryDate', 'date')
-            ->add('billed', 'checkbox')
-            ->add('paid', 'checkbox')
-            ->add('paymentDate', 'date');
+            ->add('task', EntityType::class, ['class' => 'UABundle\Entity\Task', 'choice_label' => 'name'])
+            ->add('number', IntegerType::class)
+            ->add('name', TextType::class)
+            ->add('content', TextareaType::class)
+            ->add('delivered', CheckboxType::class)
+            ->add('deliveryDate', DateType::class)
+            ->add('billed', CheckboxType::class)
+            ->add('paid', CheckboxType::class)
+            ->add('paymentDate', DateType::class);
     }
 
     /**

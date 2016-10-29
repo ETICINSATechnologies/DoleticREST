@@ -37,7 +37,8 @@ class ProjectStatusController extends FOSRestController
      * @View()
      * @Get("/project_statuses")
      */
-    public function getProjectStatusesAction(){
+    public function getProjectStatusesAction()
+    {
 
         $project_statuses = $this->getDoctrine()->getRepository("UABundle:ProjectStatus")
             ->findAll();
@@ -74,7 +75,8 @@ class ProjectStatusController extends FOSRestController
      * @ParamConverter("project_status", class="UABundle:ProjectStatus")
      * @Get("/project_status/{id}", requirements={"id" = "\d+"})
      */
-    public function getProjectStatusAction(ProjectStatus $project_status){
+    public function getProjectStatusAction(ProjectStatus $project_status)
+    {
 
         return array('project_status' => $project_status);
 
@@ -108,7 +110,8 @@ class ProjectStatusController extends FOSRestController
      * @View()
      * @Get("/project_status/{label}")
      */
-    public function getProjectStatusByLabelAction($label){
+    public function getProjectStatusByLabelAction($label)
+    {
 
         $project_status = $this->getDoctrine()->getRepository('UABundle:ProjectStatus')->findOneBy(['label' => $label]);
         return array('project_status' => $project_status);

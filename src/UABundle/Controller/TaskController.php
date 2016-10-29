@@ -12,6 +12,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
+use UABundle\Entity\Project;
 use UABundle\Entity\Task;
 use UABundle\Form\TaskType;
 
@@ -37,10 +38,41 @@ class TaskController extends FOSRestController
      * @View()
      * @Get("/tasks")
      */
-    public function getTasksAction(){
+    public function getTasksAction()
+    {
 
         $tasks = $this->getDoctrine()->getRepository("UABundle:Task")
-            ->findAll();
+            ->findBy([], ['number' => 'ASC']);
+
+        return array('tasks' => $tasks);
+    }
+
+    /**
+     * Get all the tasks in a project
+     * @param Project $project
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Task",
+     *  description="Get all tasks in a project",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project", class="UABundle:Project")
+     * @Get("/tasks/project/{id}", requirements={"id" = "\d+"})
+     */
+    public function getTasksByProjectAction(Project $project)
+    {
+
+        $tasks = $this->getDoctrine()->getRepository("UABundle:Task")
+            ->findBy(['project' => $project], ['number' => 'ASC']);
 
         return array('tasks' => $tasks);
     }
@@ -74,7 +106,8 @@ class TaskController extends FOSRestController
      * @ParamConverter("task", class="UABundle:Task")
      * @Get("/task/{id}", requirements={"id" = "\d+"})
      */
-    public function getTaskAction(Task $task){
+    public function getTaskAction(Task $task)
+    {
 
         return array('task' => $task);
 

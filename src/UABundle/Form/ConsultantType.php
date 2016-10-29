@@ -2,7 +2,9 @@
 
 namespace UABundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,10 +17,10 @@ class ConsultantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('project', 'entity', ['class' => 'UABundle\Entity\Project', 'choice_label' => 'name'])
-            ->add('userData', 'entity', ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname'])
-            ->add('jehAssigned', 'integer')
-            ->add('payByJeh', 'integer');
+            ->add('project', EntityType::class, ['class' => 'UABundle\Entity\Project', 'choice_label' => 'name'])
+            ->add('userData', EntityType::class, ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname'])
+            ->add('jehAssigned', IntegerType::class)
+            ->add('payByJeh', IntegerType::class);
     }
 
     /**

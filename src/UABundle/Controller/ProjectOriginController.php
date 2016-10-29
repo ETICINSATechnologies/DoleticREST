@@ -37,7 +37,8 @@ class ProjectOriginController extends FOSRestController
      * @View()
      * @Get("/project_origins")
      */
-    public function getProjectOriginsAction(){
+    public function getProjectOriginsAction()
+    {
 
         $project_origins = $this->getDoctrine()->getRepository("UABundle:ProjectOrigin")
             ->findAll();
@@ -74,7 +75,8 @@ class ProjectOriginController extends FOSRestController
      * @ParamConverter("project_origin", class="UABundle:ProjectOrigin")
      * @Get("/project_origin/{id}", requirements={"id" = "\d+"})
      */
-    public function getProjectOriginAction(ProjectOrigin $project_origin){
+    public function getProjectOriginAction(ProjectOrigin $project_origin)
+    {
 
         return array('project_origin' => $project_origin);
 
@@ -108,7 +110,8 @@ class ProjectOriginController extends FOSRestController
      * @View()
      * @Get("/project_origin/{label}")
      */
-    public function getProjectOriginByLabelAction($label){
+    public function getProjectOriginByLabelAction($label)
+    {
 
         $project_origin = $this->getDoctrine()->getRepository('UABundle:ProjectOrigin')->findOneBy(['label' => $label]);
         return array('project_origin' => $project_origin);

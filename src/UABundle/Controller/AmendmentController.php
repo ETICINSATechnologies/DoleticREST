@@ -13,7 +13,9 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use UABundle\Entity\Amendment;
+use UABundle\Entity\Project;
 use UABundle\Form\AmendmentType;
+use UABundle\Entity\AmendmentType as Type;
 
 class AmendmentController extends FOSRestController
 {
@@ -37,10 +39,71 @@ class AmendmentController extends FOSRestController
      * @View()
      * @Get("/amendments")
      */
-    public function getAmendmentsAction(){
+    public function getAmendmentsAction()
+    {
 
         $amendments = $this->getDoctrine()->getRepository("UABundle:Amendment")
             ->findAll();
+
+        return array('amendments' => $amendments);
+    }
+
+    /**
+     * Get all the amendments in a type
+     * @param  Type $type
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Amendment",
+     *  description="Get all amendments in a type",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("type", class="UABundle:AmendmentType")
+     * @Get("/amendments/type/{id]", requirements={"id" = "\d+"})
+     */
+    public function getAmendmentsByTypeAction(Type $type)
+    {
+
+        $amendments = $this->getDoctrine()->getRepository("UABundle:Amendment")
+            ->findByType($type);
+
+        return array('amendments' => $amendments);
+    }
+
+    /**
+     * Get all the amendments in a project
+     * @param  Project $project
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Amendment",
+     *  description="Get all amendments in a project",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project", class="UABundle:Project")
+     * @Get("/amendments/project/{id}", requirements={"id" = "\d+"})
+     */
+    public function getAmendmentsByProjectAction(Project $project)
+    {
+
+        $amendments = $this->getDoctrine()->getRepository("UABundle:Amendment")
+            ->findBy(['project' => $project]);
 
         return array('amendments' => $amendments);
     }
@@ -74,7 +137,8 @@ class AmendmentController extends FOSRestController
      * @ParamConverter("amendment", class="UABundle:Amendment")
      * @Get("/amendment/{id}", requirements={"id" = "\d+"})
      */
-    public function getAmendmentAction(Amendment $amendment){
+    public function getAmendmentAction(Amendment $amendment)
+    {
 
         return array('amendment' => $amendment);
 

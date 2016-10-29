@@ -9,10 +9,13 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use KernelBundle\Entity\DocumentTemplate;
+use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use UABundle\Entity\Document;
+use UABundle\Entity\Project;
 use UABundle\Form\DocumentType;
 
 class DocumentController extends FOSRestController
@@ -37,10 +40,129 @@ class DocumentController extends FOSRestController
      * @View()
      * @Get("/documents")
      */
-    public function getDocumentsAction(){
+    public function getDocumentsAction()
+    {
 
         $documents = $this->getDoctrine()->getRepository("UABundle:Document")
             ->findAll();
+
+        return array('documents' => $documents);
+    }
+
+    /**
+     * Get all the documents in a project
+     * @param Project $project
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Document",
+     *  description="Get all documents in a project",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project", class="UABundle:Project")
+     * @Get("/documents/project/{id}", requirements={"id" = "\d+"})
+     */
+    public function getDocumentsByProjectAction(Project $project)
+    {
+
+        $documents = $this->getDoctrine()->getRepository("UABundle:Document")
+            ->findBy(['project' => $project]);
+
+        return array('documents' => $documents);
+    }
+
+    /**
+     * Get all the documents from a template
+     * @param DocumentTemplate $template
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Document",
+     *  description="Get all documents from a template",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("template", class="KernelBundle:DocumentTemplate")
+     * @Get("/documents/template/{id}", requirements={"id" = "\d+"})
+     */
+    public function getDocumentsByTemplateAction(DocumentTemplate $template)
+    {
+
+        $documents = $this->getDoctrine()->getRepository("UABundle:Document")
+            ->findBy(['template' => $template]);
+
+        return array('documents' => $documents);
+    }
+
+    /**
+     * Get all the documents validated by a user
+     * @param User $auditor
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Document",
+     *  description="Get all documents validated by a user",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("auditor", class="KernelBundle:User")
+     * @Get("/documents/auditor/{id}", requirements={"id" = "\d+"})
+     */
+    public function getDocumentsByAuditorAction(User $auditor)
+    {
+
+        $documents = $this->getDoctrine()->getRepository("UABundle:Document")
+            ->findBy(['auditor' => $auditor]);
+
+        return array('documents' => $documents);
+    }
+
+    /**
+     * Get all the documents validated by the current user
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Document",
+     *  description="Get all documents validated by the current user",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/documents/auditor/current")
+     */
+    public function getCurrentUserAuditedDocumentsAction()
+    {
+
+        $documents = $this->getDoctrine()->getRepository("UABundle:Document")
+            ->findBy(['auditor' => $this->getUser()]);
 
         return array('documents' => $documents);
     }
@@ -74,7 +196,8 @@ class DocumentController extends FOSRestController
      * @ParamConverter("document", class="UABundle:Document")
      * @Get("/document/{id}", requirements={"id" = "\d+"})
      */
-    public function getDocumentAction(Document $document){
+    public function getDocumentAction(Document $document)
+    {
 
         return array('document' => $document);
 

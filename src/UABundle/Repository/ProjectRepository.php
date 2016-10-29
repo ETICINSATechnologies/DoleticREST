@@ -3,6 +3,8 @@
 namespace UABundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use GRCBundle\Entity\Contact;
+use KernelBundle\Entity\User;
 
 /**
  * ProjectRepository
@@ -12,4 +14,27 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProjectRepository extends EntityRepository
 {
+    public function findByChargeDAffaires(User $user)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->join('p.charges_affaires', 'c')->where($qb->expr()->eq('c.id', $user->getId()))
+            ->orderBy(['p.number' => 'DESC']);
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByContact(Contact $contact)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->join('p.contacts', 'c')->where($qb->expr()->eq('c.id', $contact->getId()))
+            ->orderBy(['p.number' => 'DESC']);
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByConsultant(User $user)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->join('p.consultants', 'c')->where($qb->expr()->eq('c.userData', $user->getId()))
+            ->orderBy(['p.number' => 'DESC']);
+        return $qb->getQuery()->getResult();
+    }
 }

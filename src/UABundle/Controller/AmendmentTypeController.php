@@ -37,7 +37,8 @@ class AmendmentTypeController extends FOSRestController
      * @View()
      * @Get("/amendment_types")
      */
-    public function getAmendmentTypesAction(){
+    public function getAmendmentTypesAction()
+    {
 
         $amendment_types = $this->getDoctrine()->getRepository("UABundle:AmendmentType")
             ->findAll();
@@ -74,7 +75,8 @@ class AmendmentTypeController extends FOSRestController
      * @ParamConverter("amendment_type", class="UABundle:AmendmentType")
      * @Get("/amendment_type/{id}", requirements={"id" = "\d+"})
      */
-    public function getAmendmentTypeAction(AmendmentType $amendment_type){
+    public function getAmendmentTypeAction(AmendmentType $amendment_type)
+    {
 
         return array('amendment_type' => $amendment_type);
 
@@ -108,7 +110,8 @@ class AmendmentTypeController extends FOSRestController
      * @View()
      * @Get("/amendment_type/{label}")
      */
-    public function getAmendmentTypeByLabelAction($label){
+    public function getAmendmentTypeByLabelAction($label)
+    {
 
         $amendment_type = $this->getDoctrine()->getRepository('UABundle:AmendmentType')->findOneBy(['label' => $label]);
         return array('amendment_type' => $amendment_type);

@@ -3,6 +3,7 @@
 namespace UABundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use UABundle\Entity\AmendmentType;
 
 /**
  * AmendmentRepository
@@ -12,4 +13,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class AmendmentRepository extends EntityRepository
 {
+    public function findByType(AmendmentType $type)
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb->join('a.types', 't')->where($qb->expr()->eq('t.id', $type->getId()));
+        return $qb->getQuery()->getResult();
+    }
 }

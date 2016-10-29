@@ -2,7 +2,9 @@
 
 namespace UABundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,10 +17,10 @@ class DocumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('project', 'entity', ['class' => 'UABundle\Entity\Project', 'choice_label' => 'name'])
-            ->add('template', 'entity', ['class' => 'KernelBundle\Entity\DocumentTemplate', 'choice_label' => 'label'])
-            ->add('auditor', 'entity', ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname'])
-            ->add('valid', 'checkbox');
+            ->add('project', EntityType::class, ['class' => 'UABundle\Entity\Project', 'choice_label' => 'name'])
+            ->add('template', EntityType::class, ['class' => 'KernelBundle\Entity\DocumentTemplate', 'choice_label' => 'label'])
+            ->add('auditor', EntityType::class, ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname'])
+            ->add('valid', CheckboxType::class);
     }
 
     /**

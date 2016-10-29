@@ -3,6 +3,7 @@
 namespace UABundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use UABundle\Entity\Project;
 
 /**
  * DeliveryRepository
@@ -12,4 +13,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class DeliveryRepository extends EntityRepository
 {
+    public function findByProject(Project $project)
+    {
+        $qb = $this->createQueryBuilder('d');
+        $qb->join('d.task', 't')->where($qb->expr()->eq('t.project', $project->getId()));
+        return $qb->getQuery()->getResult();
+    }
 }

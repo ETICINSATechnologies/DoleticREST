@@ -9,10 +9,16 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use GRCBundle\Entity\Contact;
+use GRCBundle\Entity\Firm;
+use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use UABundle\Entity\Project;
+use UABundle\Entity\ProjectField;
+use UABundle\Entity\ProjectOrigin;
+use UABundle\Entity\ProjectStatus;
 use UABundle\Form\ProjectType;
 
 class ProjectController extends FOSRestController
@@ -37,10 +43,251 @@ class ProjectController extends FOSRestController
      * @View()
      * @Get("/projects")
      */
-    public function getProjectsAction(){
+    public function getProjectsAction()
+    {
 
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
-            ->findAll();
+            ->findBy([], ['number' => 'DESC']);
+
+        return array('projects' => $projects);
+    }
+
+    /**
+     * Get all the projects from a given origin
+     * @param ProjectOrigin $origin
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Get all projects from a given origin",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("origin", class="UABundle:ProjectOrigin")
+     * @Get("/projects/origin/{id}", requirements={"id" = "\d+"})
+     */
+    public function getProjectsByOriginAction(ProjectOrigin $origin)
+    {
+
+        $projects = $this->getDoctrine()->getRepository("UABundle:Project")
+            ->findBy(['origin' => $origin], ['number' => 'DESC']);
+
+        return array('projects' => $projects);
+    }
+
+    /**
+     * Get all the projects in a field
+     * @param ProjectField $field
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Get all projects in a field",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("field", class="UABundle:ProjectField")
+     * @Get("/projects/field/{id}", requirements={"id" = "\d+"})
+     */
+    public function getProjectsByFieldAction(ProjectField $field)
+    {
+
+        $projects = $this->getDoctrine()->getRepository("UABundle:Project")
+            ->findBy(['field' => $field], ['number' => 'DESC']);
+
+        return array('projects' => $projects);
+    }
+
+    /**
+     * Get all the projects at a status
+     * @param ProjectStatus $status
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Get all projects at a status",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("status", class="UABundle:ProjectOrigin")
+     * @Get("/projects/status/{id}", requirements={"id" = "\d+"})
+     */
+    public function getProjectsByStatusAction(ProjectStatus $status)
+    {
+
+        $projects = $this->getDoctrine()->getRepository("UABundle:Project")
+            ->findBy(['status' => $status], ['number' => 'DESC']);
+
+        return array('projects' => $projects);
+    }
+
+    /**
+     * Get all the projects with a firm
+     * @param Firm $firm
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Get all projects with a firm",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("firm", class="GRCBundle:Firm")
+     * @Get("/projects/status/{id}", requirements={"id" = "\d+"})
+     */
+    public function getProjectsByFirmAction(Firm $firm)
+    {
+
+        $projects = $this->getDoctrine()->getRepository("UABundle:Project")
+            ->findBy(['firm' => $firm], ['number' => 'DESC']);
+
+        return array('projects' => $projects);
+    }
+
+    /**
+     * Get all the projects audited by a user
+     * @param User $auditor
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Get all projects audited by a user",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("auditor", class="KernelBundle:User")
+     * @Get("/projects/auditor/{id}", requirements={"id" = "\d+"})
+     */
+    public function getProjectsByAuditorAction(User $auditor)
+    {
+
+        $projects = $this->getDoctrine()->getRepository("UABundle:Project")
+            ->findBy(['auditor' => $auditor], ['number' => 'DESC']);
+
+        return array('projects' => $projects);
+    }
+
+    /**
+     * Get all the projects led by a Chargé d'Affaires
+     * @param User $chargeDAffaires
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Get all projects led by a Chargé d'Affaires",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("chargeDAffaires", class="KernelBundle:User")
+     * @Get("/projects/charge_daffaires/{id}", requirements={"id" = "\d+"})
+     */
+    public function getProjectsByChargeDAffairesAction(User $chargeDAffaires)
+    {
+
+        $projects = $this->getDoctrine()->getRepository("UABundle:Project")
+            ->findByChargeDAffaires($chargeDAffaires);
+
+        return array('projects' => $projects);
+    }
+
+    /**
+     * Get all the projects worked by a consultant
+     * @param User $consultant
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Get all projects worked by a consultant",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("consultant", class="KernelBundle:User")
+     * @Get("/projects/consultant/{id}", requirements={"id" = "\d+"})
+     */
+    public function getProjectsByConsultant(User $consultant)
+    {
+
+        $projects = $this->getDoctrine()->getRepository("UABundle:Project")
+            ->findByConsultant($consultant);
+
+        return array('projects' => $projects);
+    }
+
+    /**
+     * Get all the projects worked associated to a contact
+     * @param Contact $contact
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Get all projects associated to a contact",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("contact", class="GRCBundle:Contact")
+     * @Get("/projects/contact/{id}", requirements={"id" = "\d+"})
+     */
+    public function getProjectsByContact(Contact $contact)
+    {
+
+        $projects = $this->getDoctrine()->getRepository("UABundle:Project")
+            ->findByContact($contact);
 
         return array('projects' => $projects);
     }
@@ -74,7 +321,8 @@ class ProjectController extends FOSRestController
      * @ParamConverter("project", class="UABundle:Project")
      * @Get("/project/{id}", requirements={"id" = "\d+"})
      */
-    public function getProjectAction(Project $project){
+    public function getProjectAction(Project $project)
+    {
 
         return array('project' => $project);
 
@@ -108,7 +356,8 @@ class ProjectController extends FOSRestController
      * @View()
      * @Get("/project/number/{number}")
      */
-    public function getProjectByNumberAction($number){
+    public function getProjectByNumberAction($number)
+    {
 
         $project = $this->getDoctrine()->getRepository('UABundle:Project')->findOneBy(['number' => $number]);
         return array('project' => $project);

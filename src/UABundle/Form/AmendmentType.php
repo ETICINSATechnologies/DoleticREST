@@ -2,7 +2,11 @@
 
 namespace UABundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,11 +19,11 @@ class AmendmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('project', 'entity', ['class' => 'UABundle\Entity\Project', 'choice_label' => 'name'])
-            ->add('types', 'entity', ['class' => 'UABundle\Entity\AmendmentType', 'choice_label' => 'label', 'multiple' => true])
-            ->add('content', 'textarea')
-            ->add('attributable', 'checkbox')
-            ->add('date', 'date');
+            ->add('project', EntityType::class, ['class' => 'UABundle\Entity\Project', 'choice_label' => 'name'])
+            ->add('types', EntityType::class, ['class' => 'UABundle\Entity\AmendmentType', 'choice_label' => 'label', 'multiple' => true])
+            ->add('content', TextareaType::class)
+            ->add('attributable', CheckboxType::class)
+            ->add('date', DateType::class);
     }
 
     /**
