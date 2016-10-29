@@ -37,7 +37,8 @@ class TicketTypeController extends FOSRestController
      * @View()
      * @Get("/ticket_types")
      */
-    public function getTicketTypesAction(){
+    public function getTicketTypesAction()
+    {
 
         $ticket_types = $this->getDoctrine()->getRepository("SupportBundle:TicketType")
             ->findAll();
@@ -74,7 +75,8 @@ class TicketTypeController extends FOSRestController
      * @ParamConverter("ticket_type", class="SupportBundle:TicketType")
      * @Get("/ticket_type/{id}", requirements={"id" = "\d+"})
      */
-    public function getTicketTypeAction(TicketType $ticket_type){
+    public function getTicketTypeAction(TicketType $ticket_type)
+    {
 
         return array('ticket_type' => $ticket_type);
 
@@ -108,7 +110,8 @@ class TicketTypeController extends FOSRestController
      * @View()
      * @Get("/ticket_type/{label}")
      */
-    public function getTicketTypeByLabelAction($label){
+    public function getTicketTypeByLabelAction($label)
+    {
 
         $ticket_type = $this->getDoctrine()->getRepository('SupportBundle:TicketType')->findOneBy(['label' => $label]);
         return array('ticket_type' => $ticket_type);

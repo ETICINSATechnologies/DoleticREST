@@ -37,7 +37,8 @@ class TicketStatusController extends FOSRestController
      * @View()
      * @Get("/ticket_statuss")
      */
-    public function getTicketStatussAction(){
+    public function getTicketStatussAction()
+    {
 
         $ticket_statuss = $this->getDoctrine()->getRepository("SupportBundle:TicketStatus")
             ->findAll();
@@ -74,7 +75,8 @@ class TicketStatusController extends FOSRestController
      * @ParamConverter("ticket_status", class="SupportBundle:TicketStatus")
      * @Get("/ticket_status/{id}", requirements={"id" = "\d+"})
      */
-    public function getTicketStatusAction(TicketStatus $ticket_status){
+    public function getTicketStatusAction(TicketStatus $ticket_status)
+    {
 
         return array('ticket_status' => $ticket_status);
 
@@ -108,7 +110,8 @@ class TicketStatusController extends FOSRestController
      * @View()
      * @Get("/ticket_status/{label}")
      */
-    public function getTicketStatusByLabelAction($label){
+    public function getTicketStatusByLabelAction($label)
+    {
 
         $ticket_status = $this->getDoctrine()->getRepository('SupportBundle:TicketStatus')->findOneBy(['label' => $label]);
         return array('ticket_status' => $ticket_status);

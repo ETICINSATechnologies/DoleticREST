@@ -40,7 +40,8 @@ class TicketController extends FOSRestController
      * @View()
      * @Get("/tickets")
      */
-    public function getTicketsAction(){
+    public function getTicketsAction()
+    {
 
         $tickets = $this->getDoctrine()->getRepository("SupportBundle:Ticket")
             ->findAll();
@@ -69,7 +70,8 @@ class TicketController extends FOSRestController
      * @ParamConverter("type", class="SupportBundle:TicketType")
      * @Get("/tickets/type/{id}", requirements={"id" = "\d+"})
      */
-    public function getTicketsByTypeAction(Type $type){
+    public function getTicketsByTypeAction(Type $type)
+    {
 
         $tickets = $this->getDoctrine()->getRepository("SupportBundle:Ticket")
             ->findBy(['type' => $type]);
@@ -98,7 +100,8 @@ class TicketController extends FOSRestController
      * @ParamConverter("status", class="SupportBundle:TicketStatus")
      * @Get("/tickets/status/{id}", requirements={"id" = "\d+"})
      */
-    public function getTicketsByStatusAction(TicketStatus $status){
+    public function getTicketsByStatusAction(TicketStatus $status)
+    {
 
         $tickets = $this->getDoctrine()->getRepository("SupportBundle:Ticket")
             ->findBy(['status' => $status]);
@@ -127,7 +130,8 @@ class TicketController extends FOSRestController
      * @ParamConverter("author", class="KernelBundle:User")
      * @Get("/tickets/author/{id}", requirements={"id" = "\d+"})
      */
-    public function getTicketsByAuthorAction(User $author){
+    public function getTicketsByAuthorAction(User $author)
+    {
 
         $tickets = $this->getDoctrine()->getRepository("SupportBundle:Ticket")
             ->findBy(['author' => $author]);
@@ -154,7 +158,8 @@ class TicketController extends FOSRestController
      * @View()
      * @Get("/tickets/current")
      */
-    public function getCurrentUserTicketsAction(){
+    public function getCurrentUserTicketsAction()
+    {
 
         $tickets = $this->getDoctrine()->getRepository("SupportBundle:Ticket")
             ->findBy(['author' => $this->getUser()]);
@@ -191,7 +196,8 @@ class TicketController extends FOSRestController
      * @ParamConverter("ticket", class="SupportBundle:Ticket")
      * @Get("/ticket/{id}", requirements={"id" = "\d+"})
      */
-    public function getTicketAction(Ticket $ticket){
+    public function getTicketAction(Ticket $ticket)
+    {
 
         return array('ticket' => $ticket);
 
