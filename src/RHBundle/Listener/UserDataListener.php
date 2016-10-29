@@ -16,18 +16,15 @@ class UserDataListener
 
     private $container;
 
-    private $cacheUser;
-
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->cacheUser = null;
     }
 
     public function postPersist(UserData $userData, LifecycleEventArgs $event)
     {
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
-        if($userName = $this->makeUserName($userData->getFirstname(), $userData->getLastname())) {
+        if ($userName = $this->makeUserName($userData->getFirstname(), $userData->getLastname())) {
             $password = $this->makeRandomPassword();
             $user = new User();
             $user
@@ -36,6 +33,25 @@ class UserDataListener
                 ->setPlainPassword($password)
                 ->setUserData($userData);
             $entityManager->persist($user);
+
+            $message = new \Swift_Message();
+            $message
+                ->setSubject('Compte Doletic créé !')
+                ->setFrom($this->container->getParameter('mailer_user'))
+                ->setTo($userData->getEmail())
+                ->setBody($this->container->get('templating')->render(
+                    '@RH/emails/welcome.html.twig',
+                    [
+                        'name' => $userData->getFullname(),
+                        'url' => $this->container->getParameter('doletic_url'),
+                        'jeName' => $this->container->getParameter('je_name'),
+                        'webmaster' => $this->container->getParameter('webmaster_email'),
+                        'username' => $userName,
+                        'password' => $password
+                    ]
+                ));
+
+            $this->container->get('mailer')->send($message, $failures);
 
         } else {
             $entityManager->remove($userData);
@@ -53,7 +69,7 @@ class UserDataListener
         while (!$ok && $index < self::ITERATIONS) {
             $temp = $userName . ($index > 0 ? $index : '');
             $user = $userRepository->findOneBy(['username' => $temp]);
-            if(!isset($user)) {
+            if (!isset($user)) {
                 $ok = true;
                 $userName = $temp;
                 break;
