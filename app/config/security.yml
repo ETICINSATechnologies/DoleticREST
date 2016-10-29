@@ -31,3 +31,41 @@ security:
 
     access_control:
         - { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }
+
+    role_hierarchy:
+        # Global roles - to be updated when a new module (bundle) is added
+        ROLE_SUPERADMIN: [ROLE_KERNEL_SUPERADMIN, ROLE_RH_SUPERADMIN, ROLE_GRC_SUPERADMIN, ROLE_UA_SUPERADMIN, ROLE_SUPPORT_SUPERADMIN]
+        ROLE_ADMIN: [ROLE_KERNEL_ADMIN, ROLE_RH_ADMIN, ROLE_GRC_ADMIN, ROLE_UA_ADMIN, ROLE_SUPPORT_ADMIN]
+        ROLE_USER: [ROLE_KERNEL_USER, ROLE_RH_USER, ROLE_GRC_USER, ROLE_UA_USER, ROLE_SUPPORT_USER]
+        ROLE_GUEST: [ROLE_KERNEL_GUEST, ROLE_RH_GUEST, ROLE_GRC_GUEST, ROLE_UA_GUEST, ROLE_SUPPORT_GUEST]
+
+        # Module (bundle) roles - add roles when a module is added
+        # Kernel Module
+        ROLE_KERNEL_SUPERADMIN: [ROLE_KERNEL_ADMIN]
+        ROLE_KERNEL_ADMIN: [ROLE_KERNEL_USER]
+        ROLE_KERNEL_USER: [ROLE_KERNEL_GUEST]
+        ROLE_KERNEL_GUEST: ~
+
+        # RH Module
+        ROLE_RH_SUPERADMIN: [ROLE_RH_ADMIN]
+        ROLE_RH_ADMIN: [ROLE_RH_USER]
+        ROLE_RH_USER: [ROLE_RH_GUEST]
+        ROLE_RH_GUEST: ~
+
+        # GRC Module
+        ROLE_GRC_SUPERADMIN: [ROLE_GRC_ADMIN]
+        ROLE_GRC_ADMIN: [ROLE_GRC_USER]
+        ROLE_GRC_USER: [ROLE_GRC_GUEST]
+        ROLE_GRC_GUEST: ~
+
+        # UA Module
+        ROLE_UA_SUPERADMIN: [ROLE_UA_ADMIN]
+        ROLE_UA_ADMIN: [ROLE_UA_USER]
+        ROLE_UA_USER: [ROLE_UA_GUEST]
+        ROLE_UA_GUEST: ~
+
+        # Support Module
+        ROLE_SUPPORT_SUPERADMIN: [ROLE_SUPPORT_ADMIN]
+        ROLE_SUPPORT_ADMIN: [ROLE_SUPPORT_USER]
+        ROLE_SUPPORT_USER: [ROLE_SUPPORT_GUEST]
+        ROLE_SUPPORT_GUEST: ~

@@ -28,6 +28,13 @@ class User extends BaseUser
     private $user_data;
 
     /**
+     * @var array
+     *
+     * @ORM\OneToMany(targetEntity="UserPosition", mappedBy="user")
+     */
+    private $positions;
+
+    /**
      * Get id
      *
      * @return integer
@@ -56,5 +63,37 @@ class User extends BaseUser
         return $this;
     }
 
+    /**
+     * @return array
+     */
+    public function getPositions()
+    {
+        return $this->positions;
+    }
+
+    /**
+     * @param array $positions
+     * @return User
+     */
+    public function setPositions($positions)
+    {
+        $this->positions = $positions;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        $roles = [];
+        foreach ($this->positions as $position) {
+            if ($position->getActive()) {
+                $roles = array_merge($roles, $position->getPosition()->getRoles());
+            }
+        }
+        return $roles;
+    }
 
 }

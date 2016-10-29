@@ -11,7 +11,7 @@ class ContactFixture extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $contact = new Contact();
+        /*$contact = new Contact();
         $contact
             ->setFirstname('Client')
             ->setLastname('Doe')
@@ -20,7 +20,7 @@ class ContactFixture extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($contact);
         $manager->flush();
 
-        $this->addReference('contact', $contact);
+        $this->addReference('contact', $contact);*/
     }
 
     public function getOrder()
