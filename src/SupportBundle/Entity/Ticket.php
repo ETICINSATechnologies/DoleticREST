@@ -3,7 +3,7 @@
 namespace SupportBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use RHBundle\Entity\UserData;
+use KernelBundle\Entity\User;
 
 /**
  * Ticket
@@ -52,9 +52,9 @@ class Ticket
     private $status;
 
     /**
-     * @var UserData
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="RHBundle\Entity\UserData")
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
      */
     private $author;
 
@@ -174,7 +174,7 @@ class Ticket
     }
 
     /**
-     * @return UserData
+     * @return User
      */
     public function getAuthor()
     {
@@ -182,7 +182,7 @@ class Ticket
     }
 
     /**
-     * @param UserData $author
+     * @param User $author
      * @return Ticket
      */
     public function setAuthor($author)

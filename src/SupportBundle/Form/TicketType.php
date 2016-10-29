@@ -2,7 +2,10 @@
 
 namespace SupportBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,10 +18,10 @@ class TicketType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type', 'entity', ['class' => 'SupportBundle\Entity\TicketType', 'choice_label' => 'label'])
-            ->add('status', 'entity', ['class' => 'SupportBundle\Entity\TicketStatus', 'choice_label' => 'label'])
-            ->add('title', 'text')
-            ->add('content', 'textarea');
+            ->add('type', EntityType::class, ['class' => 'SupportBundle\Entity\TicketType', 'choice_label' => 'label'])
+            ->add('status', EntityType::class, ['class' => 'SupportBundle\Entity\TicketStatus', 'choice_label' => 'label'])
+            ->add('title', TextType::class)
+            ->add('content', TextareaType::class);
     }
 
     /**
