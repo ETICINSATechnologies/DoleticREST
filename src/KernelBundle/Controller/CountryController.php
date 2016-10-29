@@ -37,7 +37,8 @@ class CountryController extends FOSRestController
      * @View()
      * @Get("/countries")
      */
-    public function getCountriesAction(){
+    public function getCountriesAction()
+    {
 
         $countries = $this->getDoctrine()->getRepository("KernelBundle:Country")
             ->findAll();
@@ -74,7 +75,8 @@ class CountryController extends FOSRestController
      * @ParamConverter("country", class="KernelBundle:Country")
      * @Get("/country/{id}", requirements={"id" = "\d+"})
      */
-    public function getCountryAction(Country $country){
+    public function getCountryAction(Country $country)
+    {
 
         return array('country' => $country);
 
@@ -108,7 +110,8 @@ class CountryController extends FOSRestController
      * @View()
      * @Get("/country/{label}")
      */
-    public function getCountryByLabelAction($label){
+    public function getCountryByLabelAction($label)
+    {
 
         $country = $this->getDoctrine()->getRepository('KernelBundle:Country')->findOneBy(['label' => $label]);
         return array('country' => $country);

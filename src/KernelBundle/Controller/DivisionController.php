@@ -37,7 +37,8 @@ class DivisionController extends FOSRestController
      * @View()
      * @Get("/divisions")
      */
-    public function getDivisionsAction(){
+    public function getDivisionsAction()
+    {
 
         $divisions = $this->getDoctrine()->getRepository("KernelBundle:Division")
             ->findAll();
@@ -74,7 +75,8 @@ class DivisionController extends FOSRestController
      * @ParamConverter("division", class="KernelBundle:Division")
      * @Get("/division/{id}", requirements={"id" = "\d+"})
      */
-    public function getDivisionAction(Division $division){
+    public function getDivisionAction(Division $division)
+    {
 
         return array('division' => $division);
 
@@ -108,7 +110,8 @@ class DivisionController extends FOSRestController
      * @View()
      * @Get("/division/{label}")
      */
-    public function getDivisionByLabelAction($label){
+    public function getDivisionByLabelAction($label)
+    {
 
         $division = $this->getDoctrine()->getRepository('KernelBundle:Division')->findOneBy(['label' => $label]);
         return array('division' => $division);

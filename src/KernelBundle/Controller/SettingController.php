@@ -37,7 +37,8 @@ class SettingController extends FOSRestController
      * @View()
      * @Get("/settings")
      */
-    public function getSettingsAction(){
+    public function getSettingsAction()
+    {
 
         $settings = $this->getDoctrine()->getRepository("KernelBundle:Setting")
             ->findAll();
@@ -74,7 +75,8 @@ class SettingController extends FOSRestController
      * @ParamConverter("setting", class="KernelBundle:Setting")
      * @Get("/setting/{id}", requirements={"id" = "\d+"})
      */
-    public function getSettingAction(Setting $setting){
+    public function getSettingAction(Setting $setting)
+    {
 
         return array('setting' => $setting);
 
@@ -108,7 +110,8 @@ class SettingController extends FOSRestController
      * @View()
      * @Get("/setting/{label}")
      */
-    public function getSettingByLabelAction($label){
+    public function getSettingByLabelAction($label)
+    {
 
         $setting = $this->getDoctrine()->getRepository('KernelBundle:Setting')->findOneBy(['label' => $label]);
         return array('setting' => $setting);

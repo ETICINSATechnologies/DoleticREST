@@ -37,7 +37,8 @@ class GenderController extends FOSRestController
      * @View()
      * @Get("/genders")
      */
-    public function getGendersAction(){
+    public function getGendersAction()
+    {
 
         $genders = $this->getDoctrine()->getRepository("KernelBundle:Gender")
             ->findAll();
@@ -74,7 +75,8 @@ class GenderController extends FOSRestController
      * @ParamConverter("gender", class="KernelBundle:Gender")
      * @Get("/gender/{id}", requirements={"id" = "\d+"})
      */
-    public function getGenderAction(Gender $gender){
+    public function getGenderAction(Gender $gender)
+    {
 
         return array('gender' => $gender);
 
@@ -108,7 +110,8 @@ class GenderController extends FOSRestController
      * @View()
      * @Get("/gender/{label}")
      */
-    public function getGenderByLabelAction($label){
+    public function getGenderByLabelAction($label)
+    {
 
         $gender = $this->getDoctrine()->getRepository('KernelBundle:Gender')->findOneBy(['label' => $label]);
         return array('gender' => $gender);

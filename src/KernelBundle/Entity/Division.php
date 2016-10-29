@@ -39,7 +39,7 @@ class Division
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -62,7 +62,7 @@ class Division
     /**
      * Get label
      *
-     * @return string 
+     * @return string
      */
     public function getLabel()
     {
@@ -85,7 +85,7 @@ class Division
     /**
      * Get detail
      *
-     * @return string 
+     * @return string
      */
     public function getDetail()
     {

@@ -32,7 +32,7 @@ class Country
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -55,7 +55,7 @@ class Country
     /**
      * Get label
      *
-     * @return string 
+     * @return string
      */
     public function getLabel()
     {

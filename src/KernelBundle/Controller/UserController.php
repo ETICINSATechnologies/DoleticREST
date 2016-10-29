@@ -37,7 +37,8 @@ class UserController extends FOSRestController
      * @View()
      * @Get("/users")
      */
-    public function getUsersAction(){
+    public function getUsersAction()
+    {
 
         $users = $this->getDoctrine()->getRepository("KernelBundle:User")
             ->findAll();
@@ -64,7 +65,8 @@ class UserController extends FOSRestController
      * @View()
      * @Get("/user/current")
      */
-    public function getCurrentUserAction(){
+    public function getCurrentUserAction()
+    {
 
         $user = $this->getUser();
 
@@ -100,7 +102,8 @@ class UserController extends FOSRestController
      * @ParamConverter("user", class="KernelBundle:User")
      * @Get("/user/{id}", requirements={"id" = "\d+"})
      */
-    public function getUserAction(User $user){
+    public function getUserAction(User $user)
+    {
 
         return array('user' => $user);
 
@@ -134,7 +137,8 @@ class UserController extends FOSRestController
      * @View()
      * @Get("/user/{email}", requirements={"email" = "\S+@\S+\.\S+"})
      */
-    public function getUserByMailAction($email){
+    public function getUserByMailAction($email)
+    {
 
         $user = $this->getDoctrine()->getRepository('KernelBundle:User')->findOneBy(['email' => $email]);
         return array('user' => $user);
@@ -169,7 +173,8 @@ class UserController extends FOSRestController
      * @View()
      * @Get("/user/{username}")
      */
-    public function getUserByUsernameAction($username){
+    public function getUserByUsernameAction($username)
+    {
 
         $user = $this->getDoctrine()->getRepository('KernelBundle:User')->findOneBy(['username' => $username]);
         return array('user' => $user);

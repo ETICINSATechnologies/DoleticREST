@@ -37,7 +37,8 @@ class DocumentTemplateController extends FOSRestController
      * @View()
      * @Get("/templates")
      */
-    public function getDocumentTemplatesAction(){
+    public function getDocumentTemplatesAction()
+    {
 
         $templates = $this->getDoctrine()->getRepository("KernelBundle:DocumentTemplate")
             ->findAll();
@@ -74,7 +75,8 @@ class DocumentTemplateController extends FOSRestController
      * @ParamConverter("template", class="KernelBundle:DocumentTemplate")
      * @Get("/template/{id}", requirements={"id" = "\d+"})
      */
-    public function getDocumentTemplateAction(DocumentTemplate $template){
+    public function getDocumentTemplateAction(DocumentTemplate $template)
+    {
 
         return array('template' => $template);
 
@@ -108,7 +110,8 @@ class DocumentTemplateController extends FOSRestController
      * @View()
      * @Get("/template/{label}")
      */
-    public function getDocumentTemplateByLabelAction($label){
+    public function getDocumentTemplateByLabelAction($label)
+    {
 
         $template = $this->getDoctrine()->getRepository('KernelBundle:DocumentTemplate')->findOneBy(['label' => $label]);
         return array('template' => $template);

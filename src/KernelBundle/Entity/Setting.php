@@ -39,7 +39,7 @@ class Setting
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -62,7 +62,7 @@ class Setting
     /**
      * Get label
      *
-     * @return string 
+     * @return string
      */
     public function getLabel()
     {
@@ -85,7 +85,7 @@ class Setting
     /**
      * Get value
      *
-     * @return string 
+     * @return string
      */
     public function getValue()
     {
