@@ -10,6 +10,7 @@ use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use RHBundle\Entity\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use RHBundle\Entity\ConsultantMembership;
@@ -41,6 +42,43 @@ class ConsultantMembershipController extends FOSRestController
 
         $consultant_memberships = $this->getDoctrine()->getRepository("RHBundle:ConsultantMembership")
             ->findAll();
+
+        return array('consultant_memberships' => $consultant_memberships);
+    }
+
+    /**
+     * Get all the consultant memberships for a given user data
+     * @param UserData $userData
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="ConsultantMembership",
+     *  description="Get all the consultant memberships for a given user data",
+     *  requirements={
+     *      {
+     *          "name"="user_data",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="user data id"
+     *      }
+     *  },
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("userData", class="RHBundle:UserData")
+     * @Get("/administrator_memberships/user_data/{id}", requirements={"id" = "\d+"})
+     */
+    public function getAdministratorMembershipsByUserDataAction(UserData $userData){
+
+        $consultant_memberships = $this->getDoctrine()->getRepository("RHBundle:ConsultantMembership")
+            ->findBy(['userData' => $userData]);
 
         return array('consultant_memberships' => $consultant_memberships);
     }

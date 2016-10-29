@@ -9,7 +9,9 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use KernelBundle\Entity\Division;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use RHBundle\Entity\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use RHBundle\Entity\Team;
@@ -41,6 +43,93 @@ class TeamController extends FOSRestController
 
         $teams = $this->getDoctrine()->getRepository("RHBundle:Team")
             ->findAll();
+
+        return array('teams' => $teams);
+    }
+
+    /**
+     * Get all the teams in a division
+     * @param Division $division
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Team",
+     *  description="Get all teams in a division",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("division", class="KernelBundle:Division")
+     * @Get("/teams/division/{id}", requirements={"id" = "\d+"})
+     */
+    public function getTeamsByDivisionAction(Division $division){
+
+        $teams = $this->getDoctrine()->getRepository("RHBundle:Team")
+            ->findBy(['division' => $division]);
+
+        return array('teams' => $teams);
+    }
+
+    /**
+     * Get all the teams let by a UserData
+     * @param UserData $leader
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Team",
+     *  description="Get all teams led by a UserData",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("leader", class="RHBundle:UserData")
+     * @Get("/teams/leader/{id}", requirements={"id" = "\d+"})
+     */
+    public function getTeamsByLeaderAction(UserData $leader){
+
+        $teams = $this->getDoctrine()->getRepository("RHBundle:Team")
+            ->findBy(['leader' => $leader]);
+
+        return array('teams' => $teams);
+    }
+
+    /**
+     * Get all the teams a UserData belongs to
+     * @param UserData $member
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Team",
+     *  description="Get all teams a UserData belongs to",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("member", class="RHBundle:UserData")
+     * @Get("/teams/member/{id}", requirements={"id" = "\d+"})
+     */
+    public function getTeamsByMemberAction(UserData $member){
+
+        $teams = $this->getDoctrine()->getRepository("RHBundle:Team")
+            ->findUserDataTeams($member);
 
         return array('teams' => $teams);
     }

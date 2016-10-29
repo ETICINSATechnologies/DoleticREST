@@ -9,10 +9,12 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use GRCBundle\Entity\Firm;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use GRCBundle\Entity\Contact;
+use GRCBundle\Entity\ContactType as Type;
 use GRCBundle\Form\ContactType;
 
 class ContactController extends FOSRestController
@@ -41,6 +43,80 @@ class ContactController extends FOSRestController
 
         $contacts = $this->getDoctrine()->getRepository("GRCBundle:Contact")
             ->findAll();
+
+        return array('contacts' => $contacts);
+    }
+
+    /**
+     * Get all the contacts with specified type
+     * @param Type $type
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Contact",
+     *  description="Get all the contacts with specified type",
+     *  requirements={
+     *      {
+     *          "name"="type",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="contact type id"
+     *      }
+     *  },
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("type", class="GRCBundle:ContactType")
+     * @Get("/contacts/type/{id}", requirements={"id" = "\d+"})
+     */
+    public function getContactsByTypeAction(Type $type){
+
+        $contacts = $this->getDoctrine()->getRepository("GRCBundle:Contact")
+            ->findBy(['type' => $type]);
+
+        return array('contacts' => $contacts);
+    }
+
+    /**
+     * Get all the contacts in specified firm
+     * @param Firm $firm
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Contact",
+     *  description="Get all the contacts in specified firm",
+     *  requirements={
+     *      {
+     *          "name"="type",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="contact type id"
+     *      }
+     *  },
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("firm", class="GRCBundle:Firm")
+     * @Get("/contacts/firm/{id}", requirements={"id" = "\d+"})
+     */
+    public function getContactsByFirmAction(Firm $firm){
+
+        $contacts = $this->getDoctrine()->getRepository("GRCBundle:Contact")
+            ->findBy(['firm' => $firm]);
 
         return array('contacts' => $contacts);
     }

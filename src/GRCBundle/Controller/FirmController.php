@@ -9,10 +9,12 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use KernelBundle\Entity\Country;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use GRCBundle\Entity\Firm;
+use GRCBundle\Entity\FirmType as Type;
 use GRCBundle\Form\FirmType;
 
 class FirmController extends FOSRestController
@@ -41,6 +43,80 @@ class FirmController extends FOSRestController
 
         $firms = $this->getDoctrine()->getRepository("GRCBundle:Firm")
             ->findAll();
+
+        return array('firms' => $firms);
+    }
+
+    /**
+     * Get all the firms with specified type
+     * @param Type $type
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Firm",
+     *  description="Get all the firms with specified type",
+     *  requirements={
+     *      {
+     *          "name"="type",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="firm type id"
+     *      }
+     *  },
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("type", class="GRCBundle:FirmType")
+     * @Get("/firms/type/{id}", requirements={"id" = "\d+"})
+     */
+    public function getFirmsByTypeAction(Type $type){
+
+        $firms = $this->getDoctrine()->getRepository("GRCBundle:Firm")
+            ->findBy(['type' => $type]);
+
+        return array('firms' => $firms);
+    }
+
+    /**
+     * Get all the firms with specified type
+     * @param Country $country
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Firm",
+     *  description="Get all the firms from specified country",
+     *  requirements={
+     *      {
+     *          "name"="type",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="country id"
+     *      }
+     *  },
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("country", class="KernelBundle:Country")
+     * @Get("/firms/country/{id}", requirements={"id" = "\d+"})
+     */
+    public function getFirmsByCountryAction(Country $country){
+
+        $firms = $this->getDoctrine()->getRepository("GRCBundle:Firm")
+            ->findBy(['country' => $country]);
 
         return array('firms' => $firms);
     }

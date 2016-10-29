@@ -2,7 +2,9 @@
 
 namespace RHBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,10 +17,15 @@ class TeamType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('leader', 'entity', ['choice_label' => 'fullname'])
-            ->add('division', 'entity', ['choice_label' => 'label'])
-            ->add('name', 'text')
-            ->add('members', 'entity', ['choice_label' => 'fullname', 'multiple' => true]);
+            ->add('leader', EntityType::class, ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname'])
+            ->add('division', EntityType::class, ['class' => 'KernelBundle\Entity\Division', 'choice_label' => 'label'])
+            ->add('name', TextType::class)
+            ->add('members', EntityType::class, [
+                'class' => 'RHBundle\Entity\UserData',
+                'choice_label' => 'fullname',
+                'multiple' => true,
+                'required' => false
+            ]);
     }
 
     /**

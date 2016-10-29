@@ -9,7 +9,11 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use KernelBundle\Entity\Country;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use RHBundle\Entity\Department;
+use RHBundle\Entity\RecruitmentEvent;
+use RHBundle\Entity\SchoolYear;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use RHBundle\Entity\UserData;
@@ -41,6 +45,118 @@ class UserDataController extends FOSRestController
 
         $user_datas = $this->getDoctrine()->getRepository("RHBundle:UserData")
             ->findAll();
+
+        return array('user_datas' => $user_datas);
+    }
+
+    /**
+     * Get all the user datas from a recruitment event
+     * @param RecruitmentEvent $event
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="UserData",
+     *  description="Get all user datas from a recruitment event",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("event", class="RHBundle:RecruitmentEvent")
+     * @Get("/user_datas/recruitment/{id}", requirements={"id" = "\d+"})
+     */
+    public function getUserDatasByRecruitmentAction(RecruitmentEvent $event){
+        $user_datas = $this->getDoctrine()->getRepository("RHBundle:UserData")
+            ->findBy(['recruitmentEvent' => $event]);
+
+        return array('user_datas' => $user_datas);
+    }
+
+    /**
+     * Get all the user datas in a department
+     * @param Department $department
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="UserData",
+     *  description="Get all user datas in a department",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("department", class="RHBundle:Department")
+     * @Get("/user_datas/department/{id}", requirements={"id" = "\d+"})
+     */
+    public function getUserDatasByDepartmentAction(Department $department){
+        $user_datas = $this->getDoctrine()->getRepository("RHBundle:UserData")
+            ->findBy(['department' => $department]);
+
+        return array('user_datas' => $user_datas);
+    }
+
+    /**
+     * Get all the user datas in a school year
+     * @param SchoolYear $year
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="UserData",
+     *  description="Get all user datas in a school year",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("year", class="RHBundle:SchoolYear")
+     * @Get("/user_datas/year/{id}", requirements={"id" = "\d+"})
+     */
+    public function getUserDatasBySchoolYearAction(SchoolYear $year){
+        $user_datas = $this->getDoctrine()->getRepository("RHBundle:UserData")
+            ->findBy(['schoolYear' => $year]);
+
+        return array('user_datas' => $user_datas);
+    }
+
+    /**
+     * Get all the user datas from a country
+     * @param Country $country
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="UserData",
+     *  description="Get all user datas from a country",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("country", class="KernelBundle:Country")
+     * @Get("/user_datas/country/{id}", requirements={"id" = "\d+"})
+     */
+    public function getUserDatasByCountryAction(Country $country){
+        $user_datas = $this->getDoctrine()->getRepository("RHBundle:UserData")
+            ->findBy(['country' => $country]);
 
         return array('user_datas' => $user_datas);
     }

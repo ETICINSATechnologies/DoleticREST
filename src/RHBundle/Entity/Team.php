@@ -191,6 +191,9 @@ class Team
      */
     public function setLeaderAsMember()
     {
+        if(!is_array($this->members)) {
+            $this->members = [];
+        }
         $this->members = array_unique(array_merge($this->members,[$this->leader]));
     }
 }
