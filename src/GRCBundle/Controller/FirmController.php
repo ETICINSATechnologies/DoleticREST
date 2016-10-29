@@ -39,7 +39,8 @@ class FirmController extends FOSRestController
      * @View()
      * @Get("/firms")
      */
-    public function getFirmsAction(){
+    public function getFirmsAction()
+    {
 
         $firms = $this->getDoctrine()->getRepository("GRCBundle:Firm")
             ->findAll();
@@ -76,7 +77,8 @@ class FirmController extends FOSRestController
      * @ParamConverter("type", class="GRCBundle:FirmType")
      * @Get("/firms/type/{id}", requirements={"id" = "\d+"})
      */
-    public function getFirmsByTypeAction(Type $type){
+    public function getFirmsByTypeAction(Type $type)
+    {
 
         $firms = $this->getDoctrine()->getRepository("GRCBundle:Firm")
             ->findBy(['type' => $type]);
@@ -113,7 +115,8 @@ class FirmController extends FOSRestController
      * @ParamConverter("country", class="KernelBundle:Country")
      * @Get("/firms/country/{id}", requirements={"id" = "\d+"})
      */
-    public function getFirmsByCountryAction(Country $country){
+    public function getFirmsByCountryAction(Country $country)
+    {
 
         $firms = $this->getDoctrine()->getRepository("GRCBundle:Firm")
             ->findBy(['country' => $country]);
@@ -150,7 +153,8 @@ class FirmController extends FOSRestController
      * @ParamConverter("firm", class="GRCBundle:Firm")
      * @Get("/firm/{id}", requirements={"id" = "\d+"})
      */
-    public function getFirmAction(Firm $firm){
+    public function getFirmAction(Firm $firm)
+    {
 
         return array('firm' => $firm);
 
@@ -184,7 +188,8 @@ class FirmController extends FOSRestController
      * @View()
      * @Get("/firm/{name}")
      */
-    public function getFirmByLabelAction($name){
+    public function getFirmByLabelAction($name)
+    {
 
         $firm = $this->getDoctrine()->getRepository('GRCBundle:Firm')->findOneBy(['name' => $name]);
         return array('firm' => $firm);

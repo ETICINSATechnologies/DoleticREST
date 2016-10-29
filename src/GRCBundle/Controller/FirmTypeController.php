@@ -37,7 +37,8 @@ class FirmTypeController extends FOSRestController
      * @View()
      * @Get("/firm_types")
      */
-    public function getFirmTypesAction(){
+    public function getFirmTypesAction()
+    {
 
         $firm_types = $this->getDoctrine()->getRepository("GRCBundle:FirmType")
             ->findAll();
@@ -74,7 +75,8 @@ class FirmTypeController extends FOSRestController
      * @ParamConverter("firm_type", class="GRCBundle:FirmType")
      * @Get("/firm_type/{id}", requirements={"id" = "\d+"})
      */
-    public function getFirmTypeAction(FirmType $firm_type){
+    public function getFirmTypeAction(FirmType $firm_type)
+    {
 
         return array('firm_type' => $firm_type);
 
@@ -108,7 +110,8 @@ class FirmTypeController extends FOSRestController
      * @View()
      * @Get("/firm_type/{label}")
      */
-    public function getFirmTypeByLabelAction($label){
+    public function getFirmTypeByLabelAction($label)
+    {
 
         $firm_type = $this->getDoctrine()->getRepository('GRCBundle:FirmType')->findOneBy(['label' => $label]);
         return array('firm_type' => $firm_type);
