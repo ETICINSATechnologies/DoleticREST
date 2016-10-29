@@ -31,6 +31,11 @@ security:
 
     access_control:
         - { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }
+        - { path: ^/api/kernel, roles: [ ROLE_KERNEL_GUEST ] }
+        - { path: ^/api/rh, roles: [ ROLE_RH_GUEST ] }
+        - { path: ^/api/grc, roles: [ ROLE_GRC_GUEST ] }
+        - { path: ^/api/ua, roles: [ ROLE_UA_GUEST ] }
+        - { path: ^/api/support, roles: [ ROLE_SUPPORT_GUEST ] }
 
     role_hierarchy:
         # Global roles - to be updated when a new module (bundle) is added

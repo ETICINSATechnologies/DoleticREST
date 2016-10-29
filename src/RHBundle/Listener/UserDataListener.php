@@ -31,6 +31,7 @@ class UserDataListener
                 ->setUsername($userName)
                 ->setEmail($userData->getEmail())
                 ->setPlainPassword($password)
+                ->setEnabled(true)
                 ->setUserData($userData);
             $entityManager->persist($user);
 
