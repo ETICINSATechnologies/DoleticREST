@@ -143,6 +143,8 @@ class GenderController extends FOSRestController
      */
     public function postGenderAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $gender = new Gender();
         $form = $this->createForm(new GenderType(), $gender);
         $form->handleRequest($request);
@@ -197,6 +199,8 @@ class GenderController extends FOSRestController
      */
     public function putGenderAction(Request $request, Gender $gender)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $form = $this->createForm(new GenderType(), $gender);
         $form->submit($request);
         $form->handleRequest($request);
@@ -227,6 +231,8 @@ class GenderController extends FOSRestController
      */
     public function deleteGenderAction(Gender $gender)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($gender);
         $em->flush();

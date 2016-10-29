@@ -142,6 +142,8 @@ class CountryController extends FOSRestController
      */
     public function postCountryAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $country = new Country();
         $form = $this->createForm(new CountryType(), $country);
         $form->handleRequest($request);
@@ -196,6 +198,8 @@ class CountryController extends FOSRestController
      */
     public function putCountryAction(Request $request, Country $country)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $form = $this->createForm(new CountryType(), $country);
         $form->submit($request);
         $form->handleRequest($request);
@@ -226,6 +230,8 @@ class CountryController extends FOSRestController
      */
     public function deleteCountryAction(Country $country)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($country);
         $em->flush();

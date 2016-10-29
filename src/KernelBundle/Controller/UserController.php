@@ -206,6 +206,8 @@ class UserController extends FOSRestController
      */
     public function postUserAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $user = new User();
         $form = $this->createForm(new UserType(), $user);
         $form->handleRequest($request);
@@ -260,6 +262,9 @@ class UserController extends FOSRestController
      */
     public function putUserAction(Request $request, User $user)
     {
+
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $form = $this->createForm(new UserType(), $user);
         $form->submit($request);
         $form->handleRequest($request);
@@ -290,6 +295,8 @@ class UserController extends FOSRestController
      */
     public function deleteUserAction(User $user)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($user);
         $em->flush();

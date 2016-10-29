@@ -139,6 +139,8 @@ class DepartmentController extends FOSRestController
      */
     public function postDepartmentAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $department = new Department();
         $form = $this->createForm(new DepartmentType(), $department);
         $form->handleRequest($request);
@@ -193,6 +195,8 @@ class DepartmentController extends FOSRestController
      */
     public function putDepartmentAction(Request $request, Department $department)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $form = $this->createForm(new DepartmentType(), $department);
         $form->submit($request);
         $form->handleRequest($request);
@@ -223,6 +227,8 @@ class DepartmentController extends FOSRestController
      */
     public function deleteDepartmentAction(Department $department)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($department);
         $em->flush();

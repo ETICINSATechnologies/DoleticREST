@@ -13,6 +13,7 @@ use KernelBundle\Entity\Division;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use RHBundle\Entity\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use RHBundle\Entity\Team;
 use RHBundle\Form\TeamType;
@@ -39,7 +40,8 @@ class TeamController extends FOSRestController
      * @View()
      * @Get("/teams")
      */
-    public function getTeamsAction(){
+    public function getTeamsAction()
+    {
 
         $teams = $this->getDoctrine()->getRepository("RHBundle:Team")
             ->findAll();
@@ -68,7 +70,8 @@ class TeamController extends FOSRestController
      * @ParamConverter("division", class="KernelBundle:Division")
      * @Get("/teams/division/{id}", requirements={"id" = "\d+"})
      */
-    public function getTeamsByDivisionAction(Division $division){
+    public function getTeamsByDivisionAction(Division $division)
+    {
 
         $teams = $this->getDoctrine()->getRepository("RHBundle:Team")
             ->findBy(['division' => $division]);
@@ -97,7 +100,8 @@ class TeamController extends FOSRestController
      * @ParamConverter("leader", class="RHBundle:UserData")
      * @Get("/teams/leader/{id}", requirements={"id" = "\d+"})
      */
-    public function getTeamsByLeaderAction(UserData $leader){
+    public function getTeamsByLeaderAction(UserData $leader)
+    {
 
         $teams = $this->getDoctrine()->getRepository("RHBundle:Team")
             ->findBy(['leader' => $leader]);
@@ -126,7 +130,8 @@ class TeamController extends FOSRestController
      * @ParamConverter("member", class="RHBundle:UserData")
      * @Get("/teams/member/{id}", requirements={"id" = "\d+"})
      */
-    public function getTeamsByMemberAction(UserData $member){
+    public function getTeamsByMemberAction(UserData $member)
+    {
 
         $teams = $this->getDoctrine()->getRepository("RHBundle:Team")
             ->findUserDataTeams($member);
@@ -163,7 +168,8 @@ class TeamController extends FOSRestController
      * @ParamConverter("team", class="RHBundle:Team")
      * @Get("/team/{id}", requirements={"id" = "\d+"})
      */
-    public function getTeamAction(Team $team){
+    public function getTeamAction(Team $team)
+    {
 
         return array('team' => $team);
 
@@ -197,7 +203,8 @@ class TeamController extends FOSRestController
      * @View()
      * @Get("/team/{name}")
      */
-    public function getTeamByLabelAction($name){
+    public function getTeamByNameAction($name)
+    {
 
         $team = $this->getDoctrine()->getRepository('RHBundle:Team')->findOneBy(['name' => $name]);
         return array('team' => $team);
@@ -228,6 +235,8 @@ class TeamController extends FOSRestController
      */
     public function postTeamAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_ADMIN');
+
         $team = new Team();
         $form = $this->createForm(new TeamType(), $team);
         $form->handleRequest($request);
@@ -282,6 +291,14 @@ class TeamController extends FOSRestController
      */
     public function putTeamAction(Request $request, Team $team)
     {
+
+        if (
+            $this->getUser()->getUserData()->getId() !== $team->getLeader()->getId()
+            && $this->isGranted('ROLE_RH_SUPERADMIN' === false)
+        ) {
+            throw new AccessDeniedException();
+        }
+
         $form = $this->createForm(new TeamType(), $team);
         $form->submit($request);
         $form->handleRequest($request);
@@ -312,6 +329,13 @@ class TeamController extends FOSRestController
      */
     public function deleteTeamAction(Team $team)
     {
+        if (
+            $this->getUser()->getUserData()->getId() !== $team->getLeader()->getId()
+            && $this->isGranted('ROLE_RH_SUPERADMIN' === false)
+        ) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($team);
         $em->flush();

@@ -142,6 +142,8 @@ class ContactTypeController extends FOSRestController
      */
     public function postContactTypeAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_GRC_SUPERADMIN');
+
         $contact_type = new ContactType();
         $form = $this->createForm(new ContactTypeType(), $contact_type);
         $form->handleRequest($request);
@@ -196,6 +198,8 @@ class ContactTypeController extends FOSRestController
      */
     public function putContactTypeAction(Request $request, ContactType $contact_type)
     {
+        $this->denyAccessUnlessGranted('ROLE_GRC_SUPERADMIN');
+
         $form = $this->createForm(new ContactTypeType(), $contact_type);
         $form->submit($request);
         $form->handleRequest($request);
@@ -226,6 +230,8 @@ class ContactTypeController extends FOSRestController
      */
     public function deleteContactTypeAction(ContactType $contact_type)
     {
+        $this->denyAccessUnlessGranted('ROLE_GRC_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($contact_type);
         $em->flush();

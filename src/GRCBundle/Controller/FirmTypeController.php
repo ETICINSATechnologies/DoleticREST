@@ -142,6 +142,8 @@ class FirmTypeController extends FOSRestController
      */
     public function postFirmTypeAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_GRC_SUPERADMIN');
+
         $firm_type = new FirmType();
         $form = $this->createForm(new FirmTypeType(), $firm_type);
         $form->handleRequest($request);
@@ -196,6 +198,8 @@ class FirmTypeController extends FOSRestController
      */
     public function putFirmTypeAction(Request $request, FirmType $firm_type)
     {
+        $this->denyAccessUnlessGranted('ROLE_GRC_SUPERADMIN');
+
         $form = $this->createForm(new FirmTypeType(), $firm_type);
         $form->submit($request);
         $form->handleRequest($request);
@@ -226,6 +230,8 @@ class FirmTypeController extends FOSRestController
      */
     public function deleteFirmTypeAction(FirmType $firm_type)
     {
+        $this->denyAccessUnlessGranted('ROLE_GRC_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($firm_type);
         $em->flush();

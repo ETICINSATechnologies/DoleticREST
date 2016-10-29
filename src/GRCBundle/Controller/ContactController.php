@@ -13,6 +13,7 @@ use GRCBundle\Entity\Firm;
 use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use GRCBundle\Entity\Contact;
 use GRCBundle\Entity\ContactType as Type;
@@ -244,6 +245,8 @@ class ContactController extends FOSRestController
      */
     public function postContactAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_GRC_ADMIN');
+
         $contact = new Contact();
         $form = $this->createForm(new ContactType(), $contact);
         $form->handleRequest($request);
@@ -298,6 +301,8 @@ class ContactController extends FOSRestController
      */
     public function putContactAction(Request $request, Contact $contact)
     {
+        $this->denyAccessUnlessGranted('ROLE_GRC_ADMIN');
+
         $form = $this->createForm(new ContactType(), $contact);
         $form->submit($request);
         $form->handleRequest($request);
@@ -328,6 +333,13 @@ class ContactController extends FOSRestController
      */
     public function deleteContactAction(Contact $contact)
     {
+        if (
+            $this->getUser()->getId() !== $contact->getCreator()->getId()
+            && $this->isGranted('ROLE_GRC_SUPERADMIN') === false
+        ) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($contact);
         $em->flush();

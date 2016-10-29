@@ -139,6 +139,8 @@ class SchoolYearController extends FOSRestController
      */
     public function postSchoolYearAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $year = new SchoolYear();
         $form = $this->createForm(new SchoolYearType(), $year);
         $form->handleRequest($request);
@@ -193,6 +195,8 @@ class SchoolYearController extends FOSRestController
      */
     public function putSchoolYearAction(Request $request, SchoolYear $year)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $form = $this->createForm(new SchoolYearType(), $year);
         $form->submit($request);
         $form->handleRequest($request);
@@ -223,6 +227,8 @@ class SchoolYearController extends FOSRestController
      */
     public function deleteSchoolYearAction(SchoolYear $year)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($year);
         $em->flush();

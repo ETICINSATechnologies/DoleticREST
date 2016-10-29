@@ -38,7 +38,10 @@ class ConsultantMembershipController extends FOSRestController
      * @View()
      * @Get("/consultant_memberships")
      */
-    public function getConsultantMembershipsAction(){
+    public function getConsultantMembershipsAction()
+    {
+
+        $this->denyAccessUnlessGranted('ROLE_RH_ADMIN');
 
         $consultant_memberships = $this->getDoctrine()->getRepository("RHBundle:ConsultantMembership")
             ->findAll();
@@ -75,7 +78,10 @@ class ConsultantMembershipController extends FOSRestController
      * @ParamConverter("userData", class="RHBundle:UserData")
      * @Get("/administrator_memberships/user_data/{id}", requirements={"id" = "\d+"})
      */
-    public function getAdministratorMembershipsByUserDataAction(UserData $userData){
+    public function getAdministratorMembershipsByUserDataAction(UserData $userData)
+    {
+
+        $this->denyAccessUnlessGranted('ROLE_RH_ADMIN');
 
         $consultant_memberships = $this->getDoctrine()->getRepository("RHBundle:ConsultantMembership")
             ->findBy(['userData' => $userData]);
@@ -112,7 +118,9 @@ class ConsultantMembershipController extends FOSRestController
      * @ParamConverter("consultant_membership", class="RHBundle:ConsultantMembership")
      * @Get("/consultant_membership/{id}", requirements={"id" = "\d+"})
      */
-    public function getConsultantMembershipAction(ConsultantMembership $consultant_membership){
+    public function getConsultantMembershipAction(ConsultantMembership $consultant_membership)
+    {
+        $this->denyAccessUnlessGranted('ROLE_RH_ADMIN');
 
         return array('consultant_membership' => $consultant_membership);
 
@@ -143,6 +151,8 @@ class ConsultantMembershipController extends FOSRestController
      */
     public function postConsultantMembershipAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $consultant_membership = new ConsultantMembership();
         $form = $this->createForm(new ConsultantMembershipType(), $consultant_membership);
         $form->handleRequest($request);
@@ -197,6 +207,8 @@ class ConsultantMembershipController extends FOSRestController
      */
     public function putConsultantMembershipAction(Request $request, ConsultantMembership $consultant_membership)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $form = $this->createForm(new ConsultantMembershipType(), $consultant_membership);
         $form->submit($request);
         $form->handleRequest($request);
@@ -227,6 +239,8 @@ class ConsultantMembershipController extends FOSRestController
      */
     public function deleteConsultantMembershipAction(ConsultantMembership $consultant_membership)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($consultant_membership);
         $em->flush();

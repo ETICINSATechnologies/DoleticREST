@@ -13,6 +13,7 @@ use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use SupportBundle\Entity\TicketStatus;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use SupportBundle\Entity\Ticket;
 use SupportBundle\Form\TicketType;
@@ -42,6 +43,7 @@ class TicketController extends FOSRestController
      */
     public function getTicketsAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_ADMIN');
 
         $tickets = $this->getDoctrine()->getRepository("SupportBundle:Ticket")
             ->findAll();
@@ -72,6 +74,7 @@ class TicketController extends FOSRestController
      */
     public function getTicketsByTypeAction(Type $type)
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_ADMIN');
 
         $tickets = $this->getDoctrine()->getRepository("SupportBundle:Ticket")
             ->findBy(['type' => $type]);
@@ -102,6 +105,7 @@ class TicketController extends FOSRestController
      */
     public function getTicketsByStatusAction(TicketStatus $status)
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_ADMIN');
 
         $tickets = $this->getDoctrine()->getRepository("SupportBundle:Ticket")
             ->findBy(['status' => $status]);
@@ -132,6 +136,7 @@ class TicketController extends FOSRestController
      */
     public function getTicketsByAuthorAction(User $author)
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_ADMIN');
 
         $tickets = $this->getDoctrine()->getRepository("SupportBundle:Ticket")
             ->findBy(['author' => $author]);
@@ -282,6 +287,10 @@ class TicketController extends FOSRestController
      */
     public function putTicketAction(Request $request, Ticket $ticket)
     {
+        if ($this->getUser()->getId() !== $ticket->getAuthor()->getId()) {
+            throw new AccessDeniedException();
+        }
+
         $form = $this->createForm(new TicketType(), $ticket);
         $form->submit($request);
         $form->handleRequest($request);
@@ -312,6 +321,8 @@ class TicketController extends FOSRestController
      */
     public function deleteTicketAction(Ticket $ticket)
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($ticket);
         $em->flush();

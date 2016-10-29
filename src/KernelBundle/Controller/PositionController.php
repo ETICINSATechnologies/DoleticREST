@@ -142,6 +142,8 @@ class PositionController extends FOSRestController
      */
     public function postPositionAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $position = new Position();
         $form = $this->createForm(
             new PositionType(),
@@ -200,6 +202,8 @@ class PositionController extends FOSRestController
      */
     public function putPositionAction(Request $request, Position $position)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $form = $this->createForm(
             new PositionType(),
             $position,
@@ -234,6 +238,8 @@ class PositionController extends FOSRestController
      */
     public function deletePositionAction(Position $position)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($position);
         $em->flush();

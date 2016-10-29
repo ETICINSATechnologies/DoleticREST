@@ -188,7 +188,7 @@ class FirmController extends FOSRestController
      * @View()
      * @Get("/firm/{name}")
      */
-    public function getFirmByLabelAction($name)
+    public function getFirmByNameAction($name)
     {
 
         $firm = $this->getDoctrine()->getRepository('GRCBundle:Firm')->findOneBy(['name' => $name]);
@@ -220,6 +220,8 @@ class FirmController extends FOSRestController
      */
     public function postFirmAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_GRC_ADMIN');
+
         $firm = new Firm();
         $form = $this->createForm(new FirmType(), $firm);
         $form->handleRequest($request);
@@ -274,6 +276,8 @@ class FirmController extends FOSRestController
      */
     public function putFirmAction(Request $request, Firm $firm)
     {
+        $this->denyAccessUnlessGranted('ROLE_GRC_ADMIN');
+
         $form = $this->createForm(new FirmType(), $firm);
         $form->submit($request);
         $form->handleRequest($request);
@@ -304,6 +308,8 @@ class FirmController extends FOSRestController
      */
     public function deleteFirmAction(Firm $firm)
     {
+        $this->denyAccessUnlessGranted('ROLE_GRC_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($firm);
         $em->flush();

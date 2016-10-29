@@ -15,6 +15,7 @@ use RHBundle\Entity\Department;
 use RHBundle\Entity\RecruitmentEvent;
 use RHBundle\Entity\SchoolYear;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use RHBundle\Entity\UserData;
 use RHBundle\Form\UserDataType;
@@ -41,7 +42,8 @@ class UserDataController extends FOSRestController
      * @View()
      * @Get("/user_datas")
      */
-    public function getUserDatasAction(){
+    public function getUserDatasAction()
+    {
 
         $user_datas = $this->getDoctrine()->getRepository("RHBundle:UserData")
             ->findAll();
@@ -70,7 +72,8 @@ class UserDataController extends FOSRestController
      * @ParamConverter("event", class="RHBundle:RecruitmentEvent")
      * @Get("/user_datas/recruitment/{id}", requirements={"id" = "\d+"})
      */
-    public function getUserDatasByRecruitmentAction(RecruitmentEvent $event){
+    public function getUserDatasByRecruitmentAction(RecruitmentEvent $event)
+    {
         $user_datas = $this->getDoctrine()->getRepository("RHBundle:UserData")
             ->findBy(['recruitmentEvent' => $event]);
 
@@ -98,7 +101,8 @@ class UserDataController extends FOSRestController
      * @ParamConverter("department", class="RHBundle:Department")
      * @Get("/user_datas/department/{id}", requirements={"id" = "\d+"})
      */
-    public function getUserDatasByDepartmentAction(Department $department){
+    public function getUserDatasByDepartmentAction(Department $department)
+    {
         $user_datas = $this->getDoctrine()->getRepository("RHBundle:UserData")
             ->findBy(['department' => $department]);
 
@@ -126,7 +130,8 @@ class UserDataController extends FOSRestController
      * @ParamConverter("year", class="RHBundle:SchoolYear")
      * @Get("/user_datas/year/{id}", requirements={"id" = "\d+"})
      */
-    public function getUserDatasBySchoolYearAction(SchoolYear $year){
+    public function getUserDatasBySchoolYearAction(SchoolYear $year)
+    {
         $user_datas = $this->getDoctrine()->getRepository("RHBundle:UserData")
             ->findBy(['schoolYear' => $year]);
 
@@ -154,7 +159,8 @@ class UserDataController extends FOSRestController
      * @ParamConverter("country", class="KernelBundle:Country")
      * @Get("/user_datas/country/{id}", requirements={"id" = "\d+"})
      */
-    public function getUserDatasByCountryAction(Country $country){
+    public function getUserDatasByCountryAction(Country $country)
+    {
         $user_datas = $this->getDoctrine()->getRepository("RHBundle:UserData")
             ->findBy(['country' => $country]);
 
@@ -190,7 +196,8 @@ class UserDataController extends FOSRestController
      * @ParamConverter("user_data", class="RHBundle:UserData")
      * @Get("/user_data/{id}", requirements={"id" = "\d+"})
      */
-    public function getUserDataAction(UserData $user_data){
+    public function getUserDataAction(UserData $user_data)
+    {
 
         return array('user_data' => $user_data);
 
@@ -221,6 +228,8 @@ class UserDataController extends FOSRestController
      */
     public function postUserDataAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $user_data = new UserData();
         $form = $this->createForm(new UserDataType(), $user_data);
         $form->handleRequest($request);
@@ -275,6 +284,13 @@ class UserDataController extends FOSRestController
      */
     public function putUserDataAction(Request $request, UserData $user_data)
     {
+        if (
+            $this->getUser()->getUserData()->getId() !== $user_data->getId()
+            && $this->isGranted('ROLE_RH_SUPERADMIN') === false
+        ) {
+            throw new AccessDeniedException();
+        }
+
         $form = $this->createForm(new UserDataType(), $user_data);
         $form->submit($request);
         $form->handleRequest($request);
@@ -305,6 +321,8 @@ class UserDataController extends FOSRestController
      */
     public function deleteUserDataAction(UserData $user_data)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($user_data);
         $em->flush();

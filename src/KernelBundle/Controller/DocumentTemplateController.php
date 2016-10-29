@@ -143,6 +143,8 @@ class DocumentTemplateController extends FOSRestController
      */
     public function postDocumentTemplateAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $template = new DocumentTemplate();
         $form = $this->createForm(new DocumentTemplateType(), $template);
         $form->handleRequest($request);
@@ -197,6 +199,8 @@ class DocumentTemplateController extends FOSRestController
      */
     public function putDocumentTemplateAction(Request $request, DocumentTemplate $template)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $form = $this->createForm(new DocumentTemplateType(), $template);
         $form->submit($request);
         $form->handleRequest($request);
@@ -227,6 +231,8 @@ class DocumentTemplateController extends FOSRestController
      */
     public function deleteDocumentTemplateAction(DocumentTemplate $template)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($template);
         $em->flush();

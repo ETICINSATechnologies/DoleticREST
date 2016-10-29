@@ -143,6 +143,8 @@ class DivisionController extends FOSRestController
      */
     public function postDivisionAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $division = new Division();
         $form = $this->createForm(new DivisionType(), $division);
         $form->handleRequest($request);
@@ -197,6 +199,8 @@ class DivisionController extends FOSRestController
      */
     public function putDivisionAction(Request $request, Division $division)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $form = $this->createForm(new DivisionType(), $division);
         $form->submit($request);
         $form->handleRequest($request);
@@ -227,6 +231,8 @@ class DivisionController extends FOSRestController
      */
     public function deleteDivisionAction(Division $division)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($division);
         $em->flush();

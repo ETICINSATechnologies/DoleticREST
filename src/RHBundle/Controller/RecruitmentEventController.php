@@ -139,6 +139,8 @@ class RecruitmentEventController extends FOSRestController
      */
     public function postRecruitmentEventAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $recruitment = new RecruitmentEvent();
         $form = $this->createForm(new RecruitmentEventType(), $recruitment);
         $form->handleRequest($request);
@@ -193,6 +195,8 @@ class RecruitmentEventController extends FOSRestController
      */
     public function putRecruitmentEventAction(Request $request, RecruitmentEvent $recruitment)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $form = $this->createForm(new RecruitmentEventType(), $recruitment);
         $form->submit($request);
         $form->handleRequest($request);
@@ -223,6 +227,8 @@ class RecruitmentEventController extends FOSRestController
      */
     public function deleteRecruitmentEventAction(RecruitmentEvent $recruitment)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($recruitment);
         $em->flush();

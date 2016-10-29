@@ -40,6 +40,8 @@ class AdministratorMembershipController extends FOSRestController
      */
     public function getAdministratorMembershipsAction(){
 
+        $this->denyAccessUnlessGranted('ROLE_RH_ADMIN');
+
         $administrator_memberships = $this->getDoctrine()->getRepository("RHBundle:AdministratorMembership")
             ->findAll();
 
@@ -76,6 +78,8 @@ class AdministratorMembershipController extends FOSRestController
      * @Get("/administrator_memberships/user_data/{id}", requirements={"id" = "\d+"})
      */
     public function getAdministratorMembershipsByUserDataAction(UserData $userData){
+
+        $this->denyAccessUnlessGranted('ROLE_RH_ADMIN');
 
         $administrator_memberships = $this->getDoctrine()->getRepository("RHBundle:AdministratorMembership")
             ->findBy(['userData' => $userData]);
@@ -114,6 +118,8 @@ class AdministratorMembershipController extends FOSRestController
      */
     public function getAdministratorMembershipAction(AdministratorMembership $administrator_membership){
 
+        $this->denyAccessUnlessGranted('ROLE_RH_ADMIN');
+
         return array('administrator_membership' => $administrator_membership);
 
     }
@@ -143,6 +149,8 @@ class AdministratorMembershipController extends FOSRestController
      */
     public function postAdministratorMembershipAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $administrator_membership = new AdministratorMembership();
         $form = $this->createForm(new AdministratorMembershipType(), $administrator_membership);
         $form->handleRequest($request);
@@ -197,6 +205,8 @@ class AdministratorMembershipController extends FOSRestController
      */
     public function putAdministratorMembershipAction(Request $request, AdministratorMembership $administrator_membership)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $form = $this->createForm(new AdministratorMembershipType(), $administrator_membership);
         $form->submit($request);
         $form->handleRequest($request);
@@ -227,6 +237,8 @@ class AdministratorMembershipController extends FOSRestController
      */
     public function deleteAdministratorMembershipAction(AdministratorMembership $administrator_membership)
     {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($administrator_membership);
         $em->flush();

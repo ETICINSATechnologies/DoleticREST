@@ -19,12 +19,12 @@ class TicketStatusController extends FOSRestController
 {
 
     /**
-     * Get all the ticket_statuss
+     * Get all the ticket_statuses
      * @return array
      *
      * @ApiDoc(
      *  section="TicketStatus",
-     *  description="Get all ticket_statuss",
+     *  description="Get all ticket_statuses",
      *  statusCodes={
      *         200="Returned when successful"
      *  },
@@ -35,15 +35,15 @@ class TicketStatusController extends FOSRestController
      * )
      *
      * @View()
-     * @Get("/ticket_statuss")
+     * @Get("/ticket_statuses")
      */
-    public function getTicketStatussAction()
+    public function getTicketStatusesAction()
     {
 
-        $ticket_statuss = $this->getDoctrine()->getRepository("SupportBundle:TicketStatus")
+        $ticket_statuses = $this->getDoctrine()->getRepository("SupportBundle:TicketStatus")
             ->findAll();
 
-        return array('ticket_statuss' => $ticket_statuss);
+        return array('ticket_statuses' => $ticket_statuses);
     }
 
     /**
@@ -142,6 +142,8 @@ class TicketStatusController extends FOSRestController
      */
     public function postTicketStatusAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_SUPERADMIN');
+
         $ticket_status = new TicketStatus();
         $form = $this->createForm(new TicketStatusType(), $ticket_status);
         $form->handleRequest($request);
@@ -196,6 +198,8 @@ class TicketStatusController extends FOSRestController
      */
     public function putTicketStatusAction(Request $request, TicketStatus $ticket_status)
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_SUPERADMIN');
+
         $form = $this->createForm(new TicketStatusType(), $ticket_status);
         $form->submit($request);
         $form->handleRequest($request);
@@ -226,6 +230,8 @@ class TicketStatusController extends FOSRestController
      */
     public function deleteTicketStatusAction(TicketStatus $ticket_status)
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($ticket_status);
         $em->flush();

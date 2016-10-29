@@ -143,6 +143,8 @@ class SettingController extends FOSRestController
      */
     public function postSettingAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $setting = new Setting();
         $form = $this->createForm(new SettingType(), $setting);
         $form->handleRequest($request);
@@ -197,6 +199,8 @@ class SettingController extends FOSRestController
      */
     public function putSettingAction(Request $request, Setting $setting)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $form = $this->createForm(new SettingType(), $setting);
         $form->submit($request);
         $form->handleRequest($request);
@@ -227,6 +231,8 @@ class SettingController extends FOSRestController
      */
     public function deleteSettingAction(Setting $setting)
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($setting);
         $em->flush();

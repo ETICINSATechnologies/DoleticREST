@@ -142,6 +142,8 @@ class TicketTypeController extends FOSRestController
      */
     public function postTicketTypeAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_SUPERADMIN');
+
         $ticket_type = new TicketType();
         $form = $this->createForm(new TicketTypeType(), $ticket_type);
         $form->handleRequest($request);
@@ -196,6 +198,8 @@ class TicketTypeController extends FOSRestController
      */
     public function putTicketTypeAction(Request $request, TicketType $ticket_type)
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_SUPERADMIN');
+
         $form = $this->createForm(new TicketTypeType(), $ticket_type);
         $form->submit($request);
         $form->handleRequest($request);
@@ -226,6 +230,8 @@ class TicketTypeController extends FOSRestController
      */
     public function deleteTicketTypeAction(TicketType $ticket_type)
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($ticket_type);
         $em->flush();
