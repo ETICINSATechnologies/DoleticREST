@@ -192,12 +192,11 @@ class ProjectOriginController extends FOSRestController
      *
      * @View()
      * @ParamConverter("project_origin", class="UABundle:ProjectOrigin")
-     * @Put("/project_origin/{id}")
+     * @Post("/project_origin/{id}")
      */
     public function putProjectOriginAction(Request $request, ProjectOrigin $project_origin)
     {
         $form = $this->createForm(new ProjectOriginType(), $project_origin);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -208,7 +207,6 @@ class ProjectOriginController extends FOSRestController
 
             return array("project_origin" => $project_origin);
         }
-
         return array(
             'form' => $form,
         );

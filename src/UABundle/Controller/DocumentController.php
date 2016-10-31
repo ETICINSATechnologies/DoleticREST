@@ -278,12 +278,11 @@ class DocumentController extends FOSRestController
      *
      * @View()
      * @ParamConverter("document", class="UABundle:Document")
-     * @Put("/document/{id}")
+     * @Post("/document/{id}")
      */
     public function putDocumentAction(Request $request, Document $document)
     {
         $form = $this->createForm(new DocumentType(), $document);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

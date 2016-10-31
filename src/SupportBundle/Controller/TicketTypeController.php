@@ -194,14 +194,13 @@ class TicketTypeController extends FOSRestController
      *
      * @View()
      * @ParamConverter("ticket_type", class="SupportBundle:TicketType")
-     * @Put("/ticket_type/{id}")
+     * @Post("/ticket_type/{id}")
      */
     public function putTicketTypeAction(Request $request, TicketType $ticket_type)
     {
         $this->denyAccessUnlessGranted('ROLE_SUPPORT_SUPERADMIN');
 
         $form = $this->createForm(new TicketTypeType(), $ticket_type);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

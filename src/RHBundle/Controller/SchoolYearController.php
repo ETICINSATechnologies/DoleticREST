@@ -191,14 +191,13 @@ class SchoolYearController extends FOSRestController
      *
      * @View()
      * @ParamConverter("year", class="RHBundle:SchoolYear")
-     * @Put("/year/{id}")
+     * @Post("/year/{id}")
      */
     public function putSchoolYearAction(Request $request, SchoolYear $year)
     {
         $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
 
         $form = $this->createForm(new SchoolYearType(), $year);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

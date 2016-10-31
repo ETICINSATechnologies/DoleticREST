@@ -192,12 +192,11 @@ class ProjectFieldController extends FOSRestController
      *
      * @View()
      * @ParamConverter("project_field", class="UABundle:ProjectField")
-     * @Put("/project_field/{id}")
+     * @Post("/project_field/{id}")
      */
     public function putProjectFieldAction(Request $request, ProjectField $project_field)
     {
         $form = $this->createForm(new ProjectFieldType(), $project_field);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

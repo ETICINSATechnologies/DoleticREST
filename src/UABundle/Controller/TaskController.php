@@ -188,12 +188,11 @@ class TaskController extends FOSRestController
      *
      * @View()
      * @ParamConverter("task", class="UABundle:Task")
-     * @Put("/task/{id}")
+     * @Post("/task/{id}")
      */
     public function putTaskAction(Request $request, Task $task)
     {
         $form = $this->createForm(new TaskType(), $task);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

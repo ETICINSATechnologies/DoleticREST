@@ -272,14 +272,13 @@ class FirmController extends FOSRestController
      *
      * @View()
      * @ParamConverter("firm", class="GRCBundle:Firm")
-     * @Put("/firm/{id}")
+     * @Post("/firm/{id}")
      */
     public function putFirmAction(Request $request, Firm $firm)
     {
         $this->denyAccessUnlessGranted('ROLE_GRC_ADMIN');
 
         $form = $this->createForm(new FirmType(), $firm);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

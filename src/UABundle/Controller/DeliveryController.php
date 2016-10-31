@@ -219,12 +219,11 @@ class DeliveryController extends FOSRestController
      *
      * @View()
      * @ParamConverter("delivery", class="UABundle:Delivery")
-     * @Put("/delivery/{id}")
+     * @Post("/delivery/{id}")
      */
     public function putDeliveryAction(Request $request, Delivery $delivery)
     {
         $form = $this->createForm(new DeliveryType(), $delivery);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

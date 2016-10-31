@@ -195,14 +195,13 @@ class GenderController extends FOSRestController
      *
      * @View()
      * @ParamConverter("gender", class="KernelBundle:Gender")
-     * @Put("/gender/{id}")
+     * @Post("/gender/{id}")
      */
     public function putGenderAction(Request $request, Gender $gender)
     {
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $form = $this->createForm(new GenderType(), $gender);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

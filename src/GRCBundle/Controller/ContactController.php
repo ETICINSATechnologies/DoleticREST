@@ -297,14 +297,13 @@ class ContactController extends FOSRestController
      *
      * @View()
      * @ParamConverter("contact", class="GRCBundle:Contact")
-     * @Put("/contact/{id}")
+     * @Post("/contact/{id}")
      */
     public function putContactAction(Request $request, Contact $contact)
     {
         $this->denyAccessUnlessGranted('ROLE_GRC_ADMIN');
 
         $form = $this->createForm(new ContactType(), $contact);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

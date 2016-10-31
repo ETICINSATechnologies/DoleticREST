@@ -195,14 +195,13 @@ class DivisionController extends FOSRestController
      *
      * @View()
      * @ParamConverter("division", class="KernelBundle:Division")
-     * @Put("/division/{id}")
+     * @Post("/division/{id}")
      */
     public function putDivisionAction(Request $request, Division $division)
     {
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $form = $this->createForm(new DivisionType(), $division);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

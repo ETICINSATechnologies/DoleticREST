@@ -203,14 +203,13 @@ class ConsultantMembershipController extends FOSRestController
      *
      * @View()
      * @ParamConverter("consultant_membership", class="RHBundle:ConsultantMembership")
-     * @Put("/consultant_membership/{id}")
+     * @Post("/consultant_membership/{id}")
      */
     public function putConsultantMembershipAction(Request $request, ConsultantMembership $consultant_membership)
     {
         $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
 
         $form = $this->createForm(new ConsultantMembershipType(), $consultant_membership);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

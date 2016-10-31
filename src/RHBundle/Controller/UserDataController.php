@@ -280,7 +280,7 @@ class UserDataController extends FOSRestController
      *
      * @View()
      * @ParamConverter("user_data", class="RHBundle:UserData")
-     * @Put("/user_data/{id}")
+     * @Post("/user_data/{id}")
      */
     public function putUserDataAction(Request $request, UserData $user_data)
     {
@@ -292,7 +292,6 @@ class UserDataController extends FOSRestController
         }
 
         $form = $this->createForm(new UserDataType(), $user_data);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

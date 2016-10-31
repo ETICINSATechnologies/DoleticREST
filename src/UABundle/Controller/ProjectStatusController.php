@@ -192,12 +192,11 @@ class ProjectStatusController extends FOSRestController
      *
      * @View()
      * @ParamConverter("project_status", class="UABundle:ProjectStatus")
-     * @Put("/project_status/{id}")
+     * @Post("/project_status/{id}")
      */
     public function putProjectStatusAction(Request $request, ProjectStatus $project_status)
     {
         $form = $this->createForm(new ProjectStatusType(), $project_status);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

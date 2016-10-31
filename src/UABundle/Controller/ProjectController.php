@@ -438,12 +438,11 @@ class ProjectController extends FOSRestController
      *
      * @View()
      * @ParamConverter("project", class="UABundle:Project")
-     * @Put("/project/{id}")
+     * @Post("/project/{id}")
      */
     public function putProjectAction(Request $request, Project $project)
     {
-        $form = $this->createForm(new ProjectType(), $project);
-        $form->submit($request);
+        $form = $this->createForm(new ProjectType(), $project, ['']);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

@@ -198,7 +198,7 @@ class PositionController extends FOSRestController
      *
      * @View()
      * @ParamConverter("position", class="KernelBundle:Position")
-     * @Put("/position/{id}")
+     * @Post("/position/{id}")
      */
     public function putPositionAction(Request $request, Position $position)
     {
@@ -209,7 +209,6 @@ class PositionController extends FOSRestController
             $position,
             ['roles' => $this->container->getParameter('security.role_hierarchy.roles')]
         );
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

@@ -219,12 +219,11 @@ class ConsultantController extends FOSRestController
      *
      * @View()
      * @ParamConverter("consultant", class="UABundle:Consultant")
-     * @Put("/consultant/{id}")
+     * @Post("/consultant/{id}")
      */
     public function putConsultantAction(Request $request, Consultant $consultant)
     {
         $form = $this->createForm(new ConsultantType(), $consultant);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

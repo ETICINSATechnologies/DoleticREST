@@ -287,7 +287,7 @@ class TeamController extends FOSRestController
      *
      * @View()
      * @ParamConverter("team", class="RHBundle:Team")
-     * @Put("/team/{id}")
+     * @Post("/team/{id}")
      */
     public function putTeamAction(Request $request, Team $team)
     {
@@ -300,7 +300,6 @@ class TeamController extends FOSRestController
         }
 
         $form = $this->createForm(new TeamType(), $team);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

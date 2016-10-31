@@ -194,14 +194,13 @@ class CountryController extends FOSRestController
      *
      * @View()
      * @ParamConverter("country", class="KernelBundle:Country")
-     * @Put("/country/{id}")
+     * @Post("/country/{id}")
      */
     public function putCountryAction(Request $request, Country $country)
     {
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $form = $this->createForm(new CountryType(), $country);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

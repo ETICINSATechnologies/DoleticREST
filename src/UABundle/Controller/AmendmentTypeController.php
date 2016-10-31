@@ -192,12 +192,11 @@ class AmendmentTypeController extends FOSRestController
      *
      * @View()
      * @ParamConverter("amendment_type", class="UABundle:AmendmentType")
-     * @Put("/amendment_type/{id}")
+     * @Post("/amendment_type/{id}")
      */
     public function putAmendmentTypeAction(Request $request, AmendmentType $amendment_type)
     {
         $form = $this->createForm(new AmendmentTypeType(), $amendment_type);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

@@ -191,14 +191,13 @@ class DepartmentController extends FOSRestController
      *
      * @View()
      * @ParamConverter("department", class="RHBundle:Department")
-     * @Put("/department/{id}")
+     * @Post("/department/{id}")
      */
     public function putDepartmentAction(Request $request, Department $department)
     {
         $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
 
         $form = $this->createForm(new DepartmentType(), $department);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

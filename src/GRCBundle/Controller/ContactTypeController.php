@@ -194,14 +194,13 @@ class ContactTypeController extends FOSRestController
      *
      * @View()
      * @ParamConverter("contact_type", class="GRCBundle:ContactType")
-     * @Put("/contact_type/{id}")
+     * @Post("/contact_type/{id}")
      */
     public function putContactTypeAction(Request $request, ContactType $contact_type)
     {
         $this->denyAccessUnlessGranted('ROLE_GRC_SUPERADMIN');
 
         $form = $this->createForm(new ContactTypeType(), $contact_type);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

@@ -283,7 +283,7 @@ class TicketController extends FOSRestController
      *
      * @View()
      * @ParamConverter("ticket", class="SupportBundle:Ticket")
-     * @Put("/ticket/{id}")
+     * @Post("/ticket/{id}")
      */
     public function putTicketAction(Request $request, Ticket $ticket)
     {
@@ -292,7 +292,6 @@ class TicketController extends FOSRestController
         }
 
         $form = $this->createForm(new TicketType(), $ticket);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

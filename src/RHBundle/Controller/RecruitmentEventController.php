@@ -191,14 +191,13 @@ class RecruitmentEventController extends FOSRestController
      *
      * @View()
      * @ParamConverter("recruitment", class="RHBundle:RecruitmentEvent")
-     * @Put("/recruitment/{id}")
+     * @Post("/recruitment/{id}")
      */
     public function putRecruitmentEventAction(Request $request, RecruitmentEvent $recruitment)
     {
         $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
 
         $form = $this->createForm(new RecruitmentEventType(), $recruitment);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

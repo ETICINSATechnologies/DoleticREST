@@ -219,12 +219,11 @@ class AmendmentController extends FOSRestController
      *
      * @View()
      * @ParamConverter("amendment", class="UABundle:Amendment")
-     * @Put("/amendment/{id}")
+     * @Post("/amendment/{id}")
      */
     public function putAmendmentAction(Request $request, Amendment $amendment)
     {
         $form = $this->createForm(new AmendmentType(), $amendment);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

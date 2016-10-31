@@ -195,14 +195,13 @@ class SettingController extends FOSRestController
      *
      * @View()
      * @ParamConverter("setting", class="KernelBundle:Setting")
-     * @Put("/setting/{id}")
+     * @Post("/setting/{id}")
      */
     public function putSettingAction(Request $request, Setting $setting)
     {
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $form = $this->createForm(new SettingType(), $setting);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

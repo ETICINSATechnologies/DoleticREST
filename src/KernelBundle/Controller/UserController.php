@@ -258,7 +258,7 @@ class UserController extends FOSRestController
      *
      * @View()
      * @ParamConverter("user", class="KernelBundle:User")
-     * @Put("/user/{id}")
+     * @Post("/user/{id}")
      */
     public function putUserAction(Request $request, User $user)
     {
@@ -266,7 +266,6 @@ class UserController extends FOSRestController
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $form = $this->createForm(new UserType(), $user);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

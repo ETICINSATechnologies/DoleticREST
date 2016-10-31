@@ -194,14 +194,13 @@ class TicketStatusController extends FOSRestController
      *
      * @View()
      * @ParamConverter("ticket_status", class="SupportBundle:TicketStatus")
-     * @Put("/ticket_status/{id}")
+     * @Post("/ticket_status/{id}")
      */
     public function putTicketStatusAction(Request $request, TicketStatus $ticket_status)
     {
         $this->denyAccessUnlessGranted('ROLE_SUPPORT_SUPERADMIN');
 
         $form = $this->createForm(new TicketStatusType(), $ticket_status);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

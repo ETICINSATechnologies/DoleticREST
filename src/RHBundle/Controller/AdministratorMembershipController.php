@@ -201,14 +201,13 @@ class AdministratorMembershipController extends FOSRestController
      *
      * @View()
      * @ParamConverter("administrator_membership", class="RHBundle:AdministratorMembership")
-     * @Put("/administrator_membership/{id}")
+     * @Post("/administrator_membership/{id}")
      */
     public function putAdministratorMembershipAction(Request $request, AdministratorMembership $administrator_membership)
     {
         $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
 
         $form = $this->createForm(new AdministratorMembershipType(), $administrator_membership);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

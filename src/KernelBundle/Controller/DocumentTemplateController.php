@@ -195,14 +195,13 @@ class DocumentTemplateController extends FOSRestController
      *
      * @View()
      * @ParamConverter("template", class="KernelBundle:DocumentTemplate")
-     * @Put("/template/{id}")
+     * @Post("/template/{id}")
      */
     public function putDocumentTemplateAction(Request $request, DocumentTemplate $template)
     {
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $form = $this->createForm(new DocumentTemplateType(), $template);
-        $form->submit($request);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
