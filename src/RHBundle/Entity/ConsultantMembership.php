@@ -24,7 +24,7 @@ class ConsultantMembership
     /**
      * @var UserData
      *
-     * @ORM\OneToOne(targetEntity="UserData", inversedBy="consultant_membership"))
+     * @ORM\OneToOne(targetEntity="UserData", inversedBy="consultantMembership"))
      */
     private $userData;
 
