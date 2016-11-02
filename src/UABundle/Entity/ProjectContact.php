@@ -3,6 +3,7 @@
 namespace UABundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use GRCBundle\Entity\Contact;
 
 /**
  * ProjectContact
@@ -22,15 +23,15 @@ class ProjectContact
     private $id;
 
     /**
-     * @var array
+     * @var Project
      *
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="contacts")
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="contacts", cascade={"remove"})
      *
      */
     private $project;
 
     /**
-     * @var array
+     * @var Contact
      *
      * @ORM\ManyToOne(targetEntity="GRCBundle\Entity\Contact")
      *
@@ -49,7 +50,7 @@ class ProjectContact
     }
 
     /**
-     * @return array
+     * @return Project
      */
     public function getProject()
     {
@@ -57,7 +58,7 @@ class ProjectContact
     }
 
     /**
-     * @param array $project
+     * @param Project $project
      * @return ProjectContact
      */
     public function setProject($project)
@@ -67,7 +68,7 @@ class ProjectContact
     }
 
     /**
-     * @return array
+     * @return Contact
      */
     public function getContact()
     {
@@ -75,7 +76,7 @@ class ProjectContact
     }
 
     /**
-     * @param array $contact
+     * @param Contact $contact
      * @return ProjectContact
      */
     public function setContact($contact)

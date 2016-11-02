@@ -3,6 +3,7 @@
 namespace UABundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use RHBundle\Entity\UserData;
 
 /**
  * ProjectManager
@@ -22,15 +23,15 @@ class ProjectManager
     private $id;
 
     /**
-     * @var array
+     * @var Project
      *
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="managers")
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="managers", cascade={"remove"})
      *
      */
     private $project;
 
     /**
-     * @var array
+     * @var UserData
      *
      * @ORM\ManyToOne(targetEntity="RHBundle\Entity\UserData")
      *
@@ -49,7 +50,7 @@ class ProjectManager
     }
 
     /**
-     * @return array
+     * @return Project
      */
     public function getProject()
     {
@@ -57,7 +58,7 @@ class ProjectManager
     }
 
     /**
-     * @param array $project
+     * @param Project $project
      * @return ProjectManager
      */
     public function setProject($project)
@@ -67,7 +68,7 @@ class ProjectManager
     }
 
     /**
-     * @return array
+     * @return UserData
      */
     public function getManager()
     {
@@ -75,7 +76,7 @@ class ProjectManager
     }
 
     /**
-     * @param array $manager
+     * @param UserData $manager
      * @return ProjectManager
      */
     public function setManager($manager)

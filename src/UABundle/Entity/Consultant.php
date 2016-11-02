@@ -27,7 +27,7 @@ class Consultant
     /**
      * @var Project
      *
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="consultants"))
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="consultants", cascade={"remove"}))
      */
     private $project;
 
