@@ -13,6 +13,7 @@ use GRCBundle\Entity\Contact;
 use GRCBundle\Entity\Firm;
 use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use RHBundle\Entity\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use UABundle\Entity\Project;
@@ -174,7 +175,7 @@ class ProjectController extends FOSRestController
 
     /**
      * Get all the projects audited by a user
-     * @param User $auditor
+     * @param UserData $auditor
      * @return array
      *
      * @ApiDoc(
@@ -193,7 +194,7 @@ class ProjectController extends FOSRestController
      * @ParamConverter("auditor", class="KernelBundle:User")
      * @Get("/projects/auditor/{id}", requirements={"id" = "\d+"})
      */
-    public function getProjectsByAuditorAction(User $auditor)
+    public function getProjectsByAuditorAction(UserData $auditor)
     {
 
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
@@ -203,13 +204,13 @@ class ProjectController extends FOSRestController
     }
 
     /**
-     * Get all the projects led by a Chargé d'Affaires
-     * @param User $chargeDAffaires
+     * Get all the projects led by a Manager
+     * @param UserData $manager
      * @return array
      *
      * @ApiDoc(
      *  section="Project",
-     *  description="Get all projects led by a Chargé d'Affaires",
+     *  description="Get all projects led by a Manager",
      *  statusCodes={
      *         200="Returned when successful"
      *  },
@@ -220,14 +221,14 @@ class ProjectController extends FOSRestController
      * )
      *
      * @View()
-     * @ParamConverter("chargeDAffaires", class="KernelBundle:User")
-     * @Get("/projects/charge_daffaires/{id}", requirements={"id" = "\d+"})
+     * @ParamConverter("manager", class="KernelBundle:User")
+     * @Get("/projects/manager/{id}", requirements={"id" = "\d+"})
      */
-    public function getProjectsByChargeDAffairesAction(User $chargeDAffaires)
+    public function getProjectsByManagerAction(UserData $manager)
     {
 
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
-            ->findByChargeDAffaires($chargeDAffaires);
+            ->findByManager($manager);
 
         return array('projects' => $projects);
     }

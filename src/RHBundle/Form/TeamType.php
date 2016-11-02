@@ -19,13 +19,7 @@ class TeamType extends AbstractType
         $builder
             ->add('leader', EntityType::class, ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname'])
             ->add('division', EntityType::class, ['class' => 'KernelBundle\Entity\Division', 'choice_label' => 'label'])
-            ->add('name', TextType::class)
-            ->add('members', EntityType::class, [
-                'class' => 'RHBundle\Entity\UserData',
-                'choice_label' => 'fullname',
-                'multiple' => true,
-                'required' => false
-            ]);
+            ->add('name', TextType::class);
     }
 
     /**

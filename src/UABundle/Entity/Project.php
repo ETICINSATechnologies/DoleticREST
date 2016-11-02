@@ -166,22 +166,18 @@ class Project
     private $auditor;
 
     /**
-     * @ORM\ManyToMany(targetEntity="RHBundle\Entity\UserData")
-     * @ORM\JoinTable(
-     *     name="ua_charge_affaires",
-     *      joinColumns={@ORM\JoinColumn(name="project_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="user_data_id", referencedColumnName="id")}
-     * )
+     * @var array
+     *
+     * @ORM\OneToMany(targetEntity="ProjectContact", mappedBy="project")
+     *
      */
-    private $charges_affaires;
+    private $managers;
 
     /**
-     * @ORM\ManyToMany(targetEntity="GRCBundle\Entity\Contact")
-     * @ORM\JoinTable(
-     *     name="ua_project_contacts",
-     *      joinColumns={@ORM\JoinColumn(name="project_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="contact_id", referencedColumnName="id")}
-     * )
+     * @var array
+     *
+     * @ORM\OneToMany(targetEntity="ProjectContact", mappedBy="project")
+     *
      */
     private $contacts;
 
@@ -699,18 +695,18 @@ class Project
     /**
      * @return mixed
      */
-    public function getChargesAffaires()
+    public function getManagers()
     {
-        return $this->charges_affaires;
+        return $this->managers;
     }
 
     /**
-     * @param mixed $charges_affaires
+     * @param mixed $managers
      * @return Project
      */
-    public function setChargesAffaires($charges_affaires)
+    public function setManagers($managers)
     {
-        $this->charges_affaires = $charges_affaires;
+        $this->managers = $managers;
 
         return $this;
     }

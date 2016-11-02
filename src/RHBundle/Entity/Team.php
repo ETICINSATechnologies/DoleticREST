@@ -54,12 +54,7 @@ class Team
     /**
      * @var array
      *
-     * @ORM\ManyToMany(targetEntity="UserData")
-     * @ORM\JoinTable(
-     *     name="rh_team_members",
-     *     joinColumns={@ORM\JoinColumn(name="team_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="user_data_id", referencedColumnName="id")}
-     * )
+     * @ORM\OneToMany(targetEntity="TeamMember", mappedBy="team")
      *
      */
     private $members;
@@ -191,9 +186,9 @@ class Team
      */
     public function setLeaderAsMember()
     {
-        if(!is_array($this->members)) {
+        if (!is_array($this->members)) {
             $this->members = [];
         }
-        $this->members = array_unique(array_merge($this->members,[$this->leader]));
+        $this->members = array_unique(array_merge($this->members, [$this->leader]));
     }
 }
