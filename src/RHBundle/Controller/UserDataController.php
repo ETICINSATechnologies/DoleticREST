@@ -285,7 +285,8 @@ class UserDataController extends FOSRestController
     public function putUserDataAction(Request $request, UserData $user_data)
     {
         if (
-            $this->getUser()->getUserData()->getId() !== $user_data->getId()
+            $this->getUser()->getUserData() != null
+            && $this->getUser()->getUserData()->getId() !== $user_data->getId()
             && $this->isGranted('ROLE_RH_SUPERADMIN') === false
         ) {
             throw new AccessDeniedException();

@@ -138,13 +138,14 @@ class TeamMemberController extends FOSRestController
      * )
      *
      * @View()
-     * @ParamConverter("teamMember", class="RHBundle:Team")
+     * @ParamConverter("team", class="RHBundle:Team")
      * @Post("/team_member/{id}")
      */
     public function postTeamMemberAction(Request $request, Team $team)
     {
         if (
-            $this->getUser()->getUserData()->getId() !== $team->getLeader()->getId()
+            $this->getUser()->getUserData() != null
+            && $this->getUser()->getUserData()->getId() !== $team->getLeader()->getId()
             && $this->isGranted('ROLE_RH_SUPERADMIN') === false
         ) {
             throw new AccessDeniedException();
@@ -182,7 +183,8 @@ class TeamMemberController extends FOSRestController
     public function deleteTeamMemberAction(TeamMember $teamMember)
     {
         if (
-            $this->getUser()->getUserData()->getId() !== $teamMember->getTeam()->getLeader()->getId()
+            $this->getUser()->getUserData() != null
+            && $this->getUser()->getUserData()->getId() !== $teamMember->getTeam()->getLeader()->getId()
             && $this->isGranted('ROLE_RH_SUPERADMIN') === false
         ) {
             throw new AccessDeniedException();
