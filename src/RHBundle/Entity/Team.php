@@ -9,7 +9,7 @@ use KernelBundle\Entity\Division;
  * Team
  *
  * @ORM\Table(name="rh_team")
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\EntityListeners({ "RHBundle\Listener\TeamListener" })
  * @ORM\Entity(repositoryClass="RHBundle\Repository\TeamRepository")
  */
 class Team
@@ -170,25 +170,5 @@ class Team
         $this->members = $members;
 
         return $this;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreationDateValue()
-    {
-        $this->creationDate = new \DateTime();
-    }
-
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
-    public function setLeaderAsMember()
-    {
-        if (!is_array($this->members)) {
-            $this->members = [];
-        }
-        $this->members = array_unique(array_merge($this->members, [$this->leader]));
     }
 }

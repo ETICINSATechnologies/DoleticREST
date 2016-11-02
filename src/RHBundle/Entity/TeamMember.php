@@ -22,15 +22,15 @@ class TeamMember
     private $id;
 
     /**
-     * @var array
+     * @var Team
      *
-     * @ORM\ManyToOne(targetEntity="Team", inversedBy="members")
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy="members", cascade={"remove"})
      *
      */
     private $team;
 
     /**
-     * @var array
+     * @var UserData
      *
      * @ORM\ManyToOne(targetEntity="UserData")
      *
@@ -48,7 +48,7 @@ class TeamMember
     }
 
     /**
-     * @return array
+     * @return Team
      */
     public function getTeam()
     {
@@ -56,7 +56,7 @@ class TeamMember
     }
 
     /**
-     * @param array $team
+     * @param Team $team
      * @return TeamMember
      */
     public function setTeam($team)
@@ -66,7 +66,7 @@ class TeamMember
     }
 
     /**
-     * @return array
+     * @return UserData
      */
     public function getUserData()
     {
@@ -74,7 +74,7 @@ class TeamMember
     }
 
     /**
-     * @param array $userData
+     * @param UserData $userData
      * @return TeamMember
      */
     public function setUserData($userData)
