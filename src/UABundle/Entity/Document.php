@@ -38,9 +38,9 @@ class Document
     private $template;
 
     /**
-     * @var User
+     * @var \RHBundle\Entity\UserData
      *
-     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="RHBundle\Entity\UserData")
      */
     private $auditor;
 
@@ -51,6 +51,13 @@ class Document
      */
     private $valid;
 
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Merci d'uploader un fichier au format PDF")
+     * @Assert\File(mimeTypes={ "application/pdf" })
+     */
+    private $file;
 
     /**
      * Get id
@@ -139,6 +146,24 @@ class Document
     {
         $this->auditor = $auditor;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param mixed $file
+     * @return Document
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
         return $this;
     }
 
