@@ -38,8 +38,8 @@ class ProjectType extends AbstractType
             ->add('status', EntityType::class, ['class' => 'UABundle\Entity\ProjectStatus', 'choice_label' => 'label', 'disabled' => $mode > self::EDIT_MODE])
             ->add('name', TextType::class, ['disabled' => $mode > self::EDIT_MODE])
             ->add('description', TextareaType::class, ['required' => false, 'disabled' => $mode > self::EDIT_MODE])
-            ->add('signDate', DateType::class, ['disabled' => $mode !== self::SIGN_MODE])
-            ->add('endDate', DateType::class, ['disabled' => $mode !== self::END_MODE])
+            ->add('signDate', DateType::class, ['disabled' => $mode !== self::SIGN_MODE, 'format' => 'dd/MM/yyyy', 'widget' => 'single_text'])
+            ->add('endDate', DateType::class, ['disabled' => $mode !== self::END_MODE, 'format' => 'dd/MM/yyyy', 'widget' => 'single_text'])
             ->add('managementFee', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
             ->add('applicationFee', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
             ->add('rebilledFee', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
@@ -47,7 +47,7 @@ class ProjectType extends AbstractType
             ->add('secret', CheckboxType::class, ['disabled' => $mode !== self::ADD_MODE])
             ->add('critical', CheckboxType::class, ['disabled' => $mode !== self::ADD_MODE])
             ->add('disabled', CheckboxType::class, ['read_only' => true, 'value' => false])
-            ->add('disabledUntil', DateType::class, ['disabled' => $mode !== self::DISABLE_MODE])
+            ->add('disabledUntil', DateType::class, ['disabled' => $mode !== self::DISABLE_MODE, 'format' => 'dd/MM/yyyy', 'widget' => 'single_text'])
             ->add('archived', CheckboxType::class, ['read_only' => true, 'value' => false]);
     }
 

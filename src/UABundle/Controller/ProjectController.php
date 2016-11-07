@@ -390,7 +390,7 @@ class ProjectController extends FOSRestController
     public function postProjectAction(Request $request)
     {
         $project = new Project();
-        $form = $this->createForm(new ProjectType(), $project);
+        $form = $this->createForm(new ProjectType(), $project, ProjectType::ADD_MODE);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -443,7 +443,462 @@ class ProjectController extends FOSRestController
      */
     public function putProjectAction(Request $request, Project $project)
     {
-        $form = $this->createForm(new ProjectType(), $project, ['']);
+        $form = $this->createForm(new ProjectType(), $project, ['mode' => ProjectType::EDIT_MODE]);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($project);
+            $em->flush();
+
+            return array("project" => $project);
+        }
+
+        return array(
+            'form' => $form,
+        );
+    }
+
+    /**
+     * Sign a project
+     * Put action
+     * @var Request $request
+     * @var Project $project
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Sign a Project",
+     *  requirements={
+     *      {
+     *          "name"="project",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="project id"
+     *      }
+     *  },
+     *  input="UABundle\Form\ProjectType",
+     *  output="UABundle\Entity\Project",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  },
+     *  views = { "premium" }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project", class="UABundle:Project")
+     * @Post("/project/{id}/sign")
+     */
+    public function signProjectAction(Request $request, Project $project)
+    {
+        $form = $this->createForm(new ProjectType(), $project, ['mode' => ProjectType::SIGN_MODE]);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($project);
+            $em->flush();
+
+            return array("project" => $project);
+        }
+
+        return array(
+            'form' => $form,
+        );
+    }
+
+    /**
+     * End a project
+     * Put action
+     * @var Request $request
+     * @var Project $project
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="End a Project",
+     *  requirements={
+     *      {
+     *          "name"="project",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="project id"
+     *      }
+     *  },
+     *  input="UABundle\Form\ProjectType",
+     *  output="UABundle\Entity\Project",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  },
+     *  views = { "premium" }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project", class="UABundle:Project")
+     * @Post("/project/{id}/end")
+     */
+    public function endProjectAction(Request $request, Project $project)
+    {
+
+        if ($project->getSignDate() === null) {
+            return array("error" => "Impossible de terminer le projet.");
+        }
+
+        $form = $this->createForm(new ProjectType(), $project, ['mode' => ProjectType::END_MODE]);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            if ($project->getSignDate() >= $project->getEndDate()) {
+                return array("error" => "Date invalide");
+            }
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($project);
+            $em->flush();
+
+            return array("project" => $project);
+        }
+
+        return array(
+            'form' => $form,
+        );
+    }
+
+    /**
+     * Disable a project
+     * Put action
+     * @var Request $request
+     * @var Project $project
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Disable a Project",
+     *  requirements={
+     *      {
+     *          "name"="project",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="project id"
+     *      }
+     *  },
+     *  input="UABundle\Form\ProjectType",
+     *  output="UABundle\Entity\Project",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  },
+     *  views = { "premium" }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project", class="UABundle:Project")
+     * @Post("/project/{id}/disable")
+     */
+    public function disableProjectAction(Request $request, Project $project)
+    {
+        $form = $this->createForm(new ProjectType(), $project, ['mode' => ProjectType::DISABLE_MODE]);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $project->setDisabled(true)->setDisabledSince(new \DateTime());
+            $em->persist($project);
+            $em->flush();
+
+            return array("project" => $project);
+        }
+
+        return array(
+            'form' => $form,
+        );
+    }
+
+    /**
+     * Enable a project
+     * Put action
+     * @var Request $request
+     * @var Project $project
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Enable a Project",
+     *  requirements={
+     *      {
+     *          "name"="project",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="project id"
+     *      }
+     *  },
+     *  input="UABundle\Form\ProjectType",
+     *  output="UABundle\Entity\Project",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  },
+     *  views = { "premium" }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project", class="UABundle:Project")
+     * @Post("/project/{id}/enable")
+     */
+    public function enableProjectAction(Request $request, Project $project)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $project
+            ->setDisabled(false)
+            ->setDisabledSince(null)
+            ->setDisabledUntil(null);
+        $em->persist($project);
+        $em->flush();
+
+        return array("project" => $project);
+    }
+
+    /**
+     * Cancel a project signature
+     * Put action
+     * @var Request $request
+     * @var Project $project
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Cancel a Project signature",
+     *  requirements={
+     *      {
+     *          "name"="project",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="project id"
+     *      }
+     *  },
+     *  input="UABundle\Form\ProjectType",
+     *  output="UABundle\Entity\Project",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  },
+     *  views = { "premium" }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project", class="UABundle:Project")
+     * @Post("/project/{id}/unsign")
+     */
+    public function unsignProjectAction(Request $request, Project $project)
+    {
+
+        if ($project->getEndDate() !== null) {
+            return array("error" => "Impossible d'annuler la signature");
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $project->setSignDate(null);
+        $em->persist($project);
+        $em->flush();
+
+        return array("project" => $project);
+    }
+
+    /**
+     * Cancel a project end
+     * Put action
+     * @var Request $request
+     * @var Project $project
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Cancel a Project end",
+     *  requirements={
+     *      {
+     *          "name"="project",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="project id"
+     *      }
+     *  },
+     *  input="UABundle\Form\ProjectType",
+     *  output="UABundle\Entity\Project",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  },
+     *  views = { "premium" }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project", class="UABundle:Project")
+     * @Post("/project/{id}/unend")
+     */
+    public function unendProjectAction(Request $request, Project $project)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $project->setEndDate(null);
+        $em->persist($project);
+        $em->flush();
+
+        return array("project" => $project);
+    }
+
+    /**
+     * Archive a Project
+     * Put action
+     * @var Request $request
+     * @var Project $project
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Archive a Project",
+     *  requirements={
+     *      {
+     *          "name"="project",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="project id"
+     *      }
+     *  },
+     *  input="UABundle\Form\ProjectType",
+     *  output="UABundle\Entity\Project",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  },
+     *  views = { "premium" }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project", class="UABundle:Project")
+     * @Post("/project/{id}/archive")
+     */
+    public function archiveProjectAction(Request $request, Project $project)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $project->setArchived(true)->setArchivedSince(new \DateTime());
+        $em->persist($project);
+        $em->flush();
+
+        return array("project" => $project);
+    }
+
+    /**
+     * Remove a Project from archives
+     * Put action
+     * @var Request $request
+     * @var Project $project
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Remove a Project from archives",
+     *  requirements={
+     *      {
+     *          "name"="project",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="project id"
+     *      }
+     *  },
+     *  input="UABundle\Form\ProjectType",
+     *  output="UABundle\Entity\Project",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  },
+     *  views = { "premium" }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project", class="UABundle:Project")
+     * @Post("/project/{id}/unarchive")
+     */
+    public function unarchiveProjectAction(Request $request, Project $project)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $project->setArchived(false)->setArchivedSince(null);
+        $em->persist($project);
+        $em->flush();
+
+        return array("project" => $project);
+    }
+
+    /**
+     * Assign an auditor to a Project
+     * Put action
+     * @var Request $request
+     * @var Project $project
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Assign an auditor to a Project",
+     *  requirements={
+     *      {
+     *          "name"="project",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="project id"
+     *      }
+     *  },
+     *  input="UABundle\Form\ProjectType",
+     *  output="UABundle\Entity\Project",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  },
+     *  views = { "premium" }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project", class="UABundle:Project")
+     * @Post("/project/{id}/auditor")
+     */
+    public function auditorProjectAction(Request $request, Project $project)
+    {
+        $form = $this->createForm(new ProjectType(), $project, ['mode' => ProjectType::AUDITOR_MODE]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
