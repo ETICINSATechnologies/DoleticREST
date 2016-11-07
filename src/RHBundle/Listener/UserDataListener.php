@@ -35,24 +35,26 @@ class UserDataListener
                 ->setUserData($userData);
             $entityManager->persist($user);
 
-            $message = new \Swift_Message();
-            $message
-                ->setSubject('Compte Doletic créé !')
-                ->setFrom($this->container->getParameter('mailer_user'))
-                ->setTo($userData->getEmail())
-                ->setBody($this->container->get('templating')->render(
-                    '@RH/emails/welcome.html.twig',
-                    [
-                        'name' => $userData->getFullname(),
-                        'url' => $this->container->getParameter('doletic_url'),
-                        'jeName' => $this->container->getParameter('je_name'),
-                        'webmaster' => $this->container->getParameter('webmaster_email'),
-                        'username' => $userName,
-                        'password' => $password
-                    ]
-                ));
+            if ($this->container->getParameter('mailer_password') !== null) {
+                $message = new \Swift_Message();
+                $message
+                    ->setSubject('Compte Doletic créé !')
+                    ->setFrom($this->container->getParameter('mailer_user'))
+                    ->setTo($userData->getEmail())
+                    ->setBody($this->container->get('templating')->render(
+                        '@RH/emails/welcome.html.twig',
+                        [
+                            'name' => $userData->getFullname(),
+                            'url' => $this->container->getParameter('doletic_url'),
+                            'jeName' => $this->container->getParameter('je_name'),
+                            'webmaster' => $this->container->getParameter('webmaster_email'),
+                            'username' => $userName,
+                            'password' => $password
+                        ]
+                    ));
 
-            $this->container->get('mailer')->send($message, $failures);
+                $this->container->get('mailer')->send($message, $failures);
+            }
 
         } else {
             $entityManager->remove($userData);

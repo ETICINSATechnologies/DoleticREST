@@ -19,7 +19,9 @@ class ContactListener
     public function prePersist(Contact $contact, LifecycleEventArgs $event)
     {
         $contact
-            ->setCreator($this->container->get('security.token_storage')->getToken()->getUser())
+            ->setCreator(
+                $contact->getCreator() == null ? $this->container->get('security.token_storage')->getToken()->getUser()
+                    : $contact->getCreator())
             ->setCreationDate(new \DateTime())
             ->setLastUpdate($contact->getCreationDate());
     }

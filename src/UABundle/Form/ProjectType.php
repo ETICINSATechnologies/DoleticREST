@@ -14,29 +14,40 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProjectType extends AbstractType
 {
+
+    const ADD_MODE = 0;
+    const EDIT_MODE = 1;
+    const SIGN_MODE = 2;
+    const END_MODE = 3;
+    const AUDITOR_MODE = 4;
+    const DISABLE_MODE = 5;
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $mode = isset($options['mode']) ? $options['mode'] : self::ADD_MODE;
+
         $builder
-            ->add('firm', EntityType::class, ['class' => 'GRCBundle\Entity\Firm', 'choice_label' => 'name'])
-            ->add('auditor', EntityType::class, ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname'])
-            ->add('field', EntityType::class, ['class' => 'UABundle\Entity\ProjectField', 'choice_label' => 'label'])
-            ->add('origin', EntityType::class, ['class' => 'UABundle\Entity\ProjectOrigin', 'choice_label' => 'label'])
-            ->add('status', EntityType::class, ['class' => 'UABundle\Entity\ProjectStatus', 'choice_label' => 'label'])
-            ->add('name', TextType::class)
-            ->add('description', TextareaType::class, ['required' => false])
-            ->add('signDate', DateType::class, ['required' => false])
-            ->add('endDate', DateType::class, ['required' => false])
-            ->add('managementFee', IntegerType::class)
-            ->add('applicationFee', IntegerType::class)
-            ->add('rebilledFee', IntegerType::class)
-            ->add('advance', IntegerType::class)
-            ->add('secret', CheckboxType::class)
-            ->add('critical', CheckboxType::class)
+            ->add('firm', EntityType::class, ['class' => 'GRCBundle\Entity\Firm', 'choice_label' => 'name', 'disabled' => $mode > self::EDIT_MODE])
+            ->add('auditor', EntityType::class, ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname', 'disabled' => $mode !== self::AUDITOR_MODE])
+            ->add('field', EntityType::class, ['class' => 'UABundle\Entity\ProjectField', 'choice_label' => 'label', 'disabled' => $mode > self::EDIT_MODE])
+            ->add('origin', EntityType::class, ['class' => 'UABundle\Entity\ProjectOrigin', 'choice_label' => 'label', 'disabled' => $mode > self::EDIT_MODE])
+            ->add('status', EntityType::class, ['class' => 'UABundle\Entity\ProjectStatus', 'choice_label' => 'label', 'disabled' => $mode > self::EDIT_MODE])
+            ->add('name', TextType::class, ['disabled' => $mode > self::EDIT_MODE])
+            ->add('description', TextareaType::class, ['required' => false, 'disabled' => $mode > self::EDIT_MODE])
+            ->add('signDate', DateType::class, ['disabled' => $mode !== self::SIGN_MODE])
+            ->add('endDate', DateType::class, ['disabled' => $mode !== self::END_MODE])
+            ->add('managementFee', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
+            ->add('applicationFee', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
+            ->add('rebilledFee', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
+            ->add('advance', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
+            ->add('secret', CheckboxType::class, ['disabled' => $mode !== self::ADD_MODE])
+            ->add('critical', CheckboxType::class, ['disabled' => $mode !== self::ADD_MODE])
             ->add('disabled', CheckboxType::class, ['read_only' => true, 'value' => false])
+            ->add('disabledUntil', DateType::class, ['disabled' => $mode !== self::DISABLE_MODE])
             ->add('archived', CheckboxType::class, ['read_only' => true, 'value' => false]);
     }
 
@@ -47,7 +58,8 @@ class ProjectType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\Project'
+            'data_class' => 'UABundle\Entity\Project',
+            'mode' => self::ADD_MODE
         ));
     }
 

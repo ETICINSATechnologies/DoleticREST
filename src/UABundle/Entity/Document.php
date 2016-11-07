@@ -5,6 +5,7 @@ namespace UABundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use KernelBundle\Entity\DocumentTemplate;
 use KernelBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Document

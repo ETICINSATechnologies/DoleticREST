@@ -42,9 +42,13 @@ class DocumentUploadListener
     {
         $entity = $args->getEntity();
 
-        $fileName = $entity->getBrochure();
+        if (!$entity instanceof Document) {
+            return;
+        }
 
-        $entity->setBrochure(new File($this->uploader->getTargetDir().'/'.$fileName));
+        $fileName = $entity->getFile();
+
+        $entity->setFile(new File($this->uploader->getTargetDir().'/'.$fileName));
     }
 
     private function uploadFile($entity)
