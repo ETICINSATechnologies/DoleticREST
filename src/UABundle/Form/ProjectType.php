@@ -46,9 +46,7 @@ class ProjectType extends AbstractType
             ->add('advance', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
             ->add('secret', CheckboxType::class, ['disabled' => $mode !== self::ADD_MODE])
             ->add('critical', CheckboxType::class, ['disabled' => $mode !== self::ADD_MODE])
-            ->add('disabled', CheckboxType::class, ['read_only' => true, 'value' => false])
-            ->add('disabledUntil', DateType::class, ['disabled' => $mode !== self::DISABLE_MODE, 'format' => 'dd/MM/yyyy', 'widget' => 'single_text'])
-            ->add('archived', CheckboxType::class, ['read_only' => true, 'value' => false]);
+            ->add('disabledUntil', DateType::class, ['disabled' => $mode !== self::DISABLE_MODE, 'format' => 'dd/MM/yyyy', 'widget' => 'single_text']);
     }
 
     /**

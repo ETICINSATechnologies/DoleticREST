@@ -390,11 +390,18 @@ class ProjectController extends FOSRestController
     public function postProjectAction(Request $request)
     {
         $project = new Project();
-        $form = $this->createForm(new ProjectType(), $project, ProjectType::ADD_MODE);
+        $form = $this->createForm(new ProjectType(), $project, ['mode' => ProjectType::ADD_MODE]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $project
+                ->setDisabled(false)
+                ->setArchived(false)
+                ->setManagementFee(0)
+                ->setApplicationFee(0)
+                ->setAdvance(0)
+                ->setRebilledFee(0);
             $em->persist($project);
             $em->flush();
 
@@ -615,8 +622,10 @@ class ProjectController extends FOSRestController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-
             $project->setDisabled(true)->setDisabledSince(new \DateTime());
+            if($project->getDisabledSince() > $project->getDisabledUntil()) {
+                return ["error" => "Date invalide."];
+            }
             $em->persist($project);
             $em->flush();
 

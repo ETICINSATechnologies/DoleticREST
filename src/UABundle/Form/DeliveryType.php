@@ -14,22 +14,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DeliveryType extends AbstractType
 {
+
+    const ADD_MODE = 0;
+    const EDIT_MODE = 1;
+    const DELIVER_MODE = 2;
+    const PAY_MODE = 3;
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $mode = isset($options['mode']) ? $options['mode'] : self::ADD_MODE;
+
         $builder
-            ->add('task', EntityType::class, ['class' => 'UABundle\Entity\Task', 'choice_label' => 'name'])
-            ->add('number', IntegerType::class)
-            ->add('name', TextType::class)
-            ->add('content', TextareaType::class)
-            ->add('delivered', CheckboxType::class)
-            ->add('deliveryDate', DateType::class)
-            ->add('billed', CheckboxType::class)
-            ->add('paid', CheckboxType::class)
-            ->add('paymentDate', DateType::class);
+            ->add('task', EntityType::class, ['class' => 'UABundle\Entity\Task', 'choice_label' => 'name', 'disabled' => $mode !== self::ADD_MODE])
+            ->add('number', IntegerType::class, ['disabled' => $mode > self::EDIT_MODE])
+            ->add('content', TextareaType::class, ['disabled' => $mode > self::EDIT_MODE])
+            ->add('deliveryDate', DateType::class, ['disabled' => $mode !== self::DELIVER_MODE, 'format' => 'dd/MM/yyyy', 'widget' => 'single_text'])
+            ->add('billed', CheckboxType::class, ['disabled' => $mode > self::EDIT_MODE])
+            ->add('paymentDate', DateType::class, ['disabled' => $mode !== self::PAY_MODE, 'format' => 'dd/MM/yyyy', 'widget' => 'single_text']);
     }
 
     /**
@@ -39,7 +44,8 @@ class DeliveryType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\Delivery'
+            'data_class' => 'UABundle\Entity\Delivery',
+            'mode' => self::ADD_MODE
         ));
     }
 
