@@ -8,7 +8,7 @@ use GRCBundle\Entity\Contact;
 /**
  * ProjectContact
  *
- * @ORM\Table(name="ua_project_contact")
+ * @ORM\Table(name="ua_project_contact", uniqueConstraints={@ORM\UniqueConstraint(name="contact", columns={"project_id", "contact_id"})})
  * @ORM\Entity(repositoryClass="UABundle\Repository\ProjectContactRepository")
  */
 class ProjectContact

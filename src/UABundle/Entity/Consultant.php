@@ -9,7 +9,7 @@ use RHBundle\Entity\UserData;
 /**
  * Consultant
  *
- * @ORM\Table(name="ua_consultant")
+ * @ORM\Table(name="ua_consultant", uniqueConstraints={@ORM\UniqueConstraint(name="member", columns={"project_id", "user_data_id"})})
  * @ORM\Entity(repositoryClass="UABundle\Repository\ConsultantRepository")
  * @ORM\EntityListeners({ "UABundle\Listener\ConsultantListener" })
  */

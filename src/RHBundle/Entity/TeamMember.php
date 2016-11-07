@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TeamMember
  *
- * @ORM\Table(name="rh_team_member")
+ * @ORM\Table(name="rh_team_member", uniqueConstraints={@ORM\UniqueConstraint(name="member", columns={"team_id", "user_data_id"})})
  * @ORM\Entity(repositoryClass="RHBundle\Repository\TeamMemberRepository")
  */
 class TeamMember

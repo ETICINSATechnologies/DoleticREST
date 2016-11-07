@@ -8,7 +8,7 @@ use RHBundle\Entity\UserData;
 /**
  * ProjectManager
  *
- * @ORM\Table(name="ua_project_manager")
+ * @ORM\Table(name="ua_project_manager", uniqueConstraints={@ORM\UniqueConstraint(name="manager", columns={"project_id", "manager_id"})})
  * @ORM\Entity(repositoryClass="UABundle\Repository\ProjectManagerRepository")
  */
 class ProjectManager
