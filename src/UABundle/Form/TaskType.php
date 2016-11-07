@@ -27,8 +27,7 @@ class TaskType extends AbstractType
             ->add('jehAmount', IntegerType::class)
             ->add('jehCost', IntegerType::class)
             ->add('startDate', DateType::class, ['widget' => 'single_text', 'format' => 'dd/MM/yyyy'])
-            ->add('endDate', DateType::class, ['widget' => 'single_text', 'format' => 'dd/MM/yyyy'])
-            ->add('ended', CheckboxType::class, ['read_only' => true, 'value' => false]);
+            ->add('endDate', DateType::class, ['widget' => 'single_text', 'format' => 'dd/MM/yyyy']);
     }
 
     /**

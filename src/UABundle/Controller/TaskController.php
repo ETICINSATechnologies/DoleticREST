@@ -144,6 +144,7 @@ class TaskController extends FOSRestController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $task->setEnded(false);
             $em->persist($task);
             $em->flush();
 
@@ -207,6 +208,143 @@ class TaskController extends FOSRestController
         return array(
             'form' => $form,
         );
+    }
+
+    /**
+     * End a Task
+     * Put action
+     * @var Request $request
+     * @var Task $task
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Task",
+     *  description="End a Task",
+     *  requirements={
+     *      {
+     *          "name"="task",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="task id"
+     *      }
+     *  },
+     *  input="UABundle\Form\TaskType",
+     *  output="UABundle\Entity\Task",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  },
+     *  views = { "premium" }
+     * )
+     *
+     * @View()
+     * @ParamConverter("task", class="UABundle:Task")
+     * @Post("/task/{id}/end")
+     */
+    public function endTaskAction(Request $request, Task $task)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $task->setEnded(true);
+        $em->persist($task);
+        $em->flush();
+
+        return array("task" => $task);
+    }
+
+
+    /**
+     * Cancel the end of a Task
+     * Put action
+     * @var Request $request
+     * @var Task $task
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Task",
+     *  description="Cancel the end of a Task",
+     *  requirements={
+     *      {
+     *          "name"="task",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="task id"
+     *      }
+     *  },
+     *  input="UABundle\Form\TaskType",
+     *  output="UABundle\Entity\Task",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  },
+     *  views = { "premium" }
+     * )
+     *
+     * @View()
+     * @ParamConverter("task", class="UABundle:Task")
+     * @Post("/task/{id}/unend")
+     */
+    public function unendTaskAction(Request $request, Task $task)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $task->setEnded(false);
+        $em->persist($task);
+        $em->flush();
+
+        return array("task" => $task);
+    }
+
+    /**
+     * Switch a Task number with another one
+     * Put action
+     * @var Request $request
+     * @var Task $task
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Task",
+     *  description="Switch a Task number with another one",
+     *  requirements={
+     *      {
+     *          "name"="task",
+     *          "dataType"="string",
+     *          "requirement"="*",
+     *          "description"="task id"
+     *      }
+     *  },
+     *  input="UABundle\Form\TaskType",
+     *  output="UABundle\Entity\Task",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "need validations" = "#ff0000"
+     *  },
+     *  views = { "premium" }
+     * )
+     *
+     * @View()
+     * @ParamConverter("task", class="UABundle:Task")
+     * @Post("/task/{id}/switch/{idBis}")
+     */
+    public function switchTasksAction(Request $request, Task $task, $idBis)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $taskBis = $em->getRepository('UABundle:Task')->find($idBis);
+        $numBis = $taskBis->getNumber();
+        $taskBis->setNumber($task->getNumber());
+        $task->setNumber($numBis);
+        $em->persist($task);
+        $em->persist($taskBis);
+        $em->flush();
+
+        return array("task" => $task);
     }
 
     /**
