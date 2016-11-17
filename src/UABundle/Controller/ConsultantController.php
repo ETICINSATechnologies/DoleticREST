@@ -174,7 +174,7 @@ class ConsultantController extends FOSRestController
         $form = $this->createForm(new ConsultantType(), $consultant);
         $form->handleRequest($request);
 
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $consultant->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $consultant->getProject())) {
             throw new AccessDeniedException();
         }
 
@@ -228,7 +228,7 @@ class ConsultantController extends FOSRestController
      */
     public function putConsultantAction(Request $request, Consultant $consultant)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $consultant->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $consultant->getProject())) {
             throw new AccessDeniedException();
         }
 
@@ -261,7 +261,7 @@ class ConsultantController extends FOSRestController
      */
     public function deleteConsultantAction(Consultant $consultant)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $consultant->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $consultant->getProject())) {
             throw new AccessDeniedException();
         }
 

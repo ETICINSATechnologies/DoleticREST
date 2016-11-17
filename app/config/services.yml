@@ -80,11 +80,9 @@ services:
     ## UA SERVICES
     ua.project.rights_service:
         class: UABundle\Service\ProjectRightsService
+        arguments: ['@security.authorization_checker']
 
-#    ## RH SERVICES
-#    rh.team.rights_service:
-#            class: RHBundle\Service\TeamRightsService
-#
-#    ## GRC SERVICES
-#    grc.contact.rights_service:
-#            class: GRCBundle\Service\ContactRightsService
+    ## RH SERVICES
+    rh.team.rights_service:
+        class: RHBundle\Service\TeamRightsService
+        arguments: ['@security.authorization_checker']

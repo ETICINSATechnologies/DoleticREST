@@ -143,7 +143,7 @@ class TaskController extends FOSRestController
         $form = $this->createForm(new TaskType(), $task);
         $form->handleRequest($request);
 
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
             throw new AccessDeniedException();
         }
 
@@ -198,7 +198,7 @@ class TaskController extends FOSRestController
      */
     public function putTaskAction(Request $request, Task $task)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
             throw new AccessDeniedException();
         }
 
@@ -255,7 +255,7 @@ class TaskController extends FOSRestController
      */
     public function endTaskAction(Request $request, Task $task)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
             throw new AccessDeniedException();
         }
 
@@ -304,7 +304,7 @@ class TaskController extends FOSRestController
      */
     public function unendTaskAction(Request $request, Task $task)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
             throw new AccessDeniedException();
         }
 
@@ -352,7 +352,7 @@ class TaskController extends FOSRestController
      */
     public function switchTasksAction(Request $request, Task $task, $idBis)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
             throw new AccessDeniedException();
         }
 
@@ -380,7 +380,7 @@ class TaskController extends FOSRestController
      */
     public function deleteTaskAction(Task $task)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
             throw new AccessDeniedException();
         }
 

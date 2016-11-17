@@ -174,7 +174,7 @@ class DeliveryController extends FOSRestController
         $form = $this->createForm(new DeliveryType(), $delivery, ['mode' => DeliveryType::ADD_MODE]);
         $form->handleRequest($request);
 
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
             throw new AccessDeniedException();
         }
 
@@ -229,7 +229,7 @@ class DeliveryController extends FOSRestController
      */
     public function putDeliveryAction(Request $request, Delivery $delivery)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
             throw new AccessDeniedException();
         }
 
@@ -286,7 +286,7 @@ class DeliveryController extends FOSRestController
      */
     public function deliverDeliveryAction(Request $request, Delivery $delivery)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
             throw new AccessDeniedException();
         }
 
@@ -343,7 +343,7 @@ class DeliveryController extends FOSRestController
      */
     public function undeliverDeliveryAction(Request $request, Delivery $delivery)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
             throw new AccessDeniedException();
         }
 
@@ -391,7 +391,7 @@ class DeliveryController extends FOSRestController
      */
     public function payDeliveryAction(Request $request, Delivery $delivery)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
             throw new AccessDeniedException();
         }
 
@@ -448,6 +448,10 @@ class DeliveryController extends FOSRestController
      */
     public function unpayDeliveryAction(Request $request, Delivery $delivery)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $delivery->setPaid(false)->setPaymentDate(null);
         $em->persist($delivery);
@@ -468,6 +472,10 @@ class DeliveryController extends FOSRestController
      */
     public function deleteDeliveryAction(Delivery $delivery)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($delivery);
         $em->flush();

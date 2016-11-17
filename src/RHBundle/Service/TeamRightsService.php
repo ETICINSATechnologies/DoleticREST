@@ -1,12 +1,12 @@
 <?php
 
-namespace UABundle\Service;
+namespace RHBundle\Service;
 
 use KernelBundle\Entity\User;
+use RHBundle\Entity\Team;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use UABundle\Entity\Project;
 
-class ProjectRightsService
+class TeamRightsService
 {
 
     private $authorizationChecker;
@@ -16,10 +16,10 @@ class ProjectRightsService
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function userHasRights(User $user, Project $project)
+    public function userHasRights(User $user, Team $team)
     {
 
-        if (true === $this->authorizationChecker->isGranted('ROLE_UA_SUPERADMIN')) {
+        if (true === $this->authorizationChecker->isGranted('ROLE_RH_SUPERADMIN')) {
             return true;
         }
 
@@ -29,10 +29,8 @@ class ProjectRightsService
             return false;
         }
 
-        foreach ($project->getManagers() as $manager) {
-            if ($userData->getId() === $manager->getManager()->getId()) {
-                return true;
-            }
+        if ($userData->getId() == $team->getLeader()->getId()) {
+            return true;
         }
 
         return false;

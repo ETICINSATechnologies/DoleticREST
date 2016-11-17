@@ -146,7 +146,7 @@ class ProjectContactController extends FOSRestController
         $form = $this->createForm(new ProjectContactType(), $project_contact);
         $form->handleRequest($request);
 
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project)) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project)) {
             throw new AccessDeniedException();
         }
 
@@ -176,7 +176,7 @@ class ProjectContactController extends FOSRestController
      */
     public function deleteProjectContactAction(ProjectContact $project_contact)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project_contact->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project_contact->getProject())) {
             throw new AccessDeniedException();
         }
 

@@ -453,7 +453,7 @@ class ProjectController extends FOSRestController
      */
     public function putProjectAction(Request $request, Project $project)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project)) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project)) {
             throw new AccessDeniedException();
         }
 
@@ -510,7 +510,7 @@ class ProjectController extends FOSRestController
      */
     public function signProjectAction(Request $request, Project $project)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project)) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project)) {
             throw new AccessDeniedException();
         }
 
@@ -567,7 +567,7 @@ class ProjectController extends FOSRestController
      */
     public function endProjectAction(Request $request, Project $project)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project)) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project)) {
             throw new AccessDeniedException();
         }
 

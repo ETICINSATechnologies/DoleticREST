@@ -292,11 +292,7 @@ class TeamController extends FOSRestController
     public function putTeamAction(Request $request, Team $team)
     {
 
-        if (
-            ($this->getUser()->getUserData() == null
-                || $this->getUser()->getUserData()->getId() !== $team->getLeader()->getId())
-            && $this->isGranted('ROLE_RH_SUPERADMIN') === false
-        ) {
+        if (!$this->get('rh.team.rights_service')->userHasRights($this->getUser(), $team)) {
             throw new AccessDeniedException();
         }
 
@@ -329,11 +325,7 @@ class TeamController extends FOSRestController
      */
     public function deleteTeamAction(Team $team)
     {
-        if (
-            ($this->getUser()->getUserData() == null
-                || $this->getUser()->getUserData()->getId() !== $team->getLeader()->getId())
-            && $this->isGranted('ROLE_RH_SUPERADMIN') === false
-        ) {
+        if (!$this->get('rh.team.rights_service')->userHasRights($this->getUser(), $team)) {
             throw new AccessDeniedException();
         }
 

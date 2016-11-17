@@ -175,7 +175,7 @@ class AmendmentController extends FOSRestController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $amendment->getProject())) {
+            if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $amendment->getProject())) {
                 throw new AccessDeniedException();
             }
 
@@ -228,7 +228,7 @@ class AmendmentController extends FOSRestController
      */
     public function putAmendmentAction(Request $request, Amendment $amendment)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $amendment->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $amendment->getProject())) {
             throw new AccessDeniedException();
         }
 
@@ -261,7 +261,7 @@ class AmendmentController extends FOSRestController
      */
     public function deleteAmendmentAction(Amendment $amendment)
     {
-        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $amendment->getProject())) {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $amendment->getProject())) {
             throw new AccessDeniedException();
         }
 
