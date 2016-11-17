@@ -4,57 +4,6 @@ parameters:
 #    parameter_name: value
 
 services:
-    ## ENTITY LISTENERS
-    user_data_listener:
-        class: RHBundle\Listener\UserDataListener
-        arguments: ['@service_container']
-        tags:
-            - { name: doctrine.orm.entity_listener }
-            - { name: doctrine.orm.entity_listener, entity_manager: custom }
-
-    team_listener:
-        class: RHBundle\Listener\TeamListener
-        arguments: ['@service_container']
-        tags:
-            - { name: doctrine.orm.entity_listener }
-            - { name: doctrine.orm.entity_listener, entity_manager: custom }
-
-    contact_listener:
-        class: GRCBundle\Listener\ContactListener
-        arguments: ['@service_container']
-        tags:
-            - { name: doctrine.orm.entity_listener }
-            - { name: doctrine.orm.entity_listener, entity_manager: custom }
-
-    ticket_listener:
-        class: SupportBundle\Listener\TicketListener
-        arguments: ['@service_container']
-        tags:
-            - { name: doctrine.orm.entity_listener }
-            - { name: doctrine.orm.entity_listener, entity_manager: custom }
-
-    project_listener:
-        class: UABundle\Listener\ProjectListener
-        arguments: ['@service_container']
-        tags:
-            - { name: doctrine.orm.entity_listener }
-            - { name: doctrine.orm.entity_listener, entity_manager: custom }
-
-    task_listener:
-        class: UABundle\Listener\TaskListener
-        arguments: ['@service_container']
-        tags:
-            - { name: doctrine.orm.entity_listener }
-            - { name: doctrine.orm.entity_listener, entity_manager: custom }
-
-    consultant_listener:
-        class: UABundle\Listener\ConsultantListener
-        arguments: ['@service_container']
-        tags:
-            - { name: doctrine.orm.entity_listener }
-            - { name: doctrine.orm.entity_listener, entity_manager: custom }
-
-
     ## UPLOAD SERVICES
     document_uploader:
         class: KernelBundle\Service\FileUploader
@@ -67,22 +16,3 @@ services:
     template_uploader:
         class: KernelBundle\Service\FileUploader
         arguments: ['%templates_dir%']
-
-    ## UPLOAD LISTENERS
-    document_upload_listener:
-        class: UABundle\Listener\DocumentUploadListener
-        arguments: ['@document_uploader']
-        tags:
-            - { name: doctrine.event_listener, event: prePersist }
-            - { name: doctrine.event_listener, event: preUpdate }
-            - { name: doctrine.event_listener, event: postLoad }
-
-    ## UA SERVICES
-    ua.project.rights_service:
-        class: UABundle\Service\ProjectRightsService
-        arguments: ['@security.authorization_checker']
-
-    ## RH SERVICES
-    rh.team.rights_service:
-        class: RHBundle\Service\TeamRightsService
-        arguments: ['@security.authorization_checker']
