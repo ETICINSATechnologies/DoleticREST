@@ -12,6 +12,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use RHBundle\Entity\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use UABundle\Entity\Consultant;
 use UABundle\Entity\Project;
@@ -173,6 +174,10 @@ class ConsultantController extends FOSRestController
         $form = $this->createForm(new ConsultantType(), $consultant);
         $form->handleRequest($request);
 
+        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $consultant->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($consultant);
@@ -223,6 +228,10 @@ class ConsultantController extends FOSRestController
      */
     public function putConsultantAction(Request $request, Consultant $consultant)
     {
+        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $consultant->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $form = $this->createForm(new ConsultantType(), $consultant);
         $form->handleRequest($request);
 
@@ -252,6 +261,10 @@ class ConsultantController extends FOSRestController
      */
     public function deleteConsultantAction(Consultant $consultant)
     {
+        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $consultant->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($consultant);
         $em->flush();

@@ -168,7 +168,7 @@ class Project
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="ProjectContact", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="ProjectManager", mappedBy="project")
      *
      */
     private $managers;

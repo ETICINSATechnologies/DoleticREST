@@ -142,6 +142,8 @@ class ProjectStatusController extends FOSRestController
      */
     public function postProjectStatusAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $project_status = new ProjectStatus();
         $form = $this->createForm(new ProjectStatusType(), $project_status);
         $form->handleRequest($request);
@@ -196,6 +198,8 @@ class ProjectStatusController extends FOSRestController
      */
     public function putProjectStatusAction(Request $request, ProjectStatus $project_status)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $form = $this->createForm(new ProjectStatusType(), $project_status);
         $form->handleRequest($request);
 
@@ -225,6 +229,8 @@ class ProjectStatusController extends FOSRestController
      */
     public function deleteProjectStatusAction(ProjectStatus $project_status)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($project_status);
         $em->flush();

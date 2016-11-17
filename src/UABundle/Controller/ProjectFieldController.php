@@ -142,6 +142,8 @@ class ProjectFieldController extends FOSRestController
      */
     public function postProjectFieldAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $project_field = new ProjectField();
         $form = $this->createForm(new ProjectFieldType(), $project_field);
         $form->handleRequest($request);
@@ -196,6 +198,8 @@ class ProjectFieldController extends FOSRestController
      */
     public function putProjectFieldAction(Request $request, ProjectField $project_field)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $form = $this->createForm(new ProjectFieldType(), $project_field);
         $form->handleRequest($request);
 
@@ -225,6 +229,8 @@ class ProjectFieldController extends FOSRestController
      */
     public function deleteProjectFieldAction(ProjectField $project_field)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($project_field);
         $em->flush();

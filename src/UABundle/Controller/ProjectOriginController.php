@@ -142,6 +142,8 @@ class ProjectOriginController extends FOSRestController
      */
     public function postProjectOriginAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $project_origin = new ProjectOrigin();
         $form = $this->createForm(new ProjectOriginType(), $project_origin);
         $form->handleRequest($request);
@@ -196,6 +198,8 @@ class ProjectOriginController extends FOSRestController
      */
     public function putProjectOriginAction(Request $request, ProjectOrigin $project_origin)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $form = $this->createForm(new ProjectOriginType(), $project_origin);
         $form->handleRequest($request);
 
@@ -224,6 +228,8 @@ class ProjectOriginController extends FOSRestController
      */
     public function deleteProjectOriginAction(ProjectOrigin $project_origin)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($project_origin);
         $em->flush();

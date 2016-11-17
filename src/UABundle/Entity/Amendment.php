@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Amendment
- *
  * @ORM\Table(name="ua_amendment")
  * @ORM\Entity(repositoryClass="UABundle\Repository\AmendmentRepository")
  */

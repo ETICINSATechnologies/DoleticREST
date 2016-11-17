@@ -76,3 +76,15 @@ services:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
             - { name: doctrine.event_listener, event: postLoad }
+
+    ## UA SERVICES
+    ua.project.rights_service:
+        class: UABundle\Service\ProjectRightsService
+
+#    ## RH SERVICES
+#    rh.team.rights_service:
+#            class: RHBundle\Service\TeamRightsService
+#
+#    ## GRC SERVICES
+#    grc.contact.rights_service:
+#            class: GRCBundle\Service\ContactRightsService

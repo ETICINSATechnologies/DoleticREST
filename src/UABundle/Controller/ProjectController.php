@@ -15,6 +15,7 @@ use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use RHBundle\Entity\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use UABundle\Entity\Project;
 use UABundle\Entity\ProjectField;
@@ -389,6 +390,8 @@ class ProjectController extends FOSRestController
      */
     public function postProjectAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_ADMIN');
+
         $project = new Project();
         $form = $this->createForm(new ProjectType(), $project, ['mode' => ProjectType::ADD_MODE]);
         $form->handleRequest($request);
@@ -450,6 +453,10 @@ class ProjectController extends FOSRestController
      */
     public function putProjectAction(Request $request, Project $project)
     {
+        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project)) {
+            throw new AccessDeniedException();
+        }
+
         $form = $this->createForm(new ProjectType(), $project, ['mode' => ProjectType::EDIT_MODE]);
         $form->handleRequest($request);
 
@@ -503,6 +510,10 @@ class ProjectController extends FOSRestController
      */
     public function signProjectAction(Request $request, Project $project)
     {
+        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project)) {
+            throw new AccessDeniedException();
+        }
+
         $form = $this->createForm(new ProjectType(), $project, ['mode' => ProjectType::SIGN_MODE]);
         $form->handleRequest($request);
 
@@ -556,6 +567,9 @@ class ProjectController extends FOSRestController
      */
     public function endProjectAction(Request $request, Project $project)
     {
+        if ($this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project)) {
+            throw new AccessDeniedException();
+        }
 
         if ($project->getSignDate() === null) {
             return array("error" => "Impossible de terminer le projet.");
@@ -617,13 +631,15 @@ class ProjectController extends FOSRestController
      */
     public function disableProjectAction(Request $request, Project $project)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $form = $this->createForm(new ProjectType(), $project, ['mode' => ProjectType::DISABLE_MODE]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $project->setDisabled(true)->setDisabledSince(new \DateTime());
-            if($project->getDisabledSince() > $project->getDisabledUntil()) {
+            if ($project->getDisabledSince() > $project->getDisabledUntil()) {
                 return ["error" => "Date invalide."];
             }
             $em->persist($project);
@@ -673,6 +689,7 @@ class ProjectController extends FOSRestController
      */
     public function enableProjectAction(Request $request, Project $project)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
 
         $em = $this->getDoctrine()->getManager();
 
@@ -722,6 +739,7 @@ class ProjectController extends FOSRestController
      */
     public function unsignProjectAction(Request $request, Project $project)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
 
         if ($project->getEndDate() !== null) {
             return array("error" => "Impossible d'annuler la signature");
@@ -772,6 +790,8 @@ class ProjectController extends FOSRestController
      */
     public function unendProjectAction(Request $request, Project $project)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
 
         $project->setEndDate(null);
@@ -817,6 +837,8 @@ class ProjectController extends FOSRestController
      */
     public function archiveProjectAction(Request $request, Project $project)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
 
         $project->setArchived(true)->setArchivedSince(new \DateTime());
@@ -862,6 +884,8 @@ class ProjectController extends FOSRestController
      */
     public function unarchiveProjectAction(Request $request, Project $project)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
 
         $project->setArchived(false)->setArchivedSince(null);
@@ -907,6 +931,8 @@ class ProjectController extends FOSRestController
      */
     public function auditorProjectAction(Request $request, Project $project)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $form = $this->createForm(new ProjectType(), $project, ['mode' => ProjectType::AUDITOR_MODE]);
         $form->handleRequest($request);
 
@@ -936,6 +962,8 @@ class ProjectController extends FOSRestController
      */
     public function deleteProjectAction(Project $project)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($project);
         $em->flush();
