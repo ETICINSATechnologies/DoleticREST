@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Document
  *
  * @ORM\Table(name="ua_document")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({"project" = "ProjectDocument", "consultant" = "ConsultantDocument", "delivery" = "DeliveryDocument" })
  * @ORM\Entity(repositoryClass="UABundle\Repository\DocumentRepository")
  */
 class Document
@@ -23,13 +26,6 @@ class Document
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var Project
-     *
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="documents")
-     */
-    private $project;
 
     /**
      * @var DocumentTemplate

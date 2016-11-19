@@ -2,6 +2,7 @@
 
 namespace UABundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\OAuth2ServiceBundle\Tests\Storage\User;
 use RHBundle\Entity\UserData;
@@ -58,6 +59,13 @@ class Consultant
      * @ORM\Column(name="pay_by_jeh", type="integer")
      */
     private $payByJeh;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="ConsultantDocument", mappedBy="consultant"))
+     */
+    private $documents;
 
 
     /**

@@ -2,6 +2,7 @@
 
 namespace UABundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -76,6 +77,13 @@ class Delivery
      * @ORM\Column(name="payment_date", type="date", nullable=true)
      */
     private $paymentDate;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="DeliveryDocument", mappedBy="delivery"))
+     */
+    private $documents;
 
 
     /**
@@ -264,6 +272,25 @@ class Delivery
     public function setTask($task)
     {
         $this->task = $task;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
+
+    /**
+     * @param ArrayCollection $documents
+     * @return Delivery
+     */
+    public function setDocuments($documents)
+    {
+        $this->documents = $documents;
 
         return $this;
     }

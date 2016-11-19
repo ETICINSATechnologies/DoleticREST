@@ -226,7 +226,7 @@ class Project
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Document", mappedBy="project"))
+     * @ORM\OneToMany(targetEntity="ProjectDocument", mappedBy="project"))
      */
     private $documents;
 
