@@ -25,7 +25,7 @@ class UserDataType extends AbstractType
             ->add('firstname', TextType::class)
             ->add('lastname', TextType::class)
             ->add('email', EmailType::class)
-            ->add('birthdate', DateType::class, ['required' => false])
+            ->add('birthdate', DateType::class, ['widget' => 'single_text', 'format' => 'dd/MM/yyyy', 'required' => false])
             ->add('department', EntityType::class, ['class' => 'RHBundle\Entity\Department', 'choice_label' => 'label'])
             ->add('schoolYear', EntityType::class, ['class' => 'RHBundle\Entity\SchoolYear', 'choice_label' => 'label'])
             ->add('recruitmentEvent', EntityType::class, ['class' => 'RHBundle\Entity\RecruitmentEvent', 'choice_label' => 'label', 'required' => false])

@@ -5,6 +5,7 @@ namespace GRCBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use KernelBundle\Entity\Gender;
 use KernelBundle\Entity\User;
+use RHBundle\Entity\UserData;
 
 /**
  * Contact
@@ -69,6 +70,34 @@ class Contact
     /**
      * @var string
      *
+     * @ORM\Column(name="origin", type="string", length=255)
+     */
+    private $origin;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="from_prospection", type="boolean")
+     */
+    private $fromProspecting;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="error", type="boolean")
+     */
+    private $error;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="satisfied", type="boolean")
+     */
+    private $satisfied;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="notes", type="text", nullable=true)
      */
     private $notes;
@@ -109,11 +138,25 @@ class Contact
     private $firm;
 
     /**
+     * @var UserData
+     *
+     * @ORM\ManyToOne(targetEntity="RHBundle\Entity\UserData")
+     */
+    private $prospector;
+
+    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
      */
     private $creator;
+
+    /**
+     * @var array
+     *
+     * @ORM\OneToMany(targetEntity="ContactAction", mappedBy="contact")
+     */
+    private $actions;
 
 
     /**
@@ -415,6 +458,120 @@ class Contact
     public function setCreator($creator)
     {
         $this->creator = $creator;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrigin()
+    {
+        return $this->origin;
+    }
+
+    /**
+     * @param string $origin
+     * @return Contact
+     */
+    public function setOrigin($origin)
+    {
+        $this->origin = $origin;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isError()
+    {
+        return $this->error;
+    }
+
+    /**
+     * @param boolean $error
+     * @return Contact
+     */
+    public function setError($error)
+    {
+        $this->error = $error;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isSatisfied()
+    {
+        return $this->satisfied;
+    }
+
+    /**
+     * @param boolean $satisfied
+     * @return Contact
+     */
+    public function setSatisfied($satisfied)
+    {
+        $this->satisfied = $satisfied;
+
+        return $this;
+    }
+
+    /**
+     * @return UserData
+     */
+    public function getProspector()
+    {
+        return $this->prospector;
+    }
+
+    /**
+     * @param UserData $prospector
+     * @return Contact
+     */
+    public function setProspector($prospector)
+    {
+        $this->prospector = $prospector;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isFromProspecting()
+    {
+        return $this->fromProspecting;
+    }
+
+    /**
+     * @param boolean $fromProspecting
+     * @return Contact
+     */
+    public function setFromProspecting($fromProspecting)
+    {
+        $this->fromProspecting = $fromProspecting;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getActions()
+    {
+        return $this->actions;
+    }
+
+    /**
+     * @param array $actions
+     * @return Contact
+     */
+    public function setActions($actions)
+    {
+        $this->actions = $actions;
 
         return $this;
     }
