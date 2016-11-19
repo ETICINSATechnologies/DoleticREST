@@ -5,12 +5,10 @@ namespace KernelBundle\Form;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PositionType extends AbstractType
+class UserPositionType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,19 +17,15 @@ class PositionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', TextType::class)
-            ->add('detail', TextType::class)
-            ->add('roles', ChoiceType::class, [
-                'multiple' => true,
-                'choices' => $this->refactorRoles($options['roles'])
-            ])
-            ->add('old', CheckboxType::class)
-            ->add('president', CheckboxType::class)
-            ->add('treasurer', CheckboxType::class)
-            ->add('roles', EntityType::class, [
-                'class' => 'KernelBundle\Entity\Division',
+            ->add('position', EntityType::class, [
+                'class' => 'KernelBundle\Entity\Position',
                 'choice_label' => 'label'
-            ]);
+            ])
+            ->add('user', EntityType::class, [
+                'class' => 'KernelBundle\Entity\User',
+                'choice_label' => 'username'
+            ])
+            ->add('main', CheckboxType::class);
     }
 
     private function refactorRoles($originRoles)
@@ -61,7 +55,7 @@ class PositionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'KernelBundle\Entity\Position'
+            'data_class' => 'KernelBundle\Entity\UserPosition'
         ));
     }
 

@@ -83,13 +83,6 @@ class UserData
     private $postalCode;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="old", type="boolean")
-     */
-    private $old;
-
-    /**
      * @var SchoolYear
      *
      * @ORM\ManyToOne(targetEntity="SchoolYear")
@@ -336,29 +329,6 @@ class UserData
     public function getPostalCode()
     {
         return $this->postalCode;
-    }
-
-    /**
-     * Set old
-     *
-     * @param boolean $old
-     * @return UserData
-     */
-    public function setOld($old)
-    {
-        $this->old = $old;
-
-        return $this;
-    }
-
-    /**
-     * Get old
-     *
-     * @return boolean
-     */
-    public function getOld()
-    {
-        return $this->old;
     }
 
     /**

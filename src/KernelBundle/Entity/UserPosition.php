@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="kernel_user_position")
  * @ORM\Entity(repositoryClass="KernelBundle\Repository\UserPositionRepository")
+ * @ORM\EntityListeners({ "KernelBundle\Listener\UserPositionListener" })
  */
 class UserPosition
 {
@@ -34,6 +35,13 @@ class UserPosition
      * @ORM\Column(name="active", type="boolean")
      */
     private $active;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="main", type="boolean")
+     */
+    private $main;
 
     /**
      * @var \DateTime
@@ -169,6 +177,25 @@ class UserPosition
     public function setUser($user)
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isMain()
+    {
+        return $this->main;
+    }
+
+    /**
+     * @param boolean $main
+     * @return UserPosition
+     */
+    public function setMain($main)
+    {
+        $this->main = $main;
 
         return $this;
     }
