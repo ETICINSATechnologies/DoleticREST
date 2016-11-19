@@ -19,6 +19,7 @@ parameters:
     documents_dir:  '%kernel.root_dir%/../web/uploads/documents'
     avatars_dir:  '%kernel.root_dir%/../web/uploads/avatars'
     templates_dir:  '%kernel.root_dir%/../web/uploads/templates'
+    output_dir:  '%kernel.root_dir%/../web/output/documents'
 
     doletic_url: ~
     je_name: ~

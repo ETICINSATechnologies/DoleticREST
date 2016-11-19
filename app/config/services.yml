@@ -4,15 +4,3 @@ parameters:
 #    parameter_name: value
 
 services:
-    ## UPLOAD SERVICES
-    document_uploader:
-        class: KernelBundle\Service\FileUploader
-        arguments: ['%documents_dir%']
-
-    avatar_uploader:
-        class: KernelBundle\Service\FileUploader
-        arguments: ['%avatars_dir%']
-
-    template_uploader:
-        class: KernelBundle\Service\FileUploader
-        arguments: ['%templates_dir%']
