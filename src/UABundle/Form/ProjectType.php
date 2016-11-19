@@ -44,6 +44,7 @@ class ProjectType extends AbstractType
             ->add('applicationFee', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
             ->add('rebilledFee', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
             ->add('advance', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
+            ->add('expectedDuration', IntegerType::class, ['disabled' => $mode > self::EDIT_MODE, 'required' => false])
             ->add('secret', CheckboxType::class, ['disabled' => $mode !== self::ADD_MODE])
             ->add('critical', CheckboxType::class, ['disabled' => $mode !== self::ADD_MODE])
             ->add('disabledUntil', DateType::class, ['disabled' => $mode !== self::DISABLE_MODE, 'format' => 'dd/MM/yyyy', 'widget' => 'single_text']);

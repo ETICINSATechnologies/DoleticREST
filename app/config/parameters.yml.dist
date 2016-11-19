@@ -25,5 +25,8 @@ parameters:
     je_name: ~
     webmaster_email: ~
 
+    tva_percent: 20
+    consultant_tax: 10
+
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt

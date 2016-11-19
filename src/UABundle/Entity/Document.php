@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorMap({"project" = "ProjectDocument", "consultant" = "ConsultantDocument", "delivery" = "DeliveryDocument" })
  * @ORM\Entity(repositoryClass="UABundle\Repository\DocumentRepository")
  */
-class Document
+abstract class Document
 {
     /**
      * @var int

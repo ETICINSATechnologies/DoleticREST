@@ -35,3 +35,7 @@ services:
     ua.project.rights_service:
         class: UABundle\Service\ProjectRightsService
         arguments: ['@security.authorization_checker']
+
+    ua.document.service:
+        class: UABundle\Service\DocumentService
+        arguments: ['@doctrine.orm.entity_manager', '%tva_percent%', '%consultant_tax%']

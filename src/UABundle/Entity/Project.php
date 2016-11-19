@@ -89,6 +89,13 @@ class Project
     private $advance;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="expected_duration", type="integer", nullable=true)
+     */
+    private $expectedDuration;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="secret", type="boolean")
@@ -445,6 +452,25 @@ class Project
     public function getAdvance()
     {
         return $this->advance;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExpectedDuration()
+    {
+        return $this->expectedDuration;
+    }
+
+    /**
+     * @param int $expectedDuration
+     * @return Project
+     */
+    public function setExpectedDuration($expectedDuration)
+    {
+        $this->expectedDuration = $expectedDuration;
+
+        return $this;
     }
 
     /**
