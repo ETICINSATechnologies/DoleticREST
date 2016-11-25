@@ -20,8 +20,8 @@ class ContactActionType extends AbstractType
     {
         $builder
             ->add('type', EntityType::class, ['class' => 'GRCBundle\Entity\ContactActionType', 'choice_label' => 'label'])
-            ->add('contact', EntityType::class, ['class' => 'GRCBundle\Entity\Contact', 'choice_label' => 'fullname'])
-            ->add('prospector', EntityType::class, ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname'])
+            ->add('contact', EntityType::class, ['class' => 'GRCBundle\Entity\Contact', 'choice_label' => 'fullName'])
+            ->add('prospector', EntityType::class, ['class' => 'KernelBundle\Entity\User', 'choice_label' => 'fullName'])
             ->add('replied', CheckboxType::class)
             ->add('date', DateType::class, ['widget' => 'single_text', 'format' => 'dd/MM/yyyy'])
             ->add('notes', TextareaType::class);

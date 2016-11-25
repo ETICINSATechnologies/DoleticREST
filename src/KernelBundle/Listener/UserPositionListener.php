@@ -32,7 +32,7 @@ class UserPositionListener
             foreach ($positions as $position) {
                 if ($position->getId() == $userPosition->getId()) {
                     continue;
-                } elseif (!$position->isOld()) {
+                } elseif (!$position->getPosition()->isOld()) {
                     $position->setActive(false)->setEndDate(new DateTime());
                 } else {
                     $alreadyOld = true;
@@ -46,7 +46,7 @@ class UserPositionListener
         } else {
             // If the new position is not old, every old position is considered inactive
             foreach ($positions as $position) {
-                if ($position->isOld()) {
+                if ($position->getPosition()->isOld()) {
                     $position->setActive(false)->setEndDate(new DateTime());
                 }
             }

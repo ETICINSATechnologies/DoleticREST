@@ -35,9 +35,9 @@ abstract class Document
     private $template;
 
     /**
-     * @var \RHBundle\Entity\UserData
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="RHBundle\Entity\UserData")
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
      */
     private $auditor;
 
@@ -87,25 +87,6 @@ abstract class Document
     public function getValid()
     {
         return $this->valid;
-    }
-
-    /**
-     * @return Project
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
-     * @param Project $project
-     * @return Document
-     */
-    public function setProject($project)
-    {
-        $this->project = $project;
-
-        return $this;
     }
 
     /**

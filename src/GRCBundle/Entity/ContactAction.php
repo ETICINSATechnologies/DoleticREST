@@ -3,7 +3,7 @@
 namespace GRCBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use RHBundle\Entity\UserData;
+use KernelBundle\Entity\User;
 
 /**
  * ContactAction
@@ -58,9 +58,9 @@ class ContactAction
     private $contact;
 
     /**
-     * @var UserData
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="RHBundle\Entity\UserData")
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
      */
     private $prospector;
 
@@ -164,7 +164,7 @@ class ContactAction
     }
 
     /**
-     * @return UserData
+     * @return User
      */
     public function getProspector()
     {
@@ -172,7 +172,7 @@ class ContactAction
     }
 
     /**
-     * @param UserData $prospector
+     * @param User $prospector
      * @return ContactAction
      */
     public function setProspector($prospector)

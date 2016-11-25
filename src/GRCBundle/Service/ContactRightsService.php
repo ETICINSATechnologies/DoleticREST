@@ -23,13 +23,7 @@ class ContactRightsService
             return true;
         }
 
-        $userData = $user->getUserData();
-
-        if (!isset($userData)) {
-            return false;
-        }
-
-        if ($userData->getId() == $contact->getProspector()->getId() || $user->getId() == $contact->getCreator()->getId()) {
+        if ($user->getId() == $contact->getProspector()->getId() || $user->getId() == $contact->getCreator()->getId()) {
             return true;
         }
 

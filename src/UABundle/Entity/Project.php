@@ -5,7 +5,7 @@ namespace UABundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GRCBundle\Entity\Firm;
-use RHBundle\Entity\UserData;
+use KernelBundle\Entity\User;
 
 /**
  * Project
@@ -166,9 +166,9 @@ class Project
     private $firm;
 
     /**
-     * @var UserData
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="RHBundle\Entity\UserData")
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
      */
     private $auditor;
 
@@ -707,7 +707,7 @@ class Project
     }
 
     /**
-     * @return UserData
+     * @return User
      */
     public function getAuditor()
     {
@@ -715,7 +715,7 @@ class Project
     }
 
     /**
-     * @param UserData $auditor
+     * @param User $auditor
      * @return Project
      */
     public function setAuditor($auditor)

@@ -4,13 +4,12 @@ namespace UABundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\OAuth2ServiceBundle\Tests\Storage\User;
-use RHBundle\Entity\UserData;
+use KernelBundle\Entity\User;
 
 /**
  * Consultant
  *
- * @ORM\Table(name="ua_consultant", uniqueConstraints={@ORM\UniqueConstraint(name="member", columns={"project_id", "user_data_id"})})
+ * @ORM\Table(name="ua_consultant", uniqueConstraints={@ORM\UniqueConstraint(name="member", columns={"project_id", "user_id"})})
  * @ORM\Entity(repositoryClass="UABundle\Repository\ConsultantRepository")
  * @ORM\EntityListeners({ "UABundle\Listener\ConsultantListener" })
  */
@@ -33,11 +32,11 @@ class Consultant
     private $project;
 
     /**
-     * @var UserData
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="RHBundle\Entity\UserData")
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
      */
-    private $userData;
+    private $user;
 
     /**
      * @var int
@@ -167,21 +166,40 @@ class Consultant
     }
 
     /**
-     * @return UserData
+     * @return User
      */
-    public function getUserData()
+    public function getUser()
     {
-        return $this->userData;
+        return $this->user;
     }
 
     /**
-     * @param UserData $userData
+     * @param User $user
      * @return Consultant
      */
-    public function setUserData($userData)
+    public function setUser($user)
     {
-        $this->userData = $userData;
+        $this->user = $user;
 
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
+
+    /**
+     * @param ArrayCollection $documents
+     * @return Consultant
+     */
+    public function setDocuments($documents)
+    {
+        $this->documents = $documents;
+        
         return $this;
     }
 

@@ -9,8 +9,8 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use RHBundle\Entity\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use RHBundle\Entity\ConsultantMembership;
@@ -51,7 +51,7 @@ class ConsultantMembershipController extends FOSRestController
 
     /**
      * Get all the consultant memberships for a given user data
-     * @param UserData $userData
+     * @param User $user
      * @return array
      *
      * @ApiDoc(
@@ -59,7 +59,7 @@ class ConsultantMembershipController extends FOSRestController
      *  description="Get all the consultant memberships for a given user data",
      *  requirements={
      *      {
-     *          "name"="user_data",
+     *          "name"="user",
      *          "dataType"="string",
      *          "requirement"="*",
      *          "description"="user data id"
@@ -75,16 +75,16 @@ class ConsultantMembershipController extends FOSRestController
      * )
      *
      * @View()
-     * @ParamConverter("userData", class="RHBundle:UserData")
-     * @Get("/administrator_memberships/user_data/{id}", requirements={"id" = "\d+"})
+     * @ParamConverter("user", class="KernelBundle:User")
+     * @Get("/consultant_memberships/user/{id}", requirements={"id" = "\d+"})
      */
-    public function getAdministratorMembershipsByUserDataAction(UserData $userData)
+    public function getAdministratorMembershipsByUserAction(User $user)
     {
 
         $this->denyAccessUnlessGranted('ROLE_RH_ADMIN');
 
         $consultant_memberships = $this->getDoctrine()->getRepository("RHBundle:ConsultantMembership")
-            ->findBy(['userData' => $userData]);
+            ->findBy(['user' => $user]);
 
         return array('consultant_memberships' => $consultant_memberships);
     }

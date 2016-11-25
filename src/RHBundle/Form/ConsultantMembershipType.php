@@ -19,8 +19,8 @@ class ConsultantMembershipType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('userData', EntityType::class, ['choice_label' => 'fullname'])
-            ->add('startDate', DateType::class)
+            ->add('user', EntityType::class, ['class' => 'KernelBundle\Entity\User', 'choice_label' => 'fullName'])
+            ->add('startDate', DateType::class, ['widget' => 'single_text', 'format' => 'dd/MM/yyyy'])
             ->add('socialNumber', TextType::class, ['required' => false])
             ->add('feePaid', CheckboxType::class)
             ->add('formFilled', CheckboxType::class)

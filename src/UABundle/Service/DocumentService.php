@@ -3,7 +3,7 @@
 namespace UABundle\Service;
 
 use Doctrine\ORM\EntityManager;
-use RHBundle\Entity\UserData;
+use KernelBundle\Entity\User;
 use UABundle\Entity\Consultant;
 use UABundle\Entity\Delivery;
 use UABundle\Entity\Project;
@@ -31,7 +31,7 @@ class DocumentService
         ProjectManager $manager,
         ProjectContact $contact,
         Consultant $consultant,
-        UserData $president
+        User $president
     )
     {
         $auditor = $project->getAuditor();
@@ -65,24 +65,24 @@ class DocumentService
             'NOMUSER' => $manager->getManager()->getFirstname() . ' ' . mb_strtoupper($manager->getManager()->getLastname()),
 
             'CIVILITEINTERVENANT' => isset($consultant) ?
-                $consultant->getUserData()->getGender()->getLabel()
+                $consultant->getUser()->getGender()->getLabel()
                 : 'CivConsultant',
             'NOMINTERVENANT' => isset($consultant) ?
-                ($consultant->getUserData()->getFirstname() . ' ' . mb_strtoupper($consultant->getUserData()->getLastname(), 'UTF-8'))
+                ($consultant->getUser()->getFirstname() . ' ' . mb_strtoupper($consultant->getUser()->getLastname(), 'UTF-8'))
                 : 'NomConsultant',
             'CIVILITEINTERVENANT1' => isset($consultant) ?
-                $consultant->getUserData()->getGender()->getLabel()
+                $consultant->getUser()->getGender()->getLabel()
                 : 'CivConsultant',
             'NOMINTERVENANT1' => isset($consultant) ?
-                ($consultant->getUserData()->getFirstname() . ' ' . mb_strtoupper($consultant->getUserData()->getLastname(), 'UTF-8'))
+                ($consultant->getUser()->getFirstname() . ' ' . mb_strtoupper($consultant->getUser()->getLastname(), 'UTF-8'))
                 : 'NomConsultant',
 
             'CIVILITECORRESPONDANTQUALITE' => $auditor->getGender()->getLabel(),
             'NOMCORRESPONDANTQUALITE' => $auditor->getFirstname() . ' ' . mb_strtoupper($auditor->getLastname(), 'UTF-8'),
 
             'CIVILITECONTACT' => $contact->getContact()->getGender()->getLabel(),
-            'NOMCONTACT' => mb_strtoupper($contact->getContact()->getLastname(), 'UTF-8'),
-            'PRENOMCONTACT' => $contact->getContact()->getFirstname(),
+            'NOMCONTACT' => mb_strtoupper($contact->getContact()->getLastName(), 'UTF-8'),
+            'PRENOMCONTACT' => $contact->getContact()->getFirstName(),
             'FCTCONTACT' => $contact->getContact()->getRole(),
 
             'CIVPREZ' => isset($president) ? $president->getGender()->getLabel() : 'CivPresident',
@@ -112,8 +112,8 @@ class DocumentService
     public function buildConsultantDictionary(
         ProjectContact $contact,
         Consultant $consultant,
-        UserData $president,
-        UserData $treasurer
+        User $president,
+        User $treasurer
     )
     {
 
@@ -126,7 +126,7 @@ class DocumentService
         $totalPay = $consultant->getJehAssigned() * $consultant->getPayByJeh();
         $totalNetPay = $consultant->getJehAssigned() * ($consultant->getPayByJeh() - $this->consultantTax);
 
-        $consultantMembership = $consultant->getUserData()->getConsultantMembership();
+        $consultantMembership = $consultant->getUser()->getConsultantMembership();
 
         $fmt = new \NumberFormatter('fr', \NumberFormatter::SPELLOUT);
 
@@ -135,12 +135,12 @@ class DocumentService
             'TITREETUDE' => $project->getNumber(),
 
             'NUMINTER' => $consultant->getNumber(),
-            'CIVILITEINTERVENANT' => $consultant->getUserData()->getGender()->getLabel(),
-            'NOMINTERVENANT' => mb_strtoupper($consultant->getUserData()->getLastname()),
-            'PRENOMINTERVENANT' => $consultant->getUserData()->getFirstname(),
-            'ADRESSEINTERVENANT' => $consultant->getUserData()->getAddress(),
-            'CPINTERVENANT' => $consultant->getUserData()->getPostalCode(),
-            'VILLEINTERVENANT' => $consultant->getUserData()->getCity(),
+            'CIVILITEINTERVENANT' => $consultant->getUser()->getGender()->getLabel(),
+            'NOMINTERVENANT' => mb_strtoupper($consultant->getUser()->getLastname()),
+            'PRENOMINTERVENANT' => $consultant->getUser()->getFirstname(),
+            'ADRESSEINTERVENANT' => $consultant->getUser()->getAddress(),
+            'CPINTERVENANT' => $consultant->getUser()->getPostalCode(),
+            'VILLEINTERVENANT' => $consultant->getUser()->getCity(),
             'SECUINTERVENANT' => isset($consultantMembership) ? $consultantMembership->getSocialNumber() : 'NumSecu',
             'NBJOURSINTER' => $consultant->getJehAssigned(),
             'TOTALINTERVENANT_L' => $totalPay,
@@ -166,7 +166,7 @@ class DocumentService
     public function buildDeliveryDictionary(
         ProjectContact $contact,
         Delivery $delivery,
-        UserData $president
+        User $president
     )
     {
 
@@ -182,8 +182,8 @@ class DocumentService
             'DESCRIPTIONETUDE' => $project->getName(),
 
             'CIVILITECONTACT' => $contact->getContact()->getGender()->getLabel(),
-            'NOMCONTACT' => mb_strtoupper($contact->getContact()->getLastname(), 'UTF-8'),
-            'PRENOMCONTACT' => $contact->getContact()->getFirstname(),
+            'NOMCONTACT' => mb_strtoupper($contact->getContact()->getLastName(), 'UTF-8'),
+            'PRENOMCONTACT' => $contact->getContact()->getFirstName(),
             'FCTCONTACT' => $contact->getContact()->getRole(),
 
             'NOMPRESIDENT' => isset($president) ?

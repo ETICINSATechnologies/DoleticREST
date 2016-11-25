@@ -4,6 +4,7 @@ namespace RHBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use KernelBundle\Entity\Division;
+use KernelBundle\Entity\User;
 
 /**
  * Team
@@ -38,9 +39,9 @@ class Team
     private $creationDate;
 
     /**
-     * @var UserData
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="UserData")
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
      */
     private $leader;
 
@@ -116,7 +117,7 @@ class Team
     }
 
     /**
-     * @return UserData
+     * @return User
      */
     public function getLeader()
     {
@@ -124,7 +125,7 @@ class Team
     }
 
     /**
-     * @param UserData $leader
+     * @param User $leader
      * @return Team
      */
     public function setLeader($leader)

@@ -13,7 +13,6 @@ use GRCBundle\Entity\Contact;
 use GRCBundle\Entity\Firm;
 use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use RHBundle\Entity\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
@@ -176,7 +175,7 @@ class ProjectController extends FOSRestController
 
     /**
      * Get all the projects audited by a user
-     * @param UserData $auditor
+     * @param User $auditor
      * @return array
      *
      * @ApiDoc(
@@ -195,7 +194,7 @@ class ProjectController extends FOSRestController
      * @ParamConverter("auditor", class="KernelBundle:User")
      * @Get("/projects/auditor/{id}", requirements={"id" = "\d+"})
      */
-    public function getProjectsByAuditorAction(UserData $auditor)
+    public function getProjectsByAuditorAction(User $auditor)
     {
 
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
@@ -206,7 +205,7 @@ class ProjectController extends FOSRestController
 
     /**
      * Get all the projects led by a Manager
-     * @param UserData $manager
+     * @param User $manager
      * @return array
      *
      * @ApiDoc(
@@ -225,7 +224,7 @@ class ProjectController extends FOSRestController
      * @ParamConverter("manager", class="KernelBundle:User")
      * @Get("/projects/manager/{id}", requirements={"id" = "\d+"})
      */
-    public function getProjectsByManagerAction(UserData $manager)
+    public function getProjectsByManagerAction(User $manager)
     {
 
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")

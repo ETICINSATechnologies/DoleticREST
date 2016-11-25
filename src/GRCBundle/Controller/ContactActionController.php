@@ -12,7 +12,6 @@ use FOS\RestBundle\Controller\FOSRestController;
 use GRCBundle\Entity\Contact;
 use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Proxies\__CG__\RHBundle\Entity\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
@@ -129,7 +128,7 @@ class ContactActionController extends FOSRestController
 
     /**
      * Get all the contact_actions by a prospector
-     * @param UserData $prospector
+     * @param User $prospector
      * @return array
      *
      * @ApiDoc(
@@ -145,10 +144,10 @@ class ContactActionController extends FOSRestController
      * )
      *
      * @View()
-     * @ParamConverter("prospector", class="RHBundle:UserData")
+     * @ParamConverter("prospector", class="KernelBundle:User")
      * @Get("/contact_actions/prospector/{id}", requirements={"id" = "\d+"})
      */
-    public function getContactActionsByProspectorAction(UserData $prospector)
+    public function getContactActionsByProspectorAction(User $prospector)
     {
 
         $contact_actions = $this->getDoctrine()->getRepository("ContactAction.php")
@@ -180,7 +179,7 @@ class ContactActionController extends FOSRestController
     {
 
         $contact_actions = $this->getDoctrine()->getRepository("ContactAction.php")
-            ->findBy(['prospector' => $this->getUser()->getUserData()]);
+            ->findBy(['prospector' => $this->getUser()]);
 
         return array('contact_actions' => $contact_actions);
     }

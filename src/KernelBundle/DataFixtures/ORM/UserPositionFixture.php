@@ -16,6 +16,7 @@ class UserPositionFixture extends AbstractFixture implements OrderedFixtureInter
             ->setActive(true)
             ->setPosition($this->getReference('resp_dsi'))
             ->setUser($this->getReference('test_user'))
+            ->setMain(true)
             ->setStartDate(new \DateTime());
 
         $manager->persist($uPosition);

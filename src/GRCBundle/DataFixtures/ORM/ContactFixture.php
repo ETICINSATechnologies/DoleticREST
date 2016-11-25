@@ -13,9 +13,13 @@ class ContactFixture extends AbstractFixture implements OrderedFixtureInterface
     {
         $contact = new Contact();
         $contact
-            ->setFirstname('Client')
-            ->setLastname('Doe')
+            ->setFirstName('Client')
+            ->setLastName('Doe')
             ->setType($this->getReference('contact_type'))
+            ->setOrigin("Prospection téléphonique")
+            ->setFromProspecting(true)
+            ->setError(false)
+            ->setSatisfied(true)
             ->setCreator($this->getReference('test_user'));
 
         $manager->persist($contact);

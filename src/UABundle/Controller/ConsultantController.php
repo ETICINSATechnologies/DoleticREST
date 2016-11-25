@@ -9,8 +9,8 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use RHBundle\Entity\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
@@ -81,7 +81,7 @@ class ConsultantController extends FOSRestController
 
     /**
      * Get all the consultants linked to a user data
-     * @param UserData $userData
+     * @param User $user
      * @return array
      *
      * @ApiDoc(
@@ -97,14 +97,14 @@ class ConsultantController extends FOSRestController
      * )
      *
      * @View()
-     * @ParamConverter("userData", class="KernelBundle:UserData")
-     * @Get("/consultants/user_data/{id}", requirements={"id" = "\d+"})
+     * @ParamConverter("user", class="KernelBundle:User")
+     * @Get("/consultants/user/{id}", requirements={"id" = "\d+"})
      */
-    public function getConsultantsByUserDataAction(UserData $userData)
+    public function getConsultantsByUserAction(User $user)
     {
 
         $consultants = $this->getDoctrine()->getRepository("UABundle:Consultant")
-            ->findBy(['userData' => $userData]);
+            ->findBy(['user' => $user]);
 
         return array('consultants' => $consultants);
     }

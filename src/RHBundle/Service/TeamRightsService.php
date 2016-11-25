@@ -23,13 +23,7 @@ class TeamRightsService
             return true;
         }
 
-        $userData = $user->getUserData();
-
-        if (!isset($userData)) {
-            return false;
-        }
-
-        if ($userData->getId() == $team->getLeader()->getId()) {
+        if ($user->getId() == $team->getLeader()->getId()) {
             return true;
         }
 

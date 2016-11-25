@@ -19,7 +19,7 @@ class DocumentType extends AbstractType
     {
         $builder
             ->add('template', EntityType::class, ['class' => 'KernelBundle\Entity\DocumentTemplate', 'choice_label' => 'label'])
-            ->add('auditor', EntityType::class, ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname'])
+            ->add('auditor', EntityType::class, ['class' => 'KernelBundle\Entity\User', 'choice_label' => 'fullName'])
             ->add('file', FileType::class)
             ->add('valid', CheckboxType::class);
     }

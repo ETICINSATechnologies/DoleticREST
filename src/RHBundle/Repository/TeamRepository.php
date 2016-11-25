@@ -3,7 +3,7 @@
 namespace RHBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use RHBundle\Entity\UserData;
+use KernelBundle\Entity\User;
 
 /**
  * TeamRepository
@@ -13,7 +13,7 @@ use RHBundle\Entity\UserData;
  */
 class TeamRepository extends EntityRepository
 {
-    public function findUserDataTeams(UserData $member)
+    public function findUserTeams(User $member)
     {
         $qb = $this->createQueryBuilder('t');
         $qb->join('t.members', 'm')->where($qb->expr()->eq('m.id', $member->getId()));

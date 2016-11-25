@@ -1,5 +1,12 @@
 services:
     ## ENTITY LISTENERS
+    user_listener:
+        class: KernelBundle\Listener\UserListener
+        arguments: ['@service_container']
+        tags:
+            - { name: doctrine.orm.entity_listener }
+            - { name: doctrine.orm.entity_listener, entity_manager: custom }
+
     user_position_listener:
         class: KernelBundle\Listener\UserPositionListener
         arguments: ['@service_container']

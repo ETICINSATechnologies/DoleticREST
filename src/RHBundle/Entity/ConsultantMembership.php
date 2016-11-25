@@ -3,6 +3,7 @@
 namespace RHBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use KernelBundle\Entity\User;
 
 /**
  * ConsultantMembership
@@ -22,11 +23,11 @@ class ConsultantMembership
     private $id;
 
     /**
-     * @var UserData
+     * @var User
      *
-     * @ORM\OneToOne(targetEntity="UserData", inversedBy="consultantMembership"))
+     * @ORM\OneToOne(targetEntity="KernelBundle\Entity\User", inversedBy="consultantMembership"))
      */
-    private $userData;
+    private $user;
 
     /**
      * @var \DateTime
@@ -220,20 +221,20 @@ class ConsultantMembership
     }
 
     /**
-     * @return UserData
+     * @return User
      */
-    public function getUserData()
+    public function getUser()
     {
-        return $this->userData;
+        return $this->user;
     }
 
     /**
-     * @param UserData $userData
+     * @param User $user
      * @return ConsultantMembership
      */
-    public function setUserData($userData)
+    public function setUser($user)
     {
-        $this->userData = $userData;
+        $this->user = $user;
 
         return $this;
     }

@@ -16,6 +16,10 @@ class PositionFixture extends AbstractFixture implements OrderedFixtureInterface
             ->setLabel('Responsable DSI')
             ->setDetail('Responsable DSI')
             ->setRoles(['ROLE_SUPERADMIN'])
+            ->setOld(false)
+            ->setDivisionLeader(true)
+            ->setPresident(false)
+            ->setTreasurer(false)
             ->setDivision($this->getReference('division'));
 
         $manager->persist($position);

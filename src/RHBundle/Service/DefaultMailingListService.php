@@ -22,7 +22,7 @@ class DefaultMailingListService
     }
 
     public function makeDefaultMailingLists() {
-        $userDatas = $this->entityManager->getRepository('RHBundle:UserData')->findAll();
+        $users = $this->entityManager->getRepository('RHBundle:User')->findAll();
 
         $memberList = new CustomMailingList();
         $memberList->setDefault(true);
@@ -30,9 +30,9 @@ class DefaultMailingListService
         $consultantList = new CustomMailingList();
         $consultantList->setDefault(true);
 
-        foreach($userDatas as $userData) {
+        foreach($users as $user) {
             // Add old member check !
-            if($userData->getConsultantMembership() != null) {
+            if($user->getConsultantMembership() != null) {
 
             }
         }

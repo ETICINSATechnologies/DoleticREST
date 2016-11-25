@@ -12,7 +12,6 @@ use FOS\RestBundle\Controller\FOSRestController;
 use KernelBundle\Entity\Division;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use RHBundle\Entity\Team;
-use RHBundle\Entity\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;

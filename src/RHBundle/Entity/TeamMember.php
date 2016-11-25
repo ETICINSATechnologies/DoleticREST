@@ -3,11 +3,12 @@
 namespace RHBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use KernelBundle\Entity\User;
 
 /**
  * TeamMember
  *
- * @ORM\Table(name="rh_team_member", uniqueConstraints={@ORM\UniqueConstraint(name="member", columns={"team_id", "user_data_id"})})
+ * @ORM\Table(name="rh_team_member", uniqueConstraints={@ORM\UniqueConstraint(name="member", columns={"team_id", "user_id"})})
  * @ORM\Entity(repositoryClass="RHBundle\Repository\TeamMemberRepository")
  */
 class TeamMember
@@ -30,12 +31,12 @@ class TeamMember
     private $team;
 
     /**
-     * @var UserData
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="UserData")
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
      *
      */
-    private $userData;
+    private $user;
 
     /**
      * Get id
@@ -66,20 +67,20 @@ class TeamMember
     }
 
     /**
-     * @return UserData
+     * @return User
      */
-    public function getUserData()
+    public function getUser()
     {
-        return $this->userData;
+        return $this->user;
     }
 
     /**
-     * @param UserData $userData
+     * @param User $user
      * @return TeamMember
      */
-    public function setUserData($userData)
+    public function setUser($user)
     {
-        $this->userData = $userData;
+        $this->user = $user;
         return $this;
     }
 

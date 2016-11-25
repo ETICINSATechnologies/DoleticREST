@@ -10,8 +10,8 @@ use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use KernelBundle\Entity\Division;
+use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use RHBundle\Entity\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,13 +80,13 @@ class TeamController extends FOSRestController
     }
 
     /**
-     * Get all the teams let by a UserData
-     * @param UserData $leader
+     * Get all the teams let by a User
+     * @param User $leader
      * @return array
      *
      * @ApiDoc(
      *  section="Team",
-     *  description="Get all teams led by a UserData",
+     *  description="Get all teams led by a User",
      *  statusCodes={
      *         200="Returned when successful"
      *  },
@@ -97,10 +97,10 @@ class TeamController extends FOSRestController
      * )
      *
      * @View()
-     * @ParamConverter("leader", class="RHBundle:UserData")
+     * @ParamConverter("leader", class="KernelBundle:User")
      * @Get("/teams/leader/{id}", requirements={"id" = "\d+"})
      */
-    public function getTeamsByLeaderAction(UserData $leader)
+    public function getTeamsByLeaderAction(User $leader)
     {
 
         $teams = $this->getDoctrine()->getRepository("RHBundle:Team")
@@ -110,13 +110,13 @@ class TeamController extends FOSRestController
     }
 
     /**
-     * Get all the teams a UserData belongs to
-     * @param UserData $member
+     * Get all the teams a User belongs to
+     * @param User $member
      * @return array
      *
      * @ApiDoc(
      *  section="Team",
-     *  description="Get all teams a UserData belongs to",
+     *  description="Get all teams a User belongs to",
      *  statusCodes={
      *         200="Returned when successful"
      *  },
@@ -127,14 +127,14 @@ class TeamController extends FOSRestController
      * )
      *
      * @View()
-     * @ParamConverter("member", class="RHBundle:UserData")
+     * @ParamConverter("member", class="KernelBundle:User")
      * @Get("/teams/member/{id}", requirements={"id" = "\d+"})
      */
-    public function getTeamsByMemberAction(UserData $member)
+    public function getTeamsByMemberAction(User $member)
     {
 
         $teams = $this->getDoctrine()->getRepository("RHBundle:Team")
-            ->findUserDataTeams($member);
+            ->findUserTeams($member);
 
         return array('teams' => $teams);
     }

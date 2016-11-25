@@ -18,7 +18,7 @@ class ConsultantType extends AbstractType
     {
         $builder
             ->add('project', EntityType::class, ['class' => 'UABundle\Entity\Project', 'choice_label' => 'name'])
-            ->add('userData', EntityType::class, ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname'])
+            ->add('user', EntityType::class, ['class' => 'KernelBundle\Entity\User', 'choice_label' => 'fullName'])
             ->add('jehAssigned', IntegerType::class)
             ->add('payByJeh', IntegerType::class);
     }
