@@ -6,10 +6,11 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DocumentType extends AbstractType
+class ProjectFileType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -18,10 +19,10 @@ class DocumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('template', EntityType::class, ['class' => 'KernelBundle\Entity\DocumentTemplate', 'choice_label' => 'label'])
-            ->add('auditor', EntityType::class, ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname'])
-            ->add('file', FileType::class)
-            ->add('valid', CheckboxType::class);
+            ->add('project', EntityType::class, ['class' => 'UABundle\Entity\Project', 'choice_label' => 'name'])
+            ->add('label', TextType::class)
+            ->add('description', TextType::class, ['required' => false])
+            ->add('file', FileType::class);
     }
 
     /**
@@ -31,7 +32,7 @@ class DocumentType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\Document'
+            'data_class' => 'UABundle\Entity\ProjectFile'
         ));
     }
 

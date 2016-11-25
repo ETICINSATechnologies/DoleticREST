@@ -238,6 +238,13 @@ class Project
     private $documents;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="ProjectFile", mappedBy="project"))
+     */
+    private $files;
+
+    /**
      * Get id
      *
      * @return integer
@@ -904,6 +911,25 @@ class Project
     public function setLastUpdateValue()
     {
         $this->lastUpdate = new \DateTime();
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFiles()
+    {
+        return $this->files;
+    }
+
+    /**
+     * @param ArrayCollection $files
+     * @return Project
+     */
+    public function setFiles($files)
+    {
+        $this->files = $files;
+
+        return $this;
     }
 
 }
