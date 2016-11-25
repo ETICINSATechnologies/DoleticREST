@@ -60,6 +60,13 @@ class Position
     /**
      * @var boolean
      *
+     * @ORM\Column(name="division_leader", type="boolean")
+     */
+    private $divisionLeader;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="president", type="boolean")
      */
     private $president;
@@ -218,6 +225,25 @@ class Position
     public function setTreasurer($treasurer)
     {
         $this->treasurer = $treasurer;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDivisionLeader()
+    {
+        return $this->divisionLeader;
+    }
+
+    /**
+     * @param boolean $divisionLeader
+     * @return Position
+     */
+    public function setDivisionLeader($divisionLeader)
+    {
+        $this->divisionLeader = $divisionLeader;
 
         return $this;
     }

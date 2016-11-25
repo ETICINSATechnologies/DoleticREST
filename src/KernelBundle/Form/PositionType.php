@@ -26,6 +26,7 @@ class PositionType extends AbstractType
                 'choices' => $this->refactorRoles($options['roles'])
             ])
             ->add('old', CheckboxType::class)
+            ->add('divisionLeader', CheckboxType::class)
             ->add('president', CheckboxType::class)
             ->add('treasurer', CheckboxType::class)
             ->add('roles', EntityType::class, [
