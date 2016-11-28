@@ -3,7 +3,7 @@
 namespace UABundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use RHBundle\Entity\UserData;
+use KernelBundle\Entity\User;
 
 /**
  * ProjectManager
@@ -31,9 +31,9 @@ class ProjectManager
     private $project;
 
     /**
-     * @var UserData
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="RHBundle\Entity\UserData")
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
      *
      */
     private $manager;
@@ -68,7 +68,7 @@ class ProjectManager
     }
 
     /**
-     * @return UserData
+     * @return User
      */
     public function getManager()
     {
@@ -76,7 +76,7 @@ class ProjectManager
     }
 
     /**
-     * @param UserData $manager
+     * @param User $manager
      * @return ProjectManager
      */
     public function setManager($manager)

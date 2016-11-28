@@ -11,6 +11,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use UABundle\Entity\Project;
 use UABundle\Entity\ProjectContact;
@@ -145,6 +146,10 @@ class ProjectContactController extends FOSRestController
         $form = $this->createForm(new ProjectContactType(), $project_contact);
         $form->handleRequest($request);
 
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project)) {
+            throw new AccessDeniedException();
+        }
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($project_contact);
@@ -171,6 +176,10 @@ class ProjectContactController extends FOSRestController
      */
     public function deleteProjectContactAction(ProjectContact $project_contact)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project_contact->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($project_contact);
         $em->flush();

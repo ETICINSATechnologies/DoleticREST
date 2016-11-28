@@ -11,9 +11,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Document
  *
  * @ORM\Table(name="ua_document")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({"project" = "ProjectDocument", "consultant" = "ConsultantDocument", "delivery" = "DeliveryDocument" })
  * @ORM\Entity(repositoryClass="UABundle\Repository\DocumentRepository")
  */
-class Document
+abstract class Document
 {
     /**
      * @var int
@@ -25,13 +28,6 @@ class Document
     private $id;
 
     /**
-     * @var Project
-     *
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="documents")
-     */
-    private $project;
-
-    /**
      * @var DocumentTemplate
      *
      * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\DocumentTemplate")
@@ -39,9 +35,9 @@ class Document
     private $template;
 
     /**
-     * @var \RHBundle\Entity\UserData
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="RHBundle\Entity\UserData")
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
      */
     private $auditor;
 
@@ -91,25 +87,6 @@ class Document
     public function getValid()
     {
         return $this->valid;
-    }
-
-    /**
-     * @return Project
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
-     * @param Project $project
-     * @return Document
-     */
-    public function setProject($project)
-    {
-        $this->project = $project;
-
-        return $this;
     }
 
     /**

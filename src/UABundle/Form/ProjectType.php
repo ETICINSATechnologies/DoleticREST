@@ -32,7 +32,7 @@ class ProjectType extends AbstractType
 
         $builder
             ->add('firm', EntityType::class, ['class' => 'GRCBundle\Entity\Firm', 'choice_label' => 'name', 'disabled' => $mode > self::EDIT_MODE])
-            ->add('auditor', EntityType::class, ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname', 'disabled' => $mode !== self::AUDITOR_MODE])
+            ->add('auditor', EntityType::class, ['class' => 'KernelBundle\Entity\User', 'choice_label' => 'fullName', 'disabled' => $mode !== self::AUDITOR_MODE])
             ->add('field', EntityType::class, ['class' => 'UABundle\Entity\ProjectField', 'choice_label' => 'label', 'disabled' => $mode > self::EDIT_MODE])
             ->add('origin', EntityType::class, ['class' => 'UABundle\Entity\ProjectOrigin', 'choice_label' => 'label', 'disabled' => $mode > self::EDIT_MODE])
             ->add('status', EntityType::class, ['class' => 'UABundle\Entity\ProjectStatus', 'choice_label' => 'label', 'disabled' => $mode > self::EDIT_MODE])
@@ -44,6 +44,7 @@ class ProjectType extends AbstractType
             ->add('applicationFee', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
             ->add('rebilledFee', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
             ->add('advance', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
+            ->add('expectedDuration', IntegerType::class, ['disabled' => $mode > self::EDIT_MODE, 'required' => false])
             ->add('secret', CheckboxType::class, ['disabled' => $mode !== self::ADD_MODE])
             ->add('critical', CheckboxType::class, ['disabled' => $mode !== self::ADD_MODE])
             ->add('disabledUntil', DateType::class, ['disabled' => $mode !== self::DISABLE_MODE, 'format' => 'dd/MM/yyyy', 'widget' => 'single_text']);

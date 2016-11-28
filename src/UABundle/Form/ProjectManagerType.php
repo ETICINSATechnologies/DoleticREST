@@ -21,7 +21,7 @@ class ProjectManagerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('manager', EntityType::class, ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname']);
+            ->add('manager', EntityType::class, ['class' => 'KernelBundle\Entity\User', 'choice_label' => 'fullName']);
     }
 
     /**

@@ -11,6 +11,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use UABundle\Entity\Project;
 use UABundle\Entity\Task;
@@ -142,6 +143,10 @@ class TaskController extends FOSRestController
         $form = $this->createForm(new TaskType(), $task);
         $form->handleRequest($request);
 
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $task->setEnded(false);
@@ -193,6 +198,10 @@ class TaskController extends FOSRestController
      */
     public function putTaskAction(Request $request, Task $task)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $form = $this->createForm(new TaskType(), $task);
         $form->handleRequest($request);
 
@@ -246,6 +255,10 @@ class TaskController extends FOSRestController
      */
     public function endTaskAction(Request $request, Task $task)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $task->setEnded(true);
         $em->persist($task);
@@ -291,6 +304,10 @@ class TaskController extends FOSRestController
      */
     public function unendTaskAction(Request $request, Task $task)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $task->setEnded(false);
         $em->persist($task);
@@ -335,6 +352,10 @@ class TaskController extends FOSRestController
      */
     public function switchTasksAction(Request $request, Task $task, $idBis)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $taskBis = $em->getRepository('UABundle:Task')->find($idBis);
         $numBis = $taskBis->getNumber();
@@ -359,6 +380,10 @@ class TaskController extends FOSRestController
      */
     public function deleteTaskAction(Task $task)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $task->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();

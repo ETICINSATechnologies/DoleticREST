@@ -142,6 +142,8 @@ class AmendmentTypeController extends FOSRestController
      */
     public function postAmendmentTypeAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $amendment_type = new AmendmentType();
         $form = $this->createForm(new AmendmentTypeType(), $amendment_type);
         $form->handleRequest($request);
@@ -196,6 +198,8 @@ class AmendmentTypeController extends FOSRestController
      */
     public function putAmendmentTypeAction(Request $request, AmendmentType $amendment_type)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $form = $this->createForm(new AmendmentTypeType(), $amendment_type);
         $form->handleRequest($request);
 
@@ -225,6 +229,8 @@ class AmendmentTypeController extends FOSRestController
      */
     public function deleteAmendmentTypeAction(AmendmentType $amendment_type)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($amendment_type);
         $em->flush();

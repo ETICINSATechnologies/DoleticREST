@@ -140,6 +140,8 @@ class ProjectManagerController extends FOSRestController
      */
     public function postProjectManagerAction(Request $request, Project $project)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $project_manager = new ProjectManager();
         $project_manager->setProject($project);
         $form = $this->createForm(new ProjectManagerType(), $project_manager);
@@ -171,6 +173,8 @@ class ProjectManagerController extends FOSRestController
      */
     public function deleteProjectManagerAction(ProjectManager $project_manager)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($project_manager);
         $em->flush();

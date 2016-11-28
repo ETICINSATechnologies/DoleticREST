@@ -12,7 +12,6 @@ use FOS\RestBundle\Controller\FOSRestController;
 use KernelBundle\Entity\Division;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use RHBundle\Entity\Team;
-use RHBundle\Entity\UserData;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
@@ -143,11 +142,7 @@ class TeamMemberController extends FOSRestController
      */
     public function postTeamMemberAction(Request $request, Team $team)
     {
-        if (
-            ($this->getUser()->getUserData() == null
-                || $this->getUser()->getUserData()->getId() !== $team->getLeader()->getId())
-            && $this->isGranted('ROLE_RH_SUPERADMIN') === false
-        ) {
+        if (!$this->get('rh.team.rights_service')->userHasRights($this->getUser(), $team)) {
             throw new AccessDeniedException();
         }
 
@@ -182,11 +177,7 @@ class TeamMemberController extends FOSRestController
      */
     public function deleteTeamMemberAction(TeamMember $teamMember)
     {
-        if (
-            ($this->getUser()->getUserData() == null
-                || $this->getUser()->getUserData()->getId() !== $teamMember->getTeam()->getLeader()->getId())
-            && $this->isGranted('ROLE_RH_SUPERADMIN') === false
-        ) {
+        if (!$this->get('rh.team.rights_service')->userHasRights($this->getUser(), $teamMember->getTeam())) {
             throw new AccessDeniedException();
         }
 

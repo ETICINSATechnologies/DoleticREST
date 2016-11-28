@@ -1,4 +1,5 @@
 services:
+    ## ENTITY LISTENERS
     project_listener:
         class: UABundle\Listener\ProjectListener
         arguments: ['@service_container']
@@ -19,3 +20,22 @@ services:
         tags:
             - { name: doctrine.orm.entity_listener }
             - { name: doctrine.orm.entity_listener, entity_manager: custom }
+
+
+    ## UPLOAD LISTENERS
+    document_upload_listener:
+        class: UABundle\Listener\DocumentUploadListener
+        arguments: ['@document_uploader']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postLoad }
+
+    ## UA SERVICES
+    ua.project.rights_service:
+        class: UABundle\Service\ProjectRightsService
+        arguments: ['@security.authorization_checker']
+
+    ua.document.service:
+        class: UABundle\Service\DocumentService
+        arguments: ['@doctrine.orm.entity_manager', '%tva_percent%', '%consultant_tax%']

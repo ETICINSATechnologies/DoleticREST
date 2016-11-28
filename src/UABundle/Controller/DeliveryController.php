@@ -11,6 +11,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use UABundle\Entity\Delivery;
 use UABundle\Entity\Project;
@@ -173,6 +174,10 @@ class DeliveryController extends FOSRestController
         $form = $this->createForm(new DeliveryType(), $delivery, ['mode' => DeliveryType::ADD_MODE]);
         $form->handleRequest($request);
 
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $delivery->setDelivered(false)->setPaid(false);
@@ -224,6 +229,10 @@ class DeliveryController extends FOSRestController
      */
     public function putDeliveryAction(Request $request, Delivery $delivery)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $form = $this->createForm(new DeliveryType(), $delivery, ['mode' => DeliveryType::EDIT_MODE]);
         $form->handleRequest($request);
 
@@ -277,6 +286,10 @@ class DeliveryController extends FOSRestController
      */
     public function deliverDeliveryAction(Request $request, Delivery $delivery)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $form = $this->createForm(new DeliveryType(), $delivery, ['mode' => DeliveryType::DELIVER_MODE]);
         $form->handleRequest($request);
 
@@ -330,6 +343,10 @@ class DeliveryController extends FOSRestController
      */
     public function undeliverDeliveryAction(Request $request, Delivery $delivery)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $delivery->setDelivered(false)->setDeliveryDate(null);
         $em->persist($delivery);
@@ -374,6 +391,10 @@ class DeliveryController extends FOSRestController
      */
     public function payDeliveryAction(Request $request, Delivery $delivery)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $form = $this->createForm(new DeliveryType(), $delivery, ['mode' => DeliveryType::PAY_MODE]);
         $form->handleRequest($request);
 
@@ -427,6 +448,10 @@ class DeliveryController extends FOSRestController
      */
     public function unpayDeliveryAction(Request $request, Delivery $delivery)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $delivery->setPaid(false)->setPaymentDate(null);
         $em->persist($delivery);
@@ -447,6 +472,10 @@ class DeliveryController extends FOSRestController
      */
     public function deleteDeliveryAction(Delivery $delivery)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery->getTask()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($delivery);
         $em->flush();

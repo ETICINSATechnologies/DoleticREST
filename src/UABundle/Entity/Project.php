@@ -5,7 +5,7 @@ namespace UABundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GRCBundle\Entity\Firm;
-use RHBundle\Entity\UserData;
+use KernelBundle\Entity\User;
 
 /**
  * Project
@@ -89,6 +89,13 @@ class Project
     private $advance;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="expected_duration", type="integer", nullable=true)
+     */
+    private $expectedDuration;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="secret", type="boolean")
@@ -159,16 +166,16 @@ class Project
     private $firm;
 
     /**
-     * @var UserData
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="RHBundle\Entity\UserData")
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
      */
     private $auditor;
 
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="ProjectContact", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="ProjectManager", mappedBy="project")
      *
      */
     private $managers;
@@ -226,9 +233,16 @@ class Project
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Document", mappedBy="project"))
+     * @ORM\OneToMany(targetEntity="ProjectDocument", mappedBy="project"))
      */
     private $documents;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="ProjectFile", mappedBy="project"))
+     */
+    private $files;
 
     /**
      * Get id
@@ -445,6 +459,25 @@ class Project
     public function getAdvance()
     {
         return $this->advance;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExpectedDuration()
+    {
+        return $this->expectedDuration;
+    }
+
+    /**
+     * @param int $expectedDuration
+     * @return Project
+     */
+    public function setExpectedDuration($expectedDuration)
+    {
+        $this->expectedDuration = $expectedDuration;
+
+        return $this;
     }
 
     /**
@@ -674,7 +707,7 @@ class Project
     }
 
     /**
-     * @return UserData
+     * @return User
      */
     public function getAuditor()
     {
@@ -682,7 +715,7 @@ class Project
     }
 
     /**
-     * @param UserData $auditor
+     * @param User $auditor
      * @return Project
      */
     public function setAuditor($auditor)
@@ -878,6 +911,25 @@ class Project
     public function setLastUpdateValue()
     {
         $this->lastUpdate = new \DateTime();
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFiles()
+    {
+        return $this->files;
+    }
+
+    /**
+     * @param ArrayCollection $files
+     * @return Project
+     */
+    public function setFiles($files)
+    {
+        $this->files = $files;
+
+        return $this;
     }
 
 }

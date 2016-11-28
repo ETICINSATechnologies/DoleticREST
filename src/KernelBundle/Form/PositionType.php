@@ -4,6 +4,7 @@ namespace KernelBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,6 +25,10 @@ class PositionType extends AbstractType
                 'multiple' => true,
                 'choices' => $this->refactorRoles($options['roles'])
             ])
+            ->add('old', CheckboxType::class)
+            ->add('divisionLeader', CheckboxType::class)
+            ->add('president', CheckboxType::class)
+            ->add('treasurer', CheckboxType::class)
             ->add('roles', EntityType::class, [
                 'class' => 'KernelBundle\Entity\Division',
                 'choice_label' => 'label'

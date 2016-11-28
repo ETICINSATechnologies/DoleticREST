@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="kernel_position")
  * @ORM\Entity(repositoryClass="KernelBundle\Repository\PositionRepository")
+ * @ORM\EntityListeners({ "KernelBundle\Listener\PositionListener" })
  */
 class Position
 {
@@ -48,6 +49,34 @@ class Position
      * @ORM\ManyToOne(targetEntity="Division")
      */
     private $division;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="old", type="boolean")
+     */
+    private $old;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="division_leader", type="boolean")
+     */
+    private $divisionLeader;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="president", type="boolean")
+     */
+    private $president;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="treasurer", type="boolean")
+     */
+    private $treasurer;
 
     /**
      * Get id
@@ -139,6 +168,82 @@ class Position
     public function setDivision($division)
     {
         $this->division = $division;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isOld()
+    {
+        return $this->old;
+    }
+
+    /**
+     * @param boolean $old
+     * @return Position
+     */
+    public function setOld($old)
+    {
+        $this->old = $old;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isPresident()
+    {
+        return $this->president;
+    }
+
+    /**
+     * @param boolean $president
+     * @return Position
+     */
+    public function setPresident($president)
+    {
+        $this->president = $president;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isTreasurer()
+    {
+        return $this->treasurer;
+    }
+
+    /**
+     * @param boolean $treasurer
+     * @return Position
+     */
+    public function setTreasurer($treasurer)
+    {
+        $this->treasurer = $treasurer;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDivisionLeader()
+    {
+        return $this->divisionLeader;
+    }
+
+    /**
+     * @param boolean $divisionLeader
+     * @return Position
+     */
+    public function setDivisionLeader($divisionLeader)
+    {
+        $this->divisionLeader = $divisionLeader;
 
         return $this;
     }

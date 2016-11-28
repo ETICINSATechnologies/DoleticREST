@@ -41,13 +41,13 @@ class TeamListener
             $members = [];
         }
         foreach ($members as $member) {
-            if ($member->getUserData()->getId() == $team->getLeader()->getId()) {
+            if ($member->getUser()->getId() == $team->getLeader()->getId()) {
                 return;
             }
         }
 
         $newMember = new TeamMember();
-        $newMember->setTeam($team)->setUserData($team->getLeader());
+        $newMember->setTeam($team)->setUser($team->getLeader());
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
         $entityManager->persist($newMember);
         $entityManager->flush();

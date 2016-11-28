@@ -14,7 +14,7 @@ class ConsultantMembershipFixture extends AbstractFixture implements OrderedFixt
         $membership = new ConsultantMembership();
         $membership
             ->setStartDate(new \DateTime())
-            ->setUserData($this->getReference('user_data'))
+            ->setUser($this->getReference('test_user'))
             ->setFeePaid(true)
             ->setFormFilled(true)
             ->setIdGiven(true)

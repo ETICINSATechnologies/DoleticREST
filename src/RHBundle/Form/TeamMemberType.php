@@ -17,7 +17,7 @@ class TeamMemberType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('userData', EntityType::class, ['class' => 'RHBundle\Entity\UserData', 'choice_label' => 'fullname']);
+            ->add('user', EntityType::class, ['class' => 'KernelBundle\Entity\User', 'choice_label' => 'fullName']);
     }
 
     /**

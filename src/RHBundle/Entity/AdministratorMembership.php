@@ -3,6 +3,7 @@
 namespace RHBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use KernelBundle\Entity\User;
 
 /**
  * AdministratorMembership
@@ -23,11 +24,11 @@ class AdministratorMembership
     private $id;
 
     /**
-     * @var UserData
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="UserData", inversedBy="administrator_memberships"))
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User", inversedBy="administrator_memberships"))
      */
-    private $userData;
+    private $user;
 
     /**
      * @var \DateTime
@@ -161,20 +162,20 @@ class AdministratorMembership
     }
 
     /**
-     * @return UserData
+     * @return User
      */
-    public function getUserData()
+    public function getUser()
     {
-        return $this->userData;
+        return $this->user;
     }
 
     /**
-     * @param UserData $userData
+     * @param User $user
      * @return AdministratorMembership
      */
-    public function setUserData($userData)
+    public function setUser($user)
     {
-        $this->userData = $userData;
+        $this->user = $user;
 
         return $this;
     }

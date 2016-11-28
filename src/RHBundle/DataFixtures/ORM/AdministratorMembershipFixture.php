@@ -14,7 +14,7 @@ class AdministratorMembershipFixture extends AbstractFixture implements OrderedF
         $membership = new AdministratorMembership();
         $membership
             ->setStartDate(new \DateTime())
-            ->setUserData($this->getReference('user_data'))
+            ->setUser($this->getReference('test_user'))
             ->setFeePaid(true)
             ->setFormFilled(true);
 

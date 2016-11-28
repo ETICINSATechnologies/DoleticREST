@@ -13,10 +13,10 @@ class UserFixture extends AbstractFixture implements OrderedFixtureInterface
     {
         $user = new User();
         $user
-            ->setUsername('test')
-            ->setEnabled(true)
-            ->setPlainPassword('test')
-            ->setEmail('test@test.test');
+            ->setEmail('test@test.test')
+            ->setFirstName('Test')
+            ->setLastName('Est')
+            ->setPlainPassword('test');
 
         $manager->persist($user);
         $manager->flush();

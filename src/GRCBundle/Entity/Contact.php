@@ -27,16 +27,16 @@ class Contact
     /**
      * @var string
      *
-     * @ORM\Column(name="firstname", type="string", length=255)
+     * @ORM\Column(name="first_name", type="string", length=255)
      */
-    private $firstname;
+    private $firstName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastname", type="string", length=255)
+     * @ORM\Column(name="last_name", type="string", length=255)
      */
-    private $lastname;
+    private $lastName;
 
     /**
      * @var string
@@ -65,6 +65,34 @@ class Contact
      * @ORM\Column(name="role", type="string", length=255, nullable=true)
      */
     private $role;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="origin", type="string", length=255)
+     */
+    private $origin;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="from_prospecting", type="boolean")
+     */
+    private $fromProspecting;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="error", type="boolean")
+     */
+    private $error;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="satisfied", type="boolean")
+     */
+    private $satisfied;
 
     /**
      * @var string
@@ -113,7 +141,21 @@ class Contact
      *
      * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
      */
+    private $prospector;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
+     */
     private $creator;
+
+    /**
+     * @var array
+     *
+     * @ORM\OneToMany(targetEntity="ContactAction", mappedBy="contact")
+     */
+    private $actions;
 
 
     /**
@@ -127,49 +169,49 @@ class Contact
     }
 
     /**
-     * Set firstname
+     * Set firstName
      *
-     * @param string $firstname
+     * @param string $firstName
      * @return Contact
      */
-    public function setFirstname($firstname)
+    public function setFirstName($firstName)
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
     /**
-     * Get firstname
+     * Get firstName
      *
      * @return string
      */
-    public function getFirstname()
+    public function getFirstName()
     {
-        return $this->firstname;
+        return $this->firstName;
     }
 
     /**
-     * Set lastname
+     * Set lastName
      *
-     * @param string $lastname
+     * @param string $lastName
      * @return Contact
      */
-    public function setLastname($lastname)
+    public function setLastName($lastName)
     {
-        $this->lastname = $lastname;
+        $this->lastName = $lastName;
 
         return $this;
     }
 
     /**
-     * Get lastname
+     * Get lastName
      *
      * @return string
      */
-    public function getLastname()
+    public function getLastName()
     {
-        return $this->lastname;
+        return $this->lastName;
     }
 
     /**
@@ -177,9 +219,9 @@ class Contact
      *
      * @return string
      */
-    public function getFullname()
+    public function getFullName()
     {
-        return $this->firstname . ' ' . $this->lastname;
+        return $this->firstName . ' ' . $this->lastName;
     }
 
     /**
@@ -415,6 +457,120 @@ class Contact
     public function setCreator($creator)
     {
         $this->creator = $creator;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrigin()
+    {
+        return $this->origin;
+    }
+
+    /**
+     * @param string $origin
+     * @return Contact
+     */
+    public function setOrigin($origin)
+    {
+        $this->origin = $origin;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isError()
+    {
+        return $this->error;
+    }
+
+    /**
+     * @param boolean $error
+     * @return Contact
+     */
+    public function setError($error)
+    {
+        $this->error = $error;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isSatisfied()
+    {
+        return $this->satisfied;
+    }
+
+    /**
+     * @param boolean $satisfied
+     * @return Contact
+     */
+    public function setSatisfied($satisfied)
+    {
+        $this->satisfied = $satisfied;
+
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getProspector()
+    {
+        return $this->prospector;
+    }
+
+    /**
+     * @param User $prospector
+     * @return Contact
+     */
+    public function setProspector($prospector)
+    {
+        $this->prospector = $prospector;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isFromProspecting()
+    {
+        return $this->fromProspecting;
+    }
+
+    /**
+     * @param boolean $fromProspecting
+     * @return Contact
+     */
+    public function setFromProspecting($fromProspecting)
+    {
+        $this->fromProspecting = $fromProspecting;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getActions()
+    {
+        return $this->actions;
+    }
+
+    /**
+     * @param array $actions
+     * @return Contact
+     */
+    public function setActions($actions)
+    {
+        $this->actions = $actions;
 
         return $this;
     }

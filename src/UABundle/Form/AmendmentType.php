@@ -23,7 +23,7 @@ class AmendmentType extends AbstractType
             ->add('types', EntityType::class, ['class' => 'UABundle\Entity\AmendmentType', 'choice_label' => 'label', 'multiple' => true])
             ->add('content', TextareaType::class)
             ->add('attributable', CheckboxType::class)
-            ->add('date', DateType::class);
+            ->add('date', DateType::class, ['widget' => 'single_text', 'format' => 'dd/MM/yyyy']);
     }
 
     /**

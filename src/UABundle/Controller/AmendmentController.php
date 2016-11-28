@@ -11,6 +11,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use UABundle\Entity\Amendment;
 use UABundle\Entity\Project;
@@ -174,6 +175,10 @@ class AmendmentController extends FOSRestController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $amendment->getProject())) {
+                throw new AccessDeniedException();
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($amendment);
             $em->flush();
@@ -223,6 +228,10 @@ class AmendmentController extends FOSRestController
      */
     public function putAmendmentAction(Request $request, Amendment $amendment)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $amendment->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $form = $this->createForm(new AmendmentType(), $amendment);
         $form->handleRequest($request);
 
@@ -252,6 +261,10 @@ class AmendmentController extends FOSRestController
      */
     public function deleteAmendmentAction(Amendment $amendment)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $amendment->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($amendment);
         $em->flush();

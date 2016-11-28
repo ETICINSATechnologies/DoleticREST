@@ -2,7 +2,10 @@
 
 namespace GRCBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,13 +18,13 @@ class FirmType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type', 'entity', ['class' => 'GRCBundle\Entity\FirmType', 'choice_label' => 'label'])
-            ->add('country', 'entity', ['class' => 'KernelBundle\Entity\Country', 'choice_label' => 'label'])
-            ->add('siret', 'text', ['required' => false])
-            ->add('name', 'text')
-            ->add('address', 'text', ['required' => false])
-            ->add('city', 'text', ['required' => false])
-            ->add('postalCode', 'integer', ['required' => false]);
+            ->add('type', EntityType::class, ['class' => 'GRCBundle\Entity\FirmType', 'choice_label' => 'label'])
+            ->add('country', EntityType::class, ['class' => 'KernelBundle\Entity\Country', 'choice_label' => 'label'])
+            ->add('siret', TextType::class, ['required' => false])
+            ->add('name', TextType::class)
+            ->add('address', TextType::class, ['required' => false])
+            ->add('city', TextType::class, ['required' => false])
+            ->add('postalCode', IntegerType::class, ['required' => false]);
     }
 
     /**

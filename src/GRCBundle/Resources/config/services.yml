@@ -1,6 +1,11 @@
 services:
     contact_listener:
         class: GRCBundle\Listener\ContactListener
+        arguments: ['@service_container']
         tags:
             - { name: doctrine.orm.entity_listener }
             - { name: doctrine.orm.entity_listener, entity_manager: custom }
+
+    grc.contact.rights_service:
+        class: GRCBundle\Service\ContactRightsService
+        arguments: ['@security.authorization_checker']

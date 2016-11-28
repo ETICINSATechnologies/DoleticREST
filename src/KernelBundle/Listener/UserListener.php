@@ -1,13 +1,12 @@
 <?php
 
-namespace RHBundle\Listener;
+namespace KernelBundle\Listener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use KernelBundle\Entity\User;
-use RHBundle\Entity\UserData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class UserDataListener
+class UserListener
 {
 
     const ITERATIONS = 99;
@@ -21,45 +20,42 @@ class UserDataListener
         $this->container = $container;
     }
 
-    public function postPersist(UserData $userData, LifecycleEventArgs $event)
+    public function prePersist(User $user, LifecycleEventArgs $event)
     {
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
-        if ($userName = $this->makeUserName($userData->getFirstname(), $userData->getLastname())) {
-            $password = $this->makeRandomPassword();
-            $user = new User();
-            $user
-                ->setUsername($userName)
-                ->setEmail($userData->getEmail())
-                ->setPlainPassword($password)
-                ->setEnabled(true)
-                ->setUserData($userData);
-            $entityManager->persist($user);
+        if ($userName = $this->makeUserName($user->getFirstName(), $user->getLastName())) {
+            $userPassword = $user->getPlainPassword();
+            if(!isset($userPassword)) {
+                $password = $this->makeRandomPassword();
+                $user->setPlainPassword($password);
+            }
+            $user->setUsername($userName)->setEnabled(true);
 
             if ($this->container->getParameter('mailer_password') !== null) {
                 $message = new \Swift_Message();
                 $message
                     ->setSubject('Compte Doletic créé !')
                     ->setFrom($this->container->getParameter('mailer_user'))
-                    ->setTo($userData->getEmail())
+                    ->setTo($user->getEmail())
                     ->setBody($this->container->get('templating')->render(
                         '@RH/emails/welcome.html.twig',
                         [
-                            'name' => $userData->getFullname(),
+                            'name' => $user->getFullName(),
                             'url' => $this->container->getParameter('doletic_url'),
                             'jeName' => $this->container->getParameter('je_name'),
                             'webmaster' => $this->container->getParameter('webmaster_email'),
                             'username' => $userName,
-                            'password' => $password
+                            'password' => $user->getPlainPassword()
                         ]
                     ));
 
-                $this->container->get('mailer')->send($message, $failures);
+                $this->container->get('mailer')->send($message);
             }
 
         } else {
-            $entityManager->remove($userData);
+            $entityManager->remove($user);
+            $entityManager->flush();
         }
-        $entityManager->flush();
     }
 
     private function makeUserName($firstName, $lastName)

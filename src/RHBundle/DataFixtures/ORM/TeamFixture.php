@@ -13,7 +13,7 @@ class TeamFixture extends AbstractFixture implements OrderedFixtureInterface
     {
         $team = new Team();
         $team
-            ->setLeader($this->getReference('user_data'))
+            ->setLeader($this->getReference('test_user'))
             ->setName('Doletic Team')
             ->setDivision($this->getReference('division'));
 
