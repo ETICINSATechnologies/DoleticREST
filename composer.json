@@ -27,7 +27,8 @@
         "nelmio/api-doc-bundle": "^2.13",
         "friendsofsymfony/oauth-server-bundle": "^1.5",
         "phpoffice/phpword" : "dev-master",
-        "zoddo/ovh-bundle": "v1.0.0.1"
+        "zoddo/ovh-bundle": "v1.0.0.1",
+        "nelmio/cors-bundle": "^1.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
