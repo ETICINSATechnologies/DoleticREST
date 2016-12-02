@@ -17,8 +17,8 @@ class ProjectRepository extends EntityRepository
     public function findByManager(User $user)
     {
         $qb = $this->createQueryBuilder('p');
-        $qb->join('p.managers', 'c')->where($qb->expr()->eq('c.id', $user->getId()))
-            ->orderBy(['p.number' => 'DESC']);
+        $qb->join('p.managers', 'm')->where($qb->expr()->eq('m.id', $user->getId()))
+            ->orderBy('p.number', 'DESC');
         return $qb->getQuery()->getResult();
     }
 
@@ -26,7 +26,7 @@ class ProjectRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('p');
         $qb->join('p.contacts', 'c')->where($qb->expr()->eq('c.id', $contact->getId()))
-            ->orderBy(['p.number' => 'DESC']);
+            ->orderBy('p.number', 'DESC');
         return $qb->getQuery()->getResult();
     }
 
@@ -34,7 +34,7 @@ class ProjectRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('p');
         $qb->join('p.consultants', 'c')->where($qb->expr()->eq('c.user', $user->getId()))
-            ->orderBy(['p.number' => 'DESC']);
+            ->orderBy('p.number', 'DESC');
         return $qb->getQuery()->getResult();
     }
 }
