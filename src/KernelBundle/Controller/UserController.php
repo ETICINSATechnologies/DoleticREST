@@ -9,8 +9,12 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\UserBundle\Model\UserInterface;
+use KernelBundle\Form\ChangePasswordType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
 use KernelBundle\Entity\User;
 use KernelBundle\Form\UserType;
@@ -262,6 +266,114 @@ class UserController extends FOSRestController
             'form' => $form,
         );
     }
+
+    /**
+     * Edit current User
+     * Put action
+     * @param Request $request
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Edit current User",
+     *  input="KernelBundle\Form\UserType",
+     *  output="KernelBundle\Entity\User",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Post("/user/current")
+     */
+    public function putCurrentUserAction(Request $request)
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(new UserType(), $user);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($user);
+            $em->flush();
+
+            return array("user" => $user);
+        }
+
+        return array(
+            'form' => $form,
+        );
+    }
+
+    /**
+     * Edit current User password
+     * Put action
+     * @param Request $request
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Edit current User password",
+     *  input="KernelBundle\Form\UserType",
+     *  output="KernelBundle\Entity\User",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Post("/user/current/password")
+     */
+    public function changePasswordAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+
+        $defaultData = [];
+
+        $form = $this->createForm(new ChangePasswordType(), $defaultData);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $user->setPlainPassword($data['new']);
+            $this->get('fos_user.user_manager')->updateUser($user);
+            if ($this->container->getParameter('mailer_password') !== null) {
+                $message = new \Swift_Message();
+                $message
+                    ->setSubject('Ton mot de passe Doletic a été modifié.')
+                    ->setFrom($this->container->getParameter('mailer_user'))
+                    ->setTo($user->getEmail())
+                    ->setBody($this->container->get('templating')->render(
+                        ':emails:update_pass.html.twig',
+                        [
+                            'user' => $user
+                        ]
+                    ));
+
+                $this->get('mailer')->send($message);
+            }
+            return array("status" => "Updated");
+        }
+        return array("form" => $form);
+
+    }
+
 
     /**
      * Delete a User

@@ -21,6 +21,13 @@ services:
             - { name: doctrine.orm.entity_listener }
             - { name: doctrine.orm.entity_listener, entity_manager: custom }
 
+    ## VALIDATORS
+    kernel.correct_password_validator:
+        class: KernelBundle\Validator\Constraints\CorrectPasswordValidator
+        arguments: ['@security.encoder_factory', '@security.token_storage']
+        tags:
+            - { name: validator.constraint_validator }
+
     ## OVH API SERVICES
     ovh_mail_manager:
         class: KernelBundle\Service\OVHMailManager

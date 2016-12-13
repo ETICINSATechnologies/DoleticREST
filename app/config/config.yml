@@ -35,6 +35,11 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        je_name: "%je_name%"
+        doletic_url: "%doletic_url%"
+        webmaster_email: "%webmaster_email%"
+
 
 # Doctrine Configuration
 doctrine:
@@ -92,6 +97,12 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: KernelBundle\Entity\User
+    from_email:
+        address: "%%mailer_user%"
+        sender_name: Doletic
+    resetting:
+        email:
+            template:
 
 nelmio_api_doc: ~
 

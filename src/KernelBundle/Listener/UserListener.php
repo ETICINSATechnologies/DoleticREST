@@ -38,14 +38,12 @@ class UserListener
                     ->setFrom($this->container->getParameter('mailer_user'))
                     ->setTo($user->getEmail())
                     ->setBody($this->container->get('templating')->render(
-                        '@RH/emails/welcome.html.twig',
+                        ':emails:welcome.html.twig',
                         [
-                            'name' => $user->getFullName(),
+                            'user' => $user,
                             'url' => $this->container->getParameter('doletic_url'),
                             'jeName' => $this->container->getParameter('je_name'),
-                            'webmaster' => $this->container->getParameter('webmaster_email'),
-                            'username' => $userName,
-                            'password' => $user->getPlainPassword()
+                            'webmaster' => $this->container->getParameter('webmaster_email')
                         ]
                     ));
 
