@@ -30,7 +30,8 @@ class DepartmentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -53,20 +54,13 @@ class DepartmentController extends FOSRestController
      * @ApiDoc(
      *  section="Department",
      *  description="Get a department",
-     *  requirements={
-     *      {
-     *          "name"="department",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="department id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -88,20 +82,13 @@ class DepartmentController extends FOSRestController
      * @ApiDoc(
      *  section="Department",
      *  description="Get a department",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="department label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -129,9 +116,9 @@ class DepartmentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -169,14 +156,6 @@ class DepartmentController extends FOSRestController
      * @ApiDoc(
      *  section="Department",
      *  description="Edit a Department",
-     *  requirements={
-     *      {
-     *          "name"="department",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="department id"
-     *      }
-     *  },
      *  input="RHBundle\Form\DepartmentType",
      *  output="RHBundle\Entity\Department",
      *  statusCodes={
@@ -184,14 +163,14 @@ class DepartmentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("department", class="RHBundle:Department")
-     * @Post("/department/{id}")
+     * @Post("/department/{id}", requirements={"id" = "\d+"})
      */
     public function putDepartmentAction(Request $request, Department $department)
     {
@@ -220,9 +199,22 @@ class DepartmentController extends FOSRestController
      * @var Department $department
      * @return array
      *
+     * @ApiDoc(
+     *  section="Department",
+     *  description="Delete a Department",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("department", class="RHBundle:Department")
-     * @Delete("/department/{id}")
+     * @Delete("/department/{id}", requirements={"id" = "\d+"})
      */
     public function deleteDepartmentAction(Department $department)
     {

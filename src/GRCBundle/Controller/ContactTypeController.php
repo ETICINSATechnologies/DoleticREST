@@ -30,7 +30,8 @@ class ContactTypeController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -54,20 +55,13 @@ class ContactTypeController extends FOSRestController
      * @ApiDoc(
      *  section="ContactType",
      *  description="Get a contact_type",
-     *  requirements={
-     *      {
-     *          "name"="contact_type",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact_type id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -90,20 +84,13 @@ class ContactTypeController extends FOSRestController
      * @ApiDoc(
      *  section="ContactType",
      *  description="Get a contact_type",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact_type label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -132,9 +119,9 @@ class ContactTypeController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "grc" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -172,14 +159,6 @@ class ContactTypeController extends FOSRestController
      * @ApiDoc(
      *  section="ContactType",
      *  description="Edit a ContactType",
-     *  requirements={
-     *      {
-     *          "name"="contact_type",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact_type id"
-     *      }
-     *  },
      *  input="GRCBundle\Form\ContactTypeType",
      *  output="GRCBundle\Entity\ContactType",
      *  statusCodes={
@@ -187,14 +166,14 @@ class ContactTypeController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "grc" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("contact_type", class="GRCBundle:ContactType")
-     * @Post("/contact_type/{id}")
+     * @Post("/contact_type/{id}", requirements={"id" = "\d+"})
      */
     public function putContactTypeAction(Request $request, ContactType $contact_type)
     {
@@ -222,6 +201,19 @@ class ContactTypeController extends FOSRestController
      * Delete action
      * @var ContactType $contact_type
      * @return array
+     *
+     * @ApiDoc(
+     *  section="ContactType",
+     *  description="Delete a ContactType",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "grc" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
      *
      * @View()
      * @ParamConverter("contact_type", class="GRCBundle:ContactType")

@@ -34,7 +34,8 @@ class DeliveryDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -63,7 +64,8 @@ class DeliveryDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -93,7 +95,8 @@ class DeliveryDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -123,7 +126,8 @@ class DeliveryDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -152,7 +156,8 @@ class DeliveryDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -176,20 +181,13 @@ class DeliveryDocumentController extends FOSRestController
      * @ApiDoc(
      *  section="DeliveryDocument",
      *  description="Get a delivery_document",
-     *  requirements={
-     *      {
-     *          "name"="delivery_document",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="delivery_document id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -219,9 +217,9 @@ class DeliveryDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
@@ -257,14 +255,6 @@ class DeliveryDocumentController extends FOSRestController
      * @ApiDoc(
      *  section="DeliveryDocument",
      *  description="Edit a DeliveryDocument",
-     *  requirements={
-     *      {
-     *          "name"="delivery_document",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="delivery_document id"
-     *      }
-     *  },
      *  input="UABundle\Form\DeliveryDocumentType",
      *  output="UABundle\Entity\DeliveryDocument",
      *  statusCodes={
@@ -272,14 +262,14 @@ class DeliveryDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("delivery_document", class="UABundle:DeliveryDocument")
-     * @Post("/delivery_document/{id}")
+     * @Post("/delivery_document/{id}", requirements={"id" = "\d+"})
      */
     public function putDeliveryDocumentAction(Request $request, DeliveryDocument $delivery_document)
     {
@@ -306,9 +296,22 @@ class DeliveryDocumentController extends FOSRestController
      * @var DeliveryDocument $delivery_document
      * @return array
      *
+     * @ApiDoc(
+     *  section="DeliveryDocument",
+     *  description="Delete a DeliveryDocument",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("delivery_document", class="UABundle:DeliveryDocument")
-     * @Delete("/delivery_document/{id}")
+     * @Delete("/delivery_document/{id}", requirements={"id" = "\d+"})
      */
     public function deleteDeliveryDocumentAction(DeliveryDocument $delivery_document)
     {

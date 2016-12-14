@@ -23,7 +23,8 @@ class KernelController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *

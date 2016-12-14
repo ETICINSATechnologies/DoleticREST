@@ -30,7 +30,8 @@ class ProjectFieldController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -54,20 +55,13 @@ class ProjectFieldController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectField",
      *  description="Get a project_field",
-     *  requirements={
-     *      {
-     *          "name"="project_field",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_field id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -90,20 +84,13 @@ class ProjectFieldController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectField",
      *  description="Get a project_field",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_field label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -132,9 +119,9 @@ class ProjectFieldController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -172,14 +159,6 @@ class ProjectFieldController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectField",
      *  description="Edit a ProjectField",
-     *  requirements={
-     *      {
-     *          "name"="project_field",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_field id"
-     *      }
-     *  },
      *  input="UABundle\Form\ProjectFieldType",
      *  output="UABundle\Entity\ProjectField",
      *  statusCodes={
@@ -187,14 +166,14 @@ class ProjectFieldController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project_field", class="UABundle:ProjectField")
-     * @Post("/project_field/{id}")
+     * @Post("/project_field/{id}", requirements={"id" = "\d+"})
      */
     public function putProjectFieldAction(Request $request, ProjectField $project_field)
     {
@@ -223,9 +202,22 @@ class ProjectFieldController extends FOSRestController
      * @var ProjectField $project_field
      * @return array
      *
+     * @ApiDoc(
+     *  section="ProjectField",
+     *  description="Delete a ProjectField",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("project_field", class="UABundle:ProjectField")
-     * @Delete("/project_field/{id}")
+     * @Delete("/project_field/{id}", requirements={"id" = "\d+"})
      */
     public function deleteProjectFieldAction(ProjectField $project_field)
     {

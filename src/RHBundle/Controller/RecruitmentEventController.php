@@ -30,7 +30,8 @@ class RecruitmentEventController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -53,20 +54,13 @@ class RecruitmentEventController extends FOSRestController
      * @ApiDoc(
      *  section="RecruitmentEvent",
      *  description="Get a recruitment_event",
-     *  requirements={
-     *      {
-     *          "name"="recruitment_event",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="recruitment_event id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -88,20 +82,13 @@ class RecruitmentEventController extends FOSRestController
      * @ApiDoc(
      *  section="RecruitmentEvent",
      *  description="Get a recruitment_event",
-     *  requirements={
-     *      {
-     *          "name"="date",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="recruitment_event date"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -129,9 +116,9 @@ class RecruitmentEventController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -169,14 +156,6 @@ class RecruitmentEventController extends FOSRestController
      * @ApiDoc(
      *  section="RecruitmentEvent",
      *  description="Edit a RecruitmentEvent",
-     *  requirements={
-     *      {
-     *          "name"="recruitment_event",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="recruitment_event id"
-     *      }
-     *  },
      *  input="RHBundle\Form\RecruitmentEventType",
      *  output="RHBundle\Entity\RecruitmentEvent",
      *  statusCodes={
@@ -184,14 +163,14 @@ class RecruitmentEventController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("recruitment_event", class="RHBundle:RecruitmentEvent")
-     * @Post("/recruitment_event/{id}")
+     * @Post("/recruitment_event/{id}", requirements={"id" = "\d+"})
      */
     public function putRecruitmentEventAction(Request $request, RecruitmentEvent $recruitment_event)
     {
@@ -220,9 +199,22 @@ class RecruitmentEventController extends FOSRestController
      * @var RecruitmentEvent $recruitment_event
      * @return array
      *
+     * @ApiDoc(
+     *  section="RecruitmentEvent",
+     *  description="Delete a RecruitmentEvent",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("recruitment_event", class="RHBundle:RecruitmentEvent")
-     * @Delete("/recruitment_event/{id}")
+     * @Delete("/recruitment_event/{id}", requirements={"id" = "\d+"})
      */
     public function deleteRecruitmentEventAction(RecruitmentEvent $recruitment_event)
     {

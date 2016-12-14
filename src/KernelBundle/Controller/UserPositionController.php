@@ -31,7 +31,8 @@ class UserPositionController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -55,20 +56,13 @@ class UserPositionController extends FOSRestController
      * @ApiDoc(
      *  section="UserPosition",
      *  description="Get a user_position",
-     *  requirements={
-     *      {
-     *          "name"="user_position",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="user_position id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -91,20 +85,13 @@ class UserPositionController extends FOSRestController
      * @ApiDoc(
      *  section="UserPosition",
      *  description="Get a user_position",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="user_position user"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -136,9 +123,9 @@ class UserPositionController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -146,7 +133,7 @@ class UserPositionController extends FOSRestController
      */
     public function postUserPositionAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_KERNEL_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $user_position = new UserPosition();
         $form = $this->createForm(
@@ -179,14 +166,6 @@ class UserPositionController extends FOSRestController
      * @ApiDoc(
      *  section="UserPosition",
      *  description="Edit a UserPosition",
-     *  requirements={
-     *      {
-     *          "name"="user_position",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="user_position id"
-     *      }
-     *  },
      *  input="KernelBundle\Form\UserPositionType",
      *  output="KernelBundle\Entity\UserPosition",
      *  statusCodes={
@@ -194,18 +173,18 @@ class UserPositionController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("user_position", class="KernelBundle:UserPosition")
-     * @Post("/user_position/{id}")
+     * @Post("/user_position/{id}", requirements={"id" = "\d+"})
      */
     public function putUserPositionAction(Request $request, UserPosition $user_position)
     {
-        $this->denyAccessUnlessGranted('ROLE_KERNEL_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $form = $this->createForm(
             new UserPositionType(),
@@ -237,14 +216,6 @@ class UserPositionController extends FOSRestController
      * @ApiDoc(
      *  section="UserPosition",
      *  description="Disable a UserPosition",
-     *  requirements={
-     *      {
-     *          "name"="user_position",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="user_position id"
-     *      }
-     *  },
      *  input="KernelBundle\Form\UserPositionType",
      *  output="KernelBundle\Entity\UserPosition",
      *  statusCodes={
@@ -252,18 +223,18 @@ class UserPositionController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("user_position", class="KernelBundle:UserPosition")
-     * @Post("/user_position/{id}/disable")
+     * @Post("/user_position/{id}/disable", requirements={"id" = "\d+"})
      */
     public function disableUserPositionAction(Request $request, UserPosition $user_position)
     {
-        $this->denyAccessUnlessGranted('ROLE_KERNEL_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         if ($user_position->isMain()) {
             return array(
@@ -289,14 +260,6 @@ class UserPositionController extends FOSRestController
      * @ApiDoc(
      *  section="UserPosition",
      *  description="Enable a UserPosition",
-     *  requirements={
-     *      {
-     *          "name"="user_position",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="user_position id"
-     *      }
-     *  },
      *  input="KernelBundle\Form\UserPositionType",
      *  output="KernelBundle\Entity\UserPosition",
      *  statusCodes={
@@ -304,18 +267,18 @@ class UserPositionController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("user_position", class="KernelBundle:UserPosition")
-     * @Post("/user_position/{id}/enable")
+     * @Post("/user_position/{id}/enable", requirements={"id" = "\d+"})
      */
     public function enableUserPositionAction(Request $request, UserPosition $user_position)
     {
-        $this->denyAccessUnlessGranted('ROLE_KERNEL_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $user_position->setActive(true)->setEndDate(null);
         $em = $this->getDoctrine()->getManager();
@@ -331,9 +294,22 @@ class UserPositionController extends FOSRestController
      * @var UserPosition $user_position
      * @return array
      *
+     * @ApiDoc(
+     *  section="UserPosition",
+     *  description="Delete a UserPosition",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("user_position", class="KernelBundle:UserPosition")
-     * @Delete("/user_position/{id}")
+     * @Delete("/user_position/{id}", requirements={"id" = "\d+"})
      */
     public function deleteUserPositionAction(UserPosition $user_position)
     {

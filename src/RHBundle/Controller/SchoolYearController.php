@@ -30,7 +30,8 @@ class SchoolYearController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -53,20 +54,13 @@ class SchoolYearController extends FOSRestController
      * @ApiDoc(
      *  section="SchoolYear",
      *  description="Get a year",
-     *  requirements={
-     *      {
-     *          "name"="year",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="year id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -88,20 +82,13 @@ class SchoolYearController extends FOSRestController
      * @ApiDoc(
      *  section="SchoolYear",
      *  description="Get a year",
-     *  requirements={
-     *      {
-     *          "name"="year",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="year year"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -129,9 +116,9 @@ class SchoolYearController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -169,14 +156,6 @@ class SchoolYearController extends FOSRestController
      * @ApiDoc(
      *  section="SchoolYear",
      *  description="Edit a SchoolYear",
-     *  requirements={
-     *      {
-     *          "name"="year",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="year id"
-     *      }
-     *  },
      *  input="RHBundle\Form\SchoolYearType",
      *  output="RHBundle\Entity\SchoolYear",
      *  statusCodes={
@@ -184,14 +163,14 @@ class SchoolYearController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("year", class="RHBundle:SchoolYear")
-     * @Post("/year/{id}")
+     * @Post("/year/{id}", requirements={"id" = "\d+"})
      */
     public function putSchoolYearAction(Request $request, SchoolYear $year)
     {
@@ -220,9 +199,22 @@ class SchoolYearController extends FOSRestController
      * @var SchoolYear $year
      * @return array
      *
+     * @ApiDoc(
+     *  section="SchoolYear",
+     *  description="Delete a SchoolYear",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("year", class="RHBundle:SchoolYear")
-     * @Delete("/year/{id}")
+     * @Delete("/year/{id}", requirements={"id" = "\d+"})
      */
     public function deleteSchoolYearAction(SchoolYear $year)
     {

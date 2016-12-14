@@ -34,7 +34,8 @@ class ContactActionController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -51,27 +52,20 @@ class ContactActionController extends FOSRestController
     }
 
     /**
-     * Get all the contact_actions with specified type
+     * Get all the ContactActions with specified type
      * @param Type $type
      * @return array
      *
      * @ApiDoc(
      *  section="ContactAction",
-     *  description="Get all the contact_actions with specified type",
-     *  requirements={
-     *      {
-     *          "name"="type",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact_action type id"
-     *      }
-     *  },
+     *  description="Get all the ContactActions with specified type",
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -89,27 +83,20 @@ class ContactActionController extends FOSRestController
     }
 
     /**
-     * Get all the contact_actions in specified contact
+     * Get all the ContactActions of a specified contact
      * @param Contact $contact
      * @return array
      *
      * @ApiDoc(
      *  section="ContactAction",
-     *  description="Get all the contact_actions in specified contact",
-     *  requirements={
-     *      {
-     *          "name"="type",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact_action type id"
-     *      }
-     *  },
+     *  description="Get all the ContactActions of a specified contact",
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -127,19 +114,20 @@ class ContactActionController extends FOSRestController
     }
 
     /**
-     * Get all the contact_actions by a prospector
+     * Get all the ContactActions of a prospector
      * @param User $prospector
      * @return array
      *
      * @ApiDoc(
      *  section="ContactAction",
-     *  description="Get all contact_actions by a prospector",
+     *  description="Get all ContactActions of a prospector",
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -157,18 +145,19 @@ class ContactActionController extends FOSRestController
     }
 
     /**
-     * Get all the contact_actions by current user
+     * Get all the ContactActions of current user
      * @return array
      *
      * @ApiDoc(
      *  section="ContactAction",
-     *  description="Get all contact_actions by current user",
+     *  description="Get all ContactActions of current user",
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -185,27 +174,20 @@ class ContactActionController extends FOSRestController
     }
 
     /**
-     * Get a contact_action by ID
+     * Get a ContactAction by ID
      * @param ContactAction $contact_action
      * @return array
      *
      * @ApiDoc(
      *  section="ContactAction",
-     *  description="Get a contact_action",
-     *  requirements={
-     *      {
-     *          "name"="contact_action",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact_action id"
-     *      }
-     *  },
+     *  description="Get a ContactAction",
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -235,9 +217,9 @@ class ContactActionController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "grc" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
@@ -251,7 +233,7 @@ class ContactActionController extends FOSRestController
         $form = $this->createForm(new ContactActionType(), $contact_action);
         $form->handleRequest($request);
 
-        if(!$this->get('grc.contact.rights_service')->userHasRights($this->getUser(), $contact_action->getContact())) {
+        if (!$this->get('grc.contact.rights_service')->userHasRights($this->getUser(), $contact_action->getContact())) {
             throw new AccessDeniedException();
         }
 
@@ -279,14 +261,6 @@ class ContactActionController extends FOSRestController
      * @ApiDoc(
      *  section="ContactAction",
      *  description="Edit a ContactAction",
-     *  requirements={
-     *      {
-     *          "name"="contact_action",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact_action id"
-     *      }
-     *  },
      *  input="GRCBundle\Form\ContactActionType",
      *  output="GRCBundle\Entity\ContactAction",
      *  statusCodes={
@@ -294,18 +268,18 @@ class ContactActionController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "grc" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("contact_action", class="GRCBundle:ContactAction")
-     * @Post("/contact_action/{id}")
+     * @Post("/contact_action/{id}", requirements={"id" = "\d+"})
      */
     public function putContactActionAction(Request $request, ContactAction $contact_action)
     {
-        if(!$this->get('grc.contact.rights_service')->userHasRights($this->getUser(), $contact_action->getContact())) {
+        if (!$this->get('grc.contact.rights_service')->userHasRights($this->getUser(), $contact_action->getContact())) {
             throw new AccessDeniedException();
         }
 
@@ -332,9 +306,22 @@ class ContactActionController extends FOSRestController
      * @var ContactAction $contact_action
      * @return array
      *
+     * @ApiDoc(
+     *  section="ContactAction",
+     *  description="Delete a ContactAction",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "grc" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("contact_action", class="GRCBundle:ContactAction")
-     * @Delete("/contact_action/{id}")
+     * @Delete("/contact_action/{id}", requirements={"id" = "\d+"})
      */
     public function deleteContactActionAction(ContactAction $contact_action)
     {

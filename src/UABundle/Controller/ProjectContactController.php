@@ -32,7 +32,8 @@ class ProjectContactController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -61,7 +62,8 @@ class ProjectContactController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -86,20 +88,13 @@ class ProjectContactController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectContact",
      *  description="Get a project_contact",
-     *  requirements={
-     *      {
-     *          "name"="project_contact",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_contact id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -130,9 +125,9 @@ class ProjectContactController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
@@ -169,6 +164,19 @@ class ProjectContactController extends FOSRestController
      * Delete action
      * @var ProjectContact $project_contact
      * @return array
+     *
+     * @ApiDoc(
+     *  section="ProjectContact",
+     *  description="Delete a ProjectContact",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
      *
      * @View()
      * @ParamConverter("project_contact", class="UABundle:ProjectContact")

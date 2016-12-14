@@ -30,7 +30,8 @@ class UserController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -58,7 +59,8 @@ class UserController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -81,20 +83,13 @@ class UserController extends FOSRestController
      * @ApiDoc(
      *  section="User",
      *  description="Get a user",
-     *  requirements={
-     *      {
-     *          "name"="user",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="user id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -117,20 +112,13 @@ class UserController extends FOSRestController
      * @ApiDoc(
      *  section="User",
      *  description="Get a user",
-     *  requirements={
-     *      {
-     *          "name"="email",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="user email"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -158,7 +146,7 @@ class UserController extends FOSRestController
      *          "name"="username",
      *          "dataType"="string",
      *          "requirement"="*",
-     *          "description"="user email"
+     *          "description"="user username"
      *      }
      *  },
      *  statusCodes={
@@ -166,7 +154,8 @@ class UserController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -196,9 +185,9 @@ class UserController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -236,14 +225,6 @@ class UserController extends FOSRestController
      * @ApiDoc(
      *  section="User",
      *  description="Edit a User",
-     *  requirements={
-     *      {
-     *          "name"="user",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="user id"
-     *      }
-     *  },
      *  input="KernelBundle\Form\UserType",
      *  output="KernelBundle\Entity\User",
      *  statusCodes={
@@ -251,14 +232,14 @@ class UserController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("user", class="KernelBundle:User")
-     * @Post("/user/{id}")
+     * @Post("/user/{id}", requirements={"id" = "\d+"})
      */
     public function putUserAction(Request $request, User $user)
     {
@@ -288,9 +269,22 @@ class UserController extends FOSRestController
      * @var User $user
      * @return array
      *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Delete a user",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("user", class="KernelBundle:User")
-     * @Delete("/user/{id}")
+     * @Delete("/user/{id}", requirements={"id" = "\d+"})
      */
     public function deleteUserAction(User $user)
     {

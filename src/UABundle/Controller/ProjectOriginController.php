@@ -30,7 +30,8 @@ class ProjectOriginController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -54,20 +55,13 @@ class ProjectOriginController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectOrigin",
      *  description="Get a project_origin",
-     *  requirements={
-     *      {
-     *          "name"="project_origin",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_origin id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -90,20 +84,13 @@ class ProjectOriginController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectOrigin",
      *  description="Get a project_origin",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_origin label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -132,9 +119,9 @@ class ProjectOriginController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -172,14 +159,6 @@ class ProjectOriginController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectOrigin",
      *  description="Edit a ProjectOrigin",
-     *  requirements={
-     *      {
-     *          "name"="project_origin",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_origin id"
-     *      }
-     *  },
      *  input="UABundle\Form\ProjectOriginType",
      *  output="UABundle\Entity\ProjectOrigin",
      *  statusCodes={
@@ -187,14 +166,14 @@ class ProjectOriginController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project_origin", class="UABundle:ProjectOrigin")
-     * @Post("/project_origin/{id}")
+     * @Post("/project_origin/{id}", requirements={"id" = "\d+"})
      */
     public function putProjectOriginAction(Request $request, ProjectOrigin $project_origin)
     {
@@ -221,6 +200,19 @@ class ProjectOriginController extends FOSRestController
      * Delete action
      * @var ProjectOrigin $project_origin
      * @return array
+     *
+     * @ApiDoc(
+     *  section="ProjectOrigin",
+     *  description="Delete a ProjectOrigin",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
      *
      * @View()
      * @ParamConverter("project_origin", class="UABundle:ProjectOrigin")

@@ -33,7 +33,8 @@ class TeamMemberController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -62,7 +63,8 @@ class TeamMemberController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -87,20 +89,13 @@ class TeamMemberController extends FOSRestController
      * @ApiDoc(
      *  section="TeamMember",
      *  description="Get a teamMember",
-     *  requirements={
-     *      {
-     *          "name"="teamMember",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="teamMember id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -131,14 +126,14 @@ class TeamMemberController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "rh" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("team", class="RHBundle:Team")
-     * @Post("/team_member/{id}")
+     * @Post("/team_member/{id}", requirements={"id" = "\d+"})
      */
     public function postTeamMemberAction(Request $request, Team $team)
     {
@@ -171,9 +166,22 @@ class TeamMemberController extends FOSRestController
      * @var TeamMember $teamMember
      * @return array
      *
+     * @ApiDoc(
+     *  section="TeamMember",
+     *  description="Delete a TeamMember",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("teamMember", class="RHBundle:TeamMember")
-     * @Delete("/team_member/{id}")
+     * @Delete("/team_member/{id}", requirements={"id" = "\d+"})
      */
     public function deleteTeamMemberAction(TeamMember $teamMember)
     {

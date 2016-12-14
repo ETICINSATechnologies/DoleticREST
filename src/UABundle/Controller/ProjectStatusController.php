@@ -30,7 +30,8 @@ class ProjectStatusController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -54,20 +55,13 @@ class ProjectStatusController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectStatus",
      *  description="Get a project_status",
-     *  requirements={
-     *      {
-     *          "name"="project_status",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_status id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -90,20 +84,13 @@ class ProjectStatusController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectStatus",
      *  description="Get a project_status",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_status label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -132,9 +119,9 @@ class ProjectStatusController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -172,14 +159,6 @@ class ProjectStatusController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectStatus",
      *  description="Edit a ProjectStatus",
-     *  requirements={
-     *      {
-     *          "name"="project_status",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_status id"
-     *      }
-     *  },
      *  input="UABundle\Form\ProjectStatusType",
      *  output="UABundle\Entity\ProjectStatus",
      *  statusCodes={
@@ -187,14 +166,14 @@ class ProjectStatusController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project_status", class="UABundle:ProjectStatus")
-     * @Post("/project_status/{id}")
+     * @Post("/project_status/{id}", requirements={"id" = "\d+"})
      */
     public function putProjectStatusAction(Request $request, ProjectStatus $project_status)
     {
@@ -223,9 +202,22 @@ class ProjectStatusController extends FOSRestController
      * @var ProjectStatus $project_status
      * @return array
      *
+     * @ApiDoc(
+     *  section="ProjectStatus",
+     *  description="Delete a ProjectStatus",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("project_status", class="UABundle:ProjectStatus")
-     * @Delete("/project_status/{id}")
+     * @Delete("/project_status/{id}", requirements={"id" = "\d+"})
      */
     public function deleteProjectStatusAction(ProjectStatus $project_status)
     {

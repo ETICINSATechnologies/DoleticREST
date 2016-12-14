@@ -33,7 +33,8 @@ class TeamController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -62,7 +63,8 @@ class TeamController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -92,7 +94,8 @@ class TeamController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -122,7 +125,8 @@ class TeamController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -147,20 +151,13 @@ class TeamController extends FOSRestController
      * @ApiDoc(
      *  section="Team",
      *  description="Get a team",
-     *  requirements={
-     *      {
-     *          "name"="team",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="team id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -183,20 +180,13 @@ class TeamController extends FOSRestController
      * @ApiDoc(
      *  section="Team",
      *  description="Get a team",
-     *  requirements={
-     *      {
-     *          "name"="name",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="team name"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -225,9 +215,9 @@ class TeamController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "rh" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
@@ -265,14 +255,6 @@ class TeamController extends FOSRestController
      * @ApiDoc(
      *  section="Team",
      *  description="Edit a Team",
-     *  requirements={
-     *      {
-     *          "name"="team",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="team id"
-     *      }
-     *  },
      *  input="RHBundle\Form\TeamType",
      *  output="RHBundle\Entity\Team",
      *  statusCodes={
@@ -280,14 +262,14 @@ class TeamController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "rh" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("team", class="RHBundle:Team")
-     * @Post("/team/{id}")
+     * @Post("/team/{id}", requirements={"id" = "\d+"})
      */
     public function putTeamAction(Request $request, Team $team)
     {
@@ -319,9 +301,22 @@ class TeamController extends FOSRestController
      * @var Team $team
      * @return array
      *
+     * @ApiDoc(
+     *  section="Team",
+     *  description="Delete a Team",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("team", class="RHBundle:Team")
-     * @Delete("/team/{id}")
+     * @Delete("/team/{id}", requirements={"id" = "\d+"})
      */
     public function deleteTeamAction(Team $team)
     {

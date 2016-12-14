@@ -34,7 +34,8 @@ class TicketController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "support" = "#0033ff",
+     *   "admin" = "#e0a157"
      *  }
      * )
      *
@@ -64,7 +65,8 @@ class TicketController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "support" = "#0033ff",
+     *   "admin" = "#e0a157"
      *  }
      * )
      *
@@ -95,7 +97,8 @@ class TicketController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "support" = "#0033ff",
+     *   "admin" = "#e0a157"
      *  }
      * )
      *
@@ -126,7 +129,8 @@ class TicketController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "support" = "#0033ff",
+     *   "admin" = "#e0a157"
      *  }
      * )
      *
@@ -156,7 +160,8 @@ class TicketController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "support" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -180,20 +185,13 @@ class TicketController extends FOSRestController
      * @ApiDoc(
      *  section="Ticket",
      *  description="Get a ticket",
-     *  requirements={
-     *      {
-     *          "name"="ticket",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="ticket id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "support" = "#0033ff",
+     *   "admin" = "#e0a157"
      *  }
      * )
      *
@@ -203,6 +201,8 @@ class TicketController extends FOSRestController
      */
     public function getTicketAction(Ticket $ticket)
     {
+
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_ADMIN');
 
         return array('ticket' => $ticket);
 
@@ -223,9 +223,9 @@ class TicketController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "support" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
      * )
      *
      * @View()
@@ -261,14 +261,6 @@ class TicketController extends FOSRestController
      * @ApiDoc(
      *  section="Ticket",
      *  description="Edit a Ticket",
-     *  requirements={
-     *      {
-     *          "name"="ticket",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="ticket id"
-     *      }
-     *  },
      *  input="SupportBundle\Form\TicketType",
      *  output="SupportBundle\Entity\Ticket",
      *  statusCodes={
@@ -276,14 +268,14 @@ class TicketController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "support" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("ticket", class="SupportBundle:Ticket")
-     * @Post("/ticket/{id}")
+     * @Post("/ticket/{id}", requirements={"id" = "\d+"})
      */
     public function putTicketAction(Request $request, Ticket $ticket)
     {
@@ -314,9 +306,22 @@ class TicketController extends FOSRestController
      * @var Ticket $ticket
      * @return array
      *
+     * @ApiDoc(
+     *  section="Ticket",
+     *  description="Delete a Ticket",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "support" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("ticket", class="SupportBundle:Ticket")
-     * @Delete("/ticket/{id}")
+     * @Delete("/ticket/{id}", requirements={"id" = "\d+"})
      */
     public function deleteTicketAction(Ticket $ticket)
     {

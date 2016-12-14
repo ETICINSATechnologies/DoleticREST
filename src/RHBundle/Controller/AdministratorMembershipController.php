@@ -31,7 +31,8 @@ class AdministratorMembershipController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "admin" = "#e0a157"
      *  }
      * )
      *
@@ -56,20 +57,13 @@ class AdministratorMembershipController extends FOSRestController
      * @ApiDoc(
      *  section="AdministratorMembership",
      *  description="Get all administrator memberships for a given user data",
-     *  requirements={
-     *      {
-     *          "name"="user",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="user data id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "admin" = "#e0a157"
      *  }
      * )
      *
@@ -95,20 +89,13 @@ class AdministratorMembershipController extends FOSRestController
      * @ApiDoc(
      *  section="AdministratorMembership",
      *  description="Get a administrator_membership",
-     *  requirements={
-     *      {
-     *          "name"="administrator_membership",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="administrator_membership id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "admin" = "#e0a157"
      *  }
      * )
      *
@@ -139,9 +126,9 @@ class AdministratorMembershipController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -179,14 +166,6 @@ class AdministratorMembershipController extends FOSRestController
      * @ApiDoc(
      *  section="AdministratorMembership",
      *  description="Edit a AdministratorMembership",
-     *  requirements={
-     *      {
-     *          "name"="administrator_membership",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="administrator_membership id"
-     *      }
-     *  },
      *  input="RHBundle\Form\AdministratorMembershipType",
      *  output="RHBundle\Entity\AdministratorMembership",
      *  statusCodes={
@@ -194,14 +173,14 @@ class AdministratorMembershipController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("administrator_membership", class="RHBundle:AdministratorMembership")
-     * @Post("/administrator_membership/{id}")
+     * @Post("/administrator_membership/{id}", requirements={"id" = "\d+"})
      */
     public function putAdministratorMembershipAction(Request $request, AdministratorMembership $administrator_membership)
     {
@@ -230,9 +209,22 @@ class AdministratorMembershipController extends FOSRestController
      * @var AdministratorMembership $administrator_membership
      * @return array
      *
+     * @ApiDoc(
+     *  section="AdministratorMembership",
+     *  description="Delete a AdministratorMembership",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("administrator_membership", class="RHBundle:AdministratorMembership")
-     * @Delete("/administrator_membership/{id}")
+     * @Delete("/administrator_membership/{id}", requirements={"id" = "\d+"})
      */
     public function deleteAdministratorMembershipAction(AdministratorMembership $administrator_membership)
     {

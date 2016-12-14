@@ -30,7 +30,8 @@ class DocumentTemplateController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -54,20 +55,13 @@ class DocumentTemplateController extends FOSRestController
      * @ApiDoc(
      *  section="DocumentTemplate",
      *  description="Get a template",
-     *  requirements={
-     *      {
-     *          "name"="template",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="template id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -90,20 +84,13 @@ class DocumentTemplateController extends FOSRestController
      * @ApiDoc(
      *  section="DocumentTemplate",
      *  description="Get a template",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="template label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -133,9 +120,9 @@ class DocumentTemplateController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -173,14 +160,6 @@ class DocumentTemplateController extends FOSRestController
      * @ApiDoc(
      *  section="DocumentTemplate",
      *  description="Edit a DocumentTemplate",
-     *  requirements={
-     *      {
-     *          "name"="template",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="template id"
-     *      }
-     *  },
      *  input="KernelBundle\Form\DocumentTemplateType",
      *  output="KernelBundle\Entity\DocumentTemplate",
      *  statusCodes={
@@ -188,14 +167,14 @@ class DocumentTemplateController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("template", class="KernelBundle:DocumentTemplate")
-     * @Post("/template/{id}")
+     * @Post("/template/{id}", requirements={"id" = "\d+"})
      */
     public function putDocumentTemplateAction(Request $request, DocumentTemplate $template)
     {
@@ -224,9 +203,22 @@ class DocumentTemplateController extends FOSRestController
      * @var DocumentTemplate $template
      * @return array
      *
+     * @ApiDoc(
+     *  section="DocumentTemplate",
+     *  description="Delete a DocumentTemplate",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("template", class="KernelBundle:DocumentTemplate")
-     * @Delete("/template/{id}")
+     * @Delete("/template/{id}", requirements={"id" = "\d+"})
      */
     public function deleteDocumentTemplateAction(DocumentTemplate $template)
     {

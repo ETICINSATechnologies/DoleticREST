@@ -33,7 +33,8 @@ class DeliveryController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -62,7 +63,8 @@ class DeliveryController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -92,7 +94,8 @@ class DeliveryController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -117,20 +120,13 @@ class DeliveryController extends FOSRestController
      * @ApiDoc(
      *  section="Delivery",
      *  description="Get a delivery",
-     *  requirements={
-     *      {
-     *          "name"="delivery",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="delivery id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -160,9 +156,9 @@ class DeliveryController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
@@ -203,14 +199,6 @@ class DeliveryController extends FOSRestController
      * @ApiDoc(
      *  section="Delivery",
      *  description="Edit a Delivery",
-     *  requirements={
-     *      {
-     *          "name"="delivery",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="delivery id"
-     *      }
-     *  },
      *  input="UABundle\Form\DeliveryType",
      *  output="UABundle\Entity\Delivery",
      *  statusCodes={
@@ -218,14 +206,14 @@ class DeliveryController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("delivery", class="UABundle:Delivery")
-     * @Post("/delivery/{id}")
+     * @Post("/delivery/{id}", requirements={"id" = "\d+"})
      */
     public function putDeliveryAction(Request $request, Delivery $delivery)
     {
@@ -260,14 +248,6 @@ class DeliveryController extends FOSRestController
      * @ApiDoc(
      *  section="Delivery",
      *  description="Deliver a Delivery",
-     *  requirements={
-     *      {
-     *          "name"="delivery",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="delivery id"
-     *      }
-     *  },
      *  input="UABundle\Form\DeliveryType",
      *  output="UABundle\Entity\Delivery",
      *  statusCodes={
@@ -275,14 +255,14 @@ class DeliveryController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("delivery", class="UABundle:Delivery")
-     * @Post("/delivery/{id}/deliver")
+     * @Post("/delivery/{id}/deliver", requirements={"id" = "\d+"})
      */
     public function deliverDeliveryAction(Request $request, Delivery $delivery)
     {
@@ -317,14 +297,6 @@ class DeliveryController extends FOSRestController
      * @ApiDoc(
      *  section="Delivery",
      *  description="Cancel the delivery of a Delivery",
-     *  requirements={
-     *      {
-     *          "name"="delivery",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="delivery id"
-     *      }
-     *  },
      *  input="UABundle\Form\DeliveryType",
      *  output="UABundle\Entity\Delivery",
      *  statusCodes={
@@ -332,14 +304,14 @@ class DeliveryController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("delivery", class="UABundle:Delivery")
-     * @Post("/delivery/{id}/undeliver")
+     * @Post("/delivery/{id}/undeliver", requirements={"id" = "\d+"})
      */
     public function undeliverDeliveryAction(Request $request, Delivery $delivery)
     {
@@ -365,14 +337,6 @@ class DeliveryController extends FOSRestController
      * @ApiDoc(
      *  section="Delivery",
      *  description="Pay a Delivery",
-     *  requirements={
-     *      {
-     *          "name"="delivery",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="delivery id"
-     *      }
-     *  },
      *  input="UABundle\Form\DeliveryType",
      *  output="UABundle\Entity\Delivery",
      *  statusCodes={
@@ -380,14 +344,14 @@ class DeliveryController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("delivery", class="UABundle:Delivery")
-     * @Post("/delivery/{id}/pay")
+     * @Post("/delivery/{id}/pay", requirements={"id" = "\d+"})
      */
     public function payDeliveryAction(Request $request, Delivery $delivery)
     {
@@ -422,14 +386,6 @@ class DeliveryController extends FOSRestController
      * @ApiDoc(
      *  section="Delivery",
      *  description="Cancel the payment of a Delivery",
-     *  requirements={
-     *      {
-     *          "name"="delivery",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="delivery id"
-     *      }
-     *  },
      *  input="UABundle\Form\DeliveryType",
      *  output="UABundle\Entity\Delivery",
      *  statusCodes={
@@ -437,14 +393,14 @@ class DeliveryController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("delivery", class="UABundle:Delivery")
-     * @Post("/delivery/{id}/unpay")
+     * @Post("/delivery/{id}/unpay", requirements={"id" = "\d+"})
      */
     public function unpayDeliveryAction(Request $request, Delivery $delivery)
     {
@@ -466,9 +422,22 @@ class DeliveryController extends FOSRestController
      * @var Delivery $delivery
      * @return array
      *
+     * @ApiDoc(
+     *  section="Delivery",
+     *  description="Delete a Delivery",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("delivery", class="UABundle:Delivery")
-     * @Delete("/delivery/{id}")
+     * @Delete("/delivery/{id}", requirements={"id" = "\d+"})
      */
     public function deleteDeliveryAction(Delivery $delivery)
     {

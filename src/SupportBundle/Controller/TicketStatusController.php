@@ -30,7 +30,8 @@ class TicketStatusController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "support" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -54,20 +55,13 @@ class TicketStatusController extends FOSRestController
      * @ApiDoc(
      *  section="TicketStatus",
      *  description="Get a ticket_status",
-     *  requirements={
-     *      {
-     *          "name"="ticket_status",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="ticket_status id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "support" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -90,20 +84,13 @@ class TicketStatusController extends FOSRestController
      * @ApiDoc(
      *  section="TicketStatus",
      *  description="Get a ticket_status",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="ticket_status label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "support" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -132,9 +119,9 @@ class TicketStatusController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "support" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -187,14 +174,14 @@ class TicketStatusController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "support" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("ticket_status", class="SupportBundle:TicketStatus")
-     * @Post("/ticket_status/{id}")
+     * @Post("/ticket_status/{id}", requirements={"id" = "\d+"})
      */
     public function putTicketStatusAction(Request $request, TicketStatus $ticket_status)
     {
@@ -223,9 +210,22 @@ class TicketStatusController extends FOSRestController
      * @var TicketStatus $ticket_status
      * @return array
      *
+     * @ApiDoc(
+     *  section="TicketStatus",
+     *  description="Delete a TicketStatus",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "support" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("ticket_status", class="SupportBundle:TicketStatus")
-     * @Delete("/ticket_status/{id}")
+     * @Delete("/ticket_status/{id}", requirements={"id" = "\d+"})
      */
     public function deleteTicketStatusAction(TicketStatus $ticket_status)
     {

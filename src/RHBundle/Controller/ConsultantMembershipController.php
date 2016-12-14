@@ -31,7 +31,8 @@ class ConsultantMembershipController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "admin" = "#e0a157"
      *  }
      * )
      *
@@ -57,20 +58,13 @@ class ConsultantMembershipController extends FOSRestController
      * @ApiDoc(
      *  section="ConsultantMembership",
      *  description="Get all the consultant memberships for a given user data",
-     *  requirements={
-     *      {
-     *          "name"="user",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="user data id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "admin" = "#e0a157"
      *  }
      * )
      *
@@ -97,20 +91,13 @@ class ConsultantMembershipController extends FOSRestController
      * @ApiDoc(
      *  section="ConsultantMembership",
      *  description="Get a consultant_membership",
-     *  requirements={
-     *      {
-     *          "name"="consultant_membership",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="consultant_membership id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "rh" = "#0033ff",
+     *   "admin" = "#e0a157"
      *  }
      * )
      *
@@ -141,9 +128,9 @@ class ConsultantMembershipController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -181,14 +168,6 @@ class ConsultantMembershipController extends FOSRestController
      * @ApiDoc(
      *  section="ConsultantMembership",
      *  description="Edit a ConsultantMembership",
-     *  requirements={
-     *      {
-     *          "name"="consultant_membership",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="consultant_membership id"
-     *      }
-     *  },
      *  input="RHBundle\Form\ConsultantMembershipType",
      *  output="RHBundle\Entity\ConsultantMembership",
      *  statusCodes={
@@ -196,14 +175,14 @@ class ConsultantMembershipController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("consultant_membership", class="RHBundle:ConsultantMembership")
-     * @Post("/consultant_membership/{id}")
+     * @Post("/consultant_membership/{id}", requirements={"id" = "\d+"})
      */
     public function putConsultantMembershipAction(Request $request, ConsultantMembership $consultant_membership)
     {
@@ -232,9 +211,22 @@ class ConsultantMembershipController extends FOSRestController
      * @var ConsultantMembership $consultant_membership
      * @return array
      *
+     * @ApiDoc(
+     *  section="ConsultantMembership",
+     *  description="Delete a ConsultantMembership",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("consultant_membership", class="RHBundle:ConsultantMembership")
-     * @Delete("/consultant_membership/{id}")
+     * @Delete("/consultant_membership/{id}", requirements={"id" = "\d+"})
      */
     public function deleteConsultantMembershipAction(ConsultantMembership $consultant_membership)
     {

@@ -30,7 +30,8 @@ class GenderController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -54,20 +55,13 @@ class GenderController extends FOSRestController
      * @ApiDoc(
      *  section="Gender",
      *  description="Get a gender",
-     *  requirements={
-     *      {
-     *          "name"="gender",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="gender id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -90,20 +84,13 @@ class GenderController extends FOSRestController
      * @ApiDoc(
      *  section="Gender",
      *  description="Get a gender",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="gender label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -133,9 +120,9 @@ class GenderController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -173,14 +160,6 @@ class GenderController extends FOSRestController
      * @ApiDoc(
      *  section="Gender",
      *  description="Edit a Gender",
-     *  requirements={
-     *      {
-     *          "name"="gender",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="gender id"
-     *      }
-     *  },
      *  input="KernelBundle\Form\GenderType",
      *  output="KernelBundle\Entity\Gender",
      *  statusCodes={
@@ -188,14 +167,14 @@ class GenderController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("gender", class="KernelBundle:Gender")
-     * @Post("/gender/{id}")
+     * @Post("/gender/{id}", requirements={"id" = "\d+"})
      */
     public function putGenderAction(Request $request, Gender $gender)
     {
@@ -224,9 +203,22 @@ class GenderController extends FOSRestController
      * @var Gender $gender
      * @return array
      *
+     * @ApiDoc(
+     *  section="Gender",
+     *  description="Delete a Gender",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("gender", class="KernelBundle:Gender")
-     * @Delete("/gender/{id}")
+     * @Delete("/gender/{id}", requirements={"id" = "\d+"})
      */
     public function deleteGenderAction(Gender $gender)
     {
