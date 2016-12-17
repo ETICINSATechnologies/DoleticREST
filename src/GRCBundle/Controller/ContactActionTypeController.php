@@ -30,7 +30,8 @@ class ContactActionTypeController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -54,20 +55,13 @@ class ContactActionTypeController extends FOSRestController
      * @ApiDoc(
      *  section="ContactActionType",
      *  description="Get a contact_action_type",
-     *  requirements={
-     *      {
-     *          "name"="contact_action_type",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact_action_type id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -90,20 +84,13 @@ class ContactActionTypeController extends FOSRestController
      * @ApiDoc(
      *  section="ContactActionType",
      *  description="Get a contact_action_type",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact_action_type label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -132,9 +119,9 @@ class ContactActionTypeController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "grc" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -172,14 +159,6 @@ class ContactActionTypeController extends FOSRestController
      * @ApiDoc(
      *  section="ContactActionType",
      *  description="Edit a ContactActionType",
-     *  requirements={
-     *      {
-     *          "name"="contact_action_type",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact_action_type id"
-     *      }
-     *  },
      *  input="GRCBundle\Form\ContactActionTypeType",
      *  output="GRCBundle\Entity\ContactActionType",
      *  statusCodes={
@@ -187,14 +166,14 @@ class ContactActionTypeController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "grc" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("contact_action_type", class="GRCBundle:ContactActionType")
-     * @Post("/contact_action_type/{id}")
+     * @Post("/contact_action_type/{id}", requirements={"id" = "\d+"})
      */
     public function putContactActionTypeAction(Request $request, ContactActionType $contact_action_type)
     {
@@ -223,9 +202,22 @@ class ContactActionTypeController extends FOSRestController
      * @var ContactActionType $contact_action_type
      * @return array
      *
+     * @ApiDoc(
+     *  section="ContactActionType",
+     *  description="Delete a ContactActionType",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "grc" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("contact_action_type", class="GRCBundle:ContactActionType")
-     * @Delete("/contact_action_type/{id}")
+     * @Delete("/contact_action_type/{id}", requirements={"id" = "\d+"})
      */
     public function deleteContactActionTypeAction(ContactActionType $contact_action_type)
     {

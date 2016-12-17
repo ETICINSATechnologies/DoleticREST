@@ -34,7 +34,8 @@ class ContactController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -58,20 +59,13 @@ class ContactController extends FOSRestController
      * @ApiDoc(
      *  section="Contact",
      *  description="Get all the contacts with specified type",
-     *  requirements={
-     *      {
-     *          "name"="type",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact type id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -96,20 +90,13 @@ class ContactController extends FOSRestController
      * @ApiDoc(
      *  section="Contact",
      *  description="Get all the contacts in specified firm",
-     *  requirements={
-     *      {
-     *          "name"="type",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact type id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -139,7 +126,8 @@ class ContactController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -168,7 +156,8 @@ class ContactController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -192,20 +181,13 @@ class ContactController extends FOSRestController
      * @ApiDoc(
      *  section="Contact",
      *  description="Get a contact",
-     *  requirements={
-     *      {
-     *          "name"="contact",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -235,9 +217,9 @@ class ContactController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "grc" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
@@ -275,14 +257,6 @@ class ContactController extends FOSRestController
      * @ApiDoc(
      *  section="Contact",
      *  description="Edit a Contact",
-     *  requirements={
-     *      {
-     *          "name"="contact",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="contact id"
-     *      }
-     *  },
      *  input="GRCBundle\Form\ContactType",
      *  output="GRCBundle\Entity\Contact",
      *  statusCodes={
@@ -290,14 +264,14 @@ class ContactController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "grc" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("contact", class="GRCBundle:Contact")
-     * @Post("/contact/{id}")
+     * @Post("/contact/{id}", requirements={"id" = "\d+"})
      */
     public function putContactAction(Request $request, Contact $contact)
     {
@@ -326,9 +300,22 @@ class ContactController extends FOSRestController
      * @var Contact $contact
      * @return array
      *
+     * @ApiDoc(
+     *  section="Contact",
+     *  description="Delete a Contact",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "grc" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("contact", class="GRCBundle:Contact")
-     * @Delete("/contact/{id}")
+     * @Delete("/contact/{id}", requirements={"id" = "\d+"})
      */
     public function deleteContactAction(Contact $contact)
     {

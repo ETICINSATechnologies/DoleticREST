@@ -30,7 +30,8 @@ class DivisionController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -54,20 +55,13 @@ class DivisionController extends FOSRestController
      * @ApiDoc(
      *  section="Division",
      *  description="Get a division",
-     *  requirements={
-     *      {
-     *          "name"="division",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="division id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -90,20 +84,13 @@ class DivisionController extends FOSRestController
      * @ApiDoc(
      *  section="Division",
      *  description="Get a division",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="division label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -133,9 +120,9 @@ class DivisionController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -173,14 +160,6 @@ class DivisionController extends FOSRestController
      * @ApiDoc(
      *  section="Division",
      *  description="Edit a Division",
-     *  requirements={
-     *      {
-     *          "name"="division",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="division id"
-     *      }
-     *  },
      *  input="KernelBundle\Form\DivisionType",
      *  output="KernelBundle\Entity\Division",
      *  statusCodes={
@@ -188,14 +167,14 @@ class DivisionController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("division", class="KernelBundle:Division")
-     * @Post("/division/{id}")
+     * @Post("/division/{id}", requirements={"id" = "\d+"})
      */
     public function putDivisionAction(Request $request, Division $division)
     {
@@ -224,9 +203,22 @@ class DivisionController extends FOSRestController
      * @var Division $division
      * @return array
      *
+     * @ApiDoc(
+     *  section="Division",
+     *  description="Delete a Division",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("division", class="KernelBundle:Division")
-     * @Delete("/division/{id}")
+     * @Delete("/division/{id}", requirements={"id" = "\d+"})
      */
     public function deleteDivisionAction(Division $division)
     {

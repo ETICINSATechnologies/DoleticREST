@@ -33,7 +33,8 @@ class ConsultantController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -62,7 +63,8 @@ class ConsultantController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -92,7 +94,8 @@ class ConsultantController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -117,20 +120,13 @@ class ConsultantController extends FOSRestController
      * @ApiDoc(
      *  section="Consultant",
      *  description="Get a consultant",
-     *  requirements={
-     *      {
-     *          "name"="consultant",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="consultant id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -160,9 +156,9 @@ class ConsultantController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
@@ -202,14 +198,6 @@ class ConsultantController extends FOSRestController
      * @ApiDoc(
      *  section="Consultant",
      *  description="Edit a Consultant",
-     *  requirements={
-     *      {
-     *          "name"="consultant",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="consultant id"
-     *      }
-     *  },
      *  input="UABundle\Form\ConsultantType",
      *  output="UABundle\Entity\Consultant",
      *  statusCodes={
@@ -217,14 +205,14 @@ class ConsultantController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("consultant", class="UABundle:Consultant")
-     * @Post("/consultant/{id}")
+     * @Post("/consultant/{id}", requirements={"id" = "\d+"})
      */
     public function putConsultantAction(Request $request, Consultant $consultant)
     {
@@ -255,9 +243,22 @@ class ConsultantController extends FOSRestController
      * @var Consultant $consultant
      * @return array
      *
+     * @ApiDoc(
+     *  section="Consultant",
+     *  description="Delete a Consultant",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("consultant", class="UABundle:Consultant")
-     * @Delete("/consultant/{id}")
+     * @Delete("/consultant/{id}", requirements={"id" = "\d+"})
      */
     public function deleteConsultantAction(Consultant $consultant)
     {

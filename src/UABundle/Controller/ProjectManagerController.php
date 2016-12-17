@@ -31,7 +31,8 @@ class ProjectManagerController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -60,7 +61,8 @@ class ProjectManagerController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -85,20 +87,13 @@ class ProjectManagerController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectManager",
      *  description="Get a project_manager",
-     *  requirements={
-     *      {
-     *          "name"="project_manager",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_manager id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -129,14 +124,14 @@ class ProjectManagerController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project", class="UABundle:Project")
-     * @Post("/project_manager/{id}", requirements={"id" = "\d+"}))
+     * @Post("/project_manager/{id}", requirements={"id" = "\d+"})
      */
     public function postProjectManagerAction(Request $request, Project $project)
     {
@@ -167,9 +162,22 @@ class ProjectManagerController extends FOSRestController
      * @var ProjectManager $project_manager
      * @return array
      *
+     * @ApiDoc(
+     *  section="ProjectManager",
+     *  description="Delete a ProjectManager",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("project_manager", class="UABundle:ProjectManager")
-     * @Delete("/project_manager/{id}")
+     * @Delete("/project_manager/{id}", requirements={"id" = "\d+"})
      */
     public function deleteProjectManagerAction(ProjectManager $project_manager)
     {

@@ -34,7 +34,8 @@ class ProjectDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -63,7 +64,8 @@ class ProjectDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -93,7 +95,8 @@ class ProjectDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -123,7 +126,8 @@ class ProjectDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -152,7 +156,8 @@ class ProjectDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -176,20 +181,13 @@ class ProjectDocumentController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectDocument",
      *  description="Get a project_document",
-     *  requirements={
-     *      {
-     *          "name"="project_document",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_document id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -219,9 +217,9 @@ class ProjectDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
@@ -257,14 +255,6 @@ class ProjectDocumentController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectDocument",
      *  description="Edit a ProjectDocument",
-     *  requirements={
-     *      {
-     *          "name"="project_document",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_document id"
-     *      }
-     *  },
      *  input="UABundle\Form\ProjectDocumentType",
      *  output="UABundle\Entity\ProjectDocument",
      *  statusCodes={
@@ -272,14 +262,14 @@ class ProjectDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project_document", class="UABundle:ProjectDocument")
-     * @Post("/project_document/{id}")
+     * @Post("/project_document/{id}", requirements={"id" = "\d+"})
      */
     public function putProjectDocumentAction(Request $request, ProjectDocument $project_document)
     {
@@ -305,6 +295,19 @@ class ProjectDocumentController extends FOSRestController
      * Delete action
      * @var ProjectDocument $project_document
      * @return array
+     *
+     * @ApiDoc(
+     *  section="ProjectDocument",
+     *  description="Delete a ProjectDocument",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
      *
      * @View()
      * @ParamConverter("project_document", class="UABundle:ProjectDocument")

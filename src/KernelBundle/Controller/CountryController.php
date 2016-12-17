@@ -30,7 +30,8 @@ class CountryController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -54,20 +55,13 @@ class CountryController extends FOSRestController
      * @ApiDoc(
      *  section="Country",
      *  description="Get a country",
-     *  requirements={
-     *      {
-     *          "name"="country",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="country id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -90,20 +84,13 @@ class CountryController extends FOSRestController
      * @ApiDoc(
      *  section="Country",
      *  description="Get a country",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="country label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -132,9 +119,9 @@ class CountryController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -172,14 +159,6 @@ class CountryController extends FOSRestController
      * @ApiDoc(
      *  section="Country",
      *  description="Edit a Country",
-     *  requirements={
-     *      {
-     *          "name"="country",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="country id"
-     *      }
-     *  },
      *  input="KernelBundle\Form\CountryType",
      *  output="KernelBundle\Entity\Country",
      *  statusCodes={
@@ -187,14 +166,14 @@ class CountryController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("country", class="KernelBundle:Country")
-     * @Post("/country/{id}")
+     * @Post("/country/{id}", requirements={"id" = "\d+"})
      */
     public function putCountryAction(Request $request, Country $country)
     {
@@ -223,9 +202,22 @@ class CountryController extends FOSRestController
      * @var Country $country
      * @return array
      *
+     * @ApiDoc(
+     *  section="Country",
+     *  description="Delete a Country",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("country", class="KernelBundle:Country")
-     * @Delete("/country/{id}")
+     * @Delete("/country/{id}", requirements={"id" = "\d+"})
      */
     public function deleteCountryAction(Country $country)
     {

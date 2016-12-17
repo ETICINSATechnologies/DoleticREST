@@ -37,7 +37,8 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -66,7 +67,8 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -96,7 +98,8 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -126,7 +129,8 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -156,7 +160,8 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -186,7 +191,8 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -216,7 +222,8 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -246,7 +253,8 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -276,7 +284,8 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -301,20 +310,13 @@ class ProjectController extends FOSRestController
      * @ApiDoc(
      *  section="Project",
      *  description="Get a project",
-     *  requirements={
-     *      {
-     *          "name"="project",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -337,25 +339,18 @@ class ProjectController extends FOSRestController
      * @ApiDoc(
      *  section="Project",
      *  description="Get a project",
-     *  requirements={
-     *      {
-     *          "name"="number",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project number"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
      * @View()
-     * @Get("/project/number/{number}")
+     * @Get("/project/number/{number}", requirements={"number" = "\d+"})
      */
     public function getProjectByNumberAction($number)
     {
@@ -379,9 +374,9 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
@@ -426,14 +421,6 @@ class ProjectController extends FOSRestController
      * @ApiDoc(
      *  section="Project",
      *  description="Edit a Project",
-     *  requirements={
-     *      {
-     *          "name"="project",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project id"
-     *      }
-     *  },
      *  input="UABundle\Form\ProjectType",
      *  output="UABundle\Entity\Project",
      *  statusCodes={
@@ -441,14 +428,14 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project", class="UABundle:Project")
-     * @Post("/project/{id}")
+     * @Post("/project/{id}", requirements={"id" = "\d+"})
      */
     public function putProjectAction(Request $request, Project $project)
     {
@@ -483,14 +470,6 @@ class ProjectController extends FOSRestController
      * @ApiDoc(
      *  section="Project",
      *  description="Sign a Project",
-     *  requirements={
-     *      {
-     *          "name"="project",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project id"
-     *      }
-     *  },
      *  input="UABundle\Form\ProjectType",
      *  output="UABundle\Entity\Project",
      *  statusCodes={
@@ -498,14 +477,14 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project", class="UABundle:Project")
-     * @Post("/project/{id}/sign")
+     * @Post("/project/{id}/sign", requirements={"id" = "\d+"})
      */
     public function signProjectAction(Request $request, Project $project)
     {
@@ -540,14 +519,6 @@ class ProjectController extends FOSRestController
      * @ApiDoc(
      *  section="Project",
      *  description="End a Project",
-     *  requirements={
-     *      {
-     *          "name"="project",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project id"
-     *      }
-     *  },
      *  input="UABundle\Form\ProjectType",
      *  output="UABundle\Entity\Project",
      *  statusCodes={
@@ -555,14 +526,14 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project", class="UABundle:Project")
-     * @Post("/project/{id}/end")
+     * @Post("/project/{id}/end", requirements={"id" = "\d+"})
      */
     public function endProjectAction(Request $request, Project $project)
     {
@@ -619,14 +590,14 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project", class="UABundle:Project")
-     * @Post("/project/{id}/disable")
+     * @Post("/project/{id}/disable", requirements={"id" = "\d+"})
      */
     public function disableProjectAction(Request $request, Project $project)
     {
@@ -677,14 +648,14 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project", class="UABundle:Project")
-     * @Post("/project/{id}/enable")
+     * @Post("/project/{id}/enable", requirements={"id" = "\d+"})
      */
     public function enableProjectAction(Request $request, Project $project)
     {
@@ -727,14 +698,14 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project", class="UABundle:Project")
-     * @Post("/project/{id}/unsign")
+     * @Post("/project/{id}/unsign", requirements={"id" = "\d+"})
      */
     public function unsignProjectAction(Request $request, Project $project)
     {
@@ -778,14 +749,14 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project", class="UABundle:Project")
-     * @Post("/project/{id}/unend")
+     * @Post("/project/{id}/unend", requirements={"id" = "\d+"})
      */
     public function unendProjectAction(Request $request, Project $project)
     {
@@ -825,14 +796,14 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project", class="UABundle:Project")
-     * @Post("/project/{id}/archive")
+     * @Post("/project/{id}/archive", requirements={"id" = "\d+"})
      */
     public function archiveProjectAction(Request $request, Project $project)
     {
@@ -872,14 +843,14 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project", class="UABundle:Project")
-     * @Post("/project/{id}/unarchive")
+     * @Post("/project/{id}/unarchive", requirements={"id" = "\d+"})
      */
     public function unarchiveProjectAction(Request $request, Project $project)
     {
@@ -919,14 +890,15 @@ class ProjectController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
      *  },
      *  views = { "premium" }
      * )
      *
      * @View()
      * @ParamConverter("project", class="UABundle:Project")
-     * @Post("/project/{id}/auditor")
+     * @Post("/project/{id}/auditor", requirements={"id" = "\d+"})
      */
     public function auditorProjectAction(Request $request, Project $project)
     {
@@ -955,9 +927,22 @@ class ProjectController extends FOSRestController
      * @var Project $project
      * @return array
      *
+     * @ApiDoc(
+     *  section="Project",
+     *  description="Delete a project",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("project", class="UABundle:Project")
-     * @Delete("/project/{id}")
+     * @Delete("/project/{id}", requirements={"id" = "\d+"})
      */
     public function deleteProjectAction(Project $project)
     {

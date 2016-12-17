@@ -23,7 +23,7 @@ class PositionType extends AbstractType
             ->add('detail', TextType::class)
             ->add('roles', ChoiceType::class, [
                 'multiple' => true,
-                'choices' => $this->refactorRoles($options['roles'])
+                'choices' => $this->refactorRoles(isset($options['roles']) ? $options['roles'] : [])
             ])
             ->add('old', CheckboxType::class)
             ->add('divisionLeader', CheckboxType::class)

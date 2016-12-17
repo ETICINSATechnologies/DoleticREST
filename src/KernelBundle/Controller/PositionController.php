@@ -30,7 +30,8 @@ class PositionController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -54,20 +55,13 @@ class PositionController extends FOSRestController
      * @ApiDoc(
      *  section="Position",
      *  description="Get a position",
-     *  requirements={
-     *      {
-     *          "name"="position",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="position id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -90,20 +84,13 @@ class PositionController extends FOSRestController
      * @ApiDoc(
      *  section="Position",
      *  description="Get a position",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="position label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -132,9 +119,9 @@ class PositionController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -176,14 +163,6 @@ class PositionController extends FOSRestController
      * @ApiDoc(
      *  section="Position",
      *  description="Edit a Position",
-     *  requirements={
-     *      {
-     *          "name"="position",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="position id"
-     *      }
-     *  },
      *  input="KernelBundle\Form\PositionType",
      *  output="KernelBundle\Entity\Position",
      *  statusCodes={
@@ -191,14 +170,14 @@ class PositionController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("position", class="KernelBundle:Position")
-     * @Post("/position/{id}")
+     * @Post("/position/{id}", requirements={"id" = "\d+"})
      */
     public function putPositionAction(Request $request, Position $position)
     {
@@ -231,9 +210,22 @@ class PositionController extends FOSRestController
      * @var Position $position
      * @return array
      *
+     * @ApiDoc(
+     *  section="Position",
+     *  description="Delete a Position",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("position", class="KernelBundle:Position")
-     * @Delete("/position/{id}")
+     * @Delete("/position/{id}", requirements={"id" = "\d+"})
      */
     public function deletePositionAction(Position $position)
     {

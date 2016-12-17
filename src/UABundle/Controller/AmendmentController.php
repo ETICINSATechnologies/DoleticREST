@@ -33,7 +33,8 @@ class AmendmentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -62,7 +63,8 @@ class AmendmentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -92,7 +94,8 @@ class AmendmentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -117,20 +120,13 @@ class AmendmentController extends FOSRestController
      * @ApiDoc(
      *  section="Amendment",
      *  description="Get a amendment",
-     *  requirements={
-     *      {
-     *          "name"="amendment",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="amendment id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -160,9 +156,9 @@ class AmendmentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
@@ -202,14 +198,6 @@ class AmendmentController extends FOSRestController
      * @ApiDoc(
      *  section="Amendment",
      *  description="Edit a Amendment",
-     *  requirements={
-     *      {
-     *          "name"="amendment",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="amendment id"
-     *      }
-     *  },
      *  input="UABundle\Form\AmendmentType",
      *  output="UABundle\Entity\Amendment",
      *  statusCodes={
@@ -217,14 +205,14 @@ class AmendmentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("amendment", class="UABundle:Amendment")
-     * @Post("/amendment/{id}")
+     * @Post("/amendment/{id}", requirements={"id" = "\d+"})
      */
     public function putAmendmentAction(Request $request, Amendment $amendment)
     {
@@ -250,14 +238,27 @@ class AmendmentController extends FOSRestController
     }
 
     /**
-     * Delete a Amendment
+     * Delete an Amendment
      * Delete action
      * @var Amendment $amendment
      * @return array
      *
+     * @ApiDoc(
+     *  section="Amendment",
+     *  description="Delete an Amendment",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("amendment", class="UABundle:Amendment")
-     * @Delete("/amendment/{id}")
+     * @Delete("/amendment/{id}", requirements={"id" = "\d+"})
      */
     public function deleteAmendmentAction(Amendment $amendment)
     {

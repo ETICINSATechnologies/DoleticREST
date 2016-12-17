@@ -32,7 +32,8 @@ class FirmController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -56,20 +57,13 @@ class FirmController extends FOSRestController
      * @ApiDoc(
      *  section="Firm",
      *  description="Get all the firms with specified type",
-     *  requirements={
-     *      {
-     *          "name"="type",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="firm type id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -94,20 +88,13 @@ class FirmController extends FOSRestController
      * @ApiDoc(
      *  section="Firm",
      *  description="Get all the firms from specified country",
-     *  requirements={
-     *      {
-     *          "name"="type",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="country id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -132,20 +119,13 @@ class FirmController extends FOSRestController
      * @ApiDoc(
      *  section="Firm",
      *  description="Get a firm",
-     *  requirements={
-     *      {
-     *          "name"="firm",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="firm id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -168,20 +148,13 @@ class FirmController extends FOSRestController
      * @ApiDoc(
      *  section="Firm",
      *  description="Get a firm",
-     *  requirements={
-     *      {
-     *          "name"="name",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="firm name"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -210,9 +183,9 @@ class FirmController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "grc" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
@@ -250,14 +223,6 @@ class FirmController extends FOSRestController
      * @ApiDoc(
      *  section="Firm",
      *  description="Edit a Firm",
-     *  requirements={
-     *      {
-     *          "name"="firm",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="firm id"
-     *      }
-     *  },
      *  input="GRCBundle\Form\FirmType",
      *  output="GRCBundle\Entity\Firm",
      *  statusCodes={
@@ -265,14 +230,14 @@ class FirmController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "grc" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("firm", class="GRCBundle:Firm")
-     * @Post("/firm/{id}")
+     * @Post("/firm/{id}", requirements={"id" = "\d+"})
      */
     public function putFirmAction(Request $request, Firm $firm)
     {
@@ -301,9 +266,22 @@ class FirmController extends FOSRestController
      * @var Firm $firm
      * @return array
      *
+     * @ApiDoc(
+     *  section="Firm",
+     *  description="Delete a Firm",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "grc" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("firm", class="GRCBundle:Firm")
-     * @Delete("/firm/{id}")
+     * @Delete("/firm/{id}", requirements={"id" = "\d+"})
      */
     public function deleteFirmAction(Firm $firm)
     {

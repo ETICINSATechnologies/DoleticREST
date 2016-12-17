@@ -30,7 +30,8 @@ class TicketTypeController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "support" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -54,20 +55,13 @@ class TicketTypeController extends FOSRestController
      * @ApiDoc(
      *  section="TicketType",
      *  description="Get a ticket_type",
-     *  requirements={
-     *      {
-     *          "name"="ticket_type",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="ticket_type id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "support" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -90,20 +84,13 @@ class TicketTypeController extends FOSRestController
      * @ApiDoc(
      *  section="TicketType",
      *  description="Get a ticket_type",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="ticket_type label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "support" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -132,9 +119,9 @@ class TicketTypeController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "support" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -172,14 +159,6 @@ class TicketTypeController extends FOSRestController
      * @ApiDoc(
      *  section="TicketType",
      *  description="Edit a TicketType",
-     *  requirements={
-     *      {
-     *          "name"="ticket_type",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="ticket_type id"
-     *      }
-     *  },
      *  input="SupportBundle\Form\TicketTypeType",
      *  output="SupportBundle\Entity\TicketType",
      *  statusCodes={
@@ -187,14 +166,14 @@ class TicketTypeController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "support" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("ticket_type", class="SupportBundle:TicketType")
-     * @Post("/ticket_type/{id}")
+     * @Post("/ticket_type/{id}", requirements={"id" = "\d+"})
      */
     public function putTicketTypeAction(Request $request, TicketType $ticket_type)
     {
@@ -223,9 +202,22 @@ class TicketTypeController extends FOSRestController
      * @var TicketType $ticket_type
      * @return array
      *
+     * @ApiDoc(
+     *  section="TicketType",
+     *  description="Delete a TicketType",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "support" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("ticket_type", class="SupportBundle:TicketType")
-     * @Delete("/ticket_type/{id}")
+     * @Delete("/ticket_type/{id}", requirements={"id" = "\d+"})
      */
     public function deleteTicketTypeAction(TicketType $ticket_type)
     {

@@ -34,7 +34,8 @@ class ConsultantDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -63,7 +64,8 @@ class ConsultantDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -93,7 +95,8 @@ class ConsultantDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -123,7 +126,8 @@ class ConsultantDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -152,7 +156,8 @@ class ConsultantDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -176,20 +181,13 @@ class ConsultantDocumentController extends FOSRestController
      * @ApiDoc(
      *  section="ConsultantDocument",
      *  description="Get a consultant_document",
-     *  requirements={
-     *      {
-     *          "name"="consultant_document",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="consultant_document id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -219,9 +217,9 @@ class ConsultantDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
@@ -257,14 +255,6 @@ class ConsultantDocumentController extends FOSRestController
      * @ApiDoc(
      *  section="ConsultantDocument",
      *  description="Edit a ConsultantDocument",
-     *  requirements={
-     *      {
-     *          "name"="consultant_document",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="consultant_document id"
-     *      }
-     *  },
      *  input="UABundle\Form\ConsultantDocumentType",
      *  output="UABundle\Entity\ConsultantDocument",
      *  statusCodes={
@@ -272,14 +262,14 @@ class ConsultantDocumentController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("consultant_document", class="UABundle:ConsultantDocument")
-     * @Post("/consultant_document/{id}")
+     * @Post("/consultant_document/{id}", requirements={"id" = "\d+"})
      */
     public function putConsultantDocumentAction(Request $request, ConsultantDocument $consultant_document)
     {
@@ -306,9 +296,22 @@ class ConsultantDocumentController extends FOSRestController
      * @var ConsultantDocument $consultant_document
      * @return array
      *
+     * @ApiDoc(
+     *  section="ConsultantDocument",
+     *  description="Delete a ConsultantDocument",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("consultant_document", class="UABundle:ConsultantDocument")
-     * @Delete("/consultant_document/{id}")
+     * @Delete("/consultant_document/{id}", requirements={"id" = "\d+"})
      */
     public function deleteConsultantDocumentAction(ConsultantDocument $consultant_document)
     {

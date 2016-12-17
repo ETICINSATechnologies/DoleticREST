@@ -32,7 +32,8 @@ class ProjectFileController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -61,7 +62,8 @@ class ProjectFileController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -91,7 +93,8 @@ class ProjectFileController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -120,7 +123,8 @@ class ProjectFileController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -144,20 +148,13 @@ class ProjectFileController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectFile",
      *  description="Get a project_file",
-     *  requirements={
-     *      {
-     *          "name"="project_file",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_file id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -187,9 +184,9 @@ class ProjectFileController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
@@ -225,14 +222,6 @@ class ProjectFileController extends FOSRestController
      * @ApiDoc(
      *  section="ProjectFile",
      *  description="Edit a ProjectFile",
-     *  requirements={
-     *      {
-     *          "name"="project_file",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="project_file id"
-     *      }
-     *  },
      *  input="UABundle\Form\ProjectFileType",
      *  output="UABundle\Entity\ProjectFile",
      *  statusCodes={
@@ -240,14 +229,14 @@ class ProjectFileController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("project_file", class="UABundle:ProjectFile")
-     * @Post("/project_file/{id}")
+     * @Post("/project_file/{id}", requirements={"id" = "\d+"})
      */
     public function putProjectFileAction(Request $request, ProjectFile $project_file)
     {
@@ -274,9 +263,22 @@ class ProjectFileController extends FOSRestController
      * @var ProjectFile $project_file
      * @return array
      *
+     * @ApiDoc(
+     *  section="ProjectFile",
+     *  description="Delete a ProjectFile",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("project_file", class="UABundle:ProjectFile")
-     * @Delete("/project_file/{id}")
+     * @Delete("/project_file/{id}", requirements={"id" = "\d+"})
      */
     public function deleteProjectFileAction(ProjectFile $project_file)
     {

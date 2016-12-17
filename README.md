@@ -120,3 +120,17 @@ curl --header "Authorization: Bearer <token>" <hote>/api/<route>
 ```
 
 Ou, de façon plus pratique, l'extension POSTMan de Google Chrome, ou un client REST intégré à un IDE comme celui de PhpStorm.
+
+
+### Documentation des routes
+
+Chaque route devra être documentée en utilisant nelmio/apidoc-bundle. Les tags à indiquer sont les suivants :
+- La stabilité
+    + stable (#4a7023)
+    + unstable (#ff0000)
+- Le module concerné, par exemple "kernel" (#0033ff)
+- Le niveau de droit nécessaire :
+    + super-admin (#da4932)
+    + admin (#e0a157)
+    + user (#b8c381)
+    + guest (#85d893)

@@ -30,7 +30,8 @@ class FirmTypeController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -54,20 +55,13 @@ class FirmTypeController extends FOSRestController
      * @ApiDoc(
      *  section="FirmType",
      *  description="Get a firm_type",
-     *  requirements={
-     *      {
-     *          "name"="firm_type",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="firm_type id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -90,20 +84,13 @@ class FirmTypeController extends FOSRestController
      * @ApiDoc(
      *  section="FirmType",
      *  description="Get a firm_type",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="firm_type label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "grc" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -132,9 +119,9 @@ class FirmTypeController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "grc" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -172,14 +159,6 @@ class FirmTypeController extends FOSRestController
      * @ApiDoc(
      *  section="FirmType",
      *  description="Edit a FirmType",
-     *  requirements={
-     *      {
-     *          "name"="firm_type",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="firm_type id"
-     *      }
-     *  },
      *  input="GRCBundle\Form\FirmTypeType",
      *  output="GRCBundle\Entity\FirmType",
      *  statusCodes={
@@ -187,14 +166,14 @@ class FirmTypeController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "grc" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("firm_type", class="GRCBundle:FirmType")
-     * @Post("/firm_type/{id}")
+     * @Post("/firm_type/{id}", requirements={"id" = "\d+"})
      */
     public function putFirmTypeAction(Request $request, FirmType $firm_type)
     {
@@ -222,6 +201,19 @@ class FirmTypeController extends FOSRestController
      * Delete action
      * @var FirmType $firm_type
      * @return array
+     *
+     * @ApiDoc(
+     *  section="FirmType",
+     *  description="Delete a FirmType",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "grc" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
      *
      * @View()
      * @ParamConverter("firm_type", class="GRCBundle:FirmType")

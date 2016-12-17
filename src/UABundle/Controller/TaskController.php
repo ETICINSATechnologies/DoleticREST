@@ -32,7 +32,8 @@ class TaskController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -61,7 +62,8 @@ class TaskController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -86,20 +88,13 @@ class TaskController extends FOSRestController
      * @ApiDoc(
      *  section="Task",
      *  description="Get a task",
-     *  requirements={
-     *      {
-     *          "name"="task",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="task id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -129,9 +124,9 @@ class TaskController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
@@ -172,14 +167,6 @@ class TaskController extends FOSRestController
      * @ApiDoc(
      *  section="Task",
      *  description="Edit a Task",
-     *  requirements={
-     *      {
-     *          "name"="task",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="task id"
-     *      }
-     *  },
      *  input="UABundle\Form\TaskType",
      *  output="UABundle\Entity\Task",
      *  statusCodes={
@@ -187,14 +174,14 @@ class TaskController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("task", class="UABundle:Task")
-     * @Post("/task/{id}")
+     * @Post("/task/{id}", requirements={"id" = "\d+"})
      */
     public function putTaskAction(Request $request, Task $task)
     {
@@ -229,14 +216,6 @@ class TaskController extends FOSRestController
      * @ApiDoc(
      *  section="Task",
      *  description="End a Task",
-     *  requirements={
-     *      {
-     *          "name"="task",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="task id"
-     *      }
-     *  },
      *  input="UABundle\Form\TaskType",
      *  output="UABundle\Entity\Task",
      *  statusCodes={
@@ -244,14 +223,14 @@ class TaskController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("task", class="UABundle:Task")
-     * @Post("/task/{id}/end")
+     * @Post("/task/{id}/end", requirements={"id" = "\d+"})
      */
     public function endTaskAction(Request $request, Task $task)
     {
@@ -278,14 +257,6 @@ class TaskController extends FOSRestController
      * @ApiDoc(
      *  section="Task",
      *  description="Cancel the end of a Task",
-     *  requirements={
-     *      {
-     *          "name"="task",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="task id"
-     *      }
-     *  },
      *  input="UABundle\Form\TaskType",
      *  output="UABundle\Entity\Task",
      *  statusCodes={
@@ -293,14 +264,14 @@ class TaskController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("task", class="UABundle:Task")
-     * @Post("/task/{id}/unend")
+     * @Post("/task/{id}/unend", requirements={"id" = "\d+"})
      */
     public function unendTaskAction(Request $request, Task $task)
     {
@@ -326,14 +297,6 @@ class TaskController extends FOSRestController
      * @ApiDoc(
      *  section="Task",
      *  description="Switch a Task number with another one",
-     *  requirements={
-     *      {
-     *          "name"="task",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="task id"
-     *      }
-     *  },
      *  input="UABundle\Form\TaskType",
      *  output="UABundle\Entity\Task",
      *  statusCodes={
@@ -341,14 +304,14 @@ class TaskController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("task", class="UABundle:Task")
-     * @Post("/task/{id}/switch/{idBis}")
+     * @Post("/task/{id}/switch/{idBis}", requirements={"id" = "\d+", "idBis" = "\d+"})
      */
     public function switchTasksAction(Request $request, Task $task, $idBis)
     {
@@ -374,9 +337,22 @@ class TaskController extends FOSRestController
      * @var Task $task
      * @return array
      *
+     * @ApiDoc(
+     *  section="Task",
+     *  description="Delete a Task",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
+     *
      * @View()
      * @ParamConverter("task", class="UABundle:Task")
-     * @Delete("/task/{id}")
+     * @Delete("/task/{id}", requirements={"id" = "\d+"})
      */
     public function deleteTaskAction(Task $task)
     {

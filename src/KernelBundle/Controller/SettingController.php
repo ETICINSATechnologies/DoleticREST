@@ -30,7 +30,8 @@ class SettingController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -54,20 +55,13 @@ class SettingController extends FOSRestController
      * @ApiDoc(
      *  section="Setting",
      *  description="Get a setting",
-     *  requirements={
-     *      {
-     *          "name"="setting",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="setting id"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -90,20 +84,13 @@ class SettingController extends FOSRestController
      * @ApiDoc(
      *  section="Setting",
      *  description="Get a setting",
-     *  requirements={
-     *      {
-     *          "name"="label",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="setting label"
-     *      }
-     *  },
      *  statusCodes={
      *         200="Returned when successful"
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
      *  }
      * )
      *
@@ -133,9 +120,9 @@ class SettingController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
@@ -173,14 +160,6 @@ class SettingController extends FOSRestController
      * @ApiDoc(
      *  section="Setting",
      *  description="Edit a Setting",
-     *  requirements={
-     *      {
-     *          "name"="setting",
-     *          "dataType"="string",
-     *          "requirement"="*",
-     *          "description"="setting id"
-     *      }
-     *  },
      *  input="KernelBundle\Form\SettingType",
      *  output="KernelBundle\Entity\Setting",
      *  statusCodes={
@@ -188,14 +167,14 @@ class SettingController extends FOSRestController
      *  },
      *  tags={
      *   "stable" = "#4A7023",
-     *   "need validations" = "#ff0000"
-     *  },
-     *  views = { "premium" }
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
      * )
      *
      * @View()
      * @ParamConverter("setting", class="KernelBundle:Setting")
-     * @Post("/setting/{id}")
+     * @Post("/setting/{id}", requirements={"id" = "\d+"})
      */
     public function putSettingAction(Request $request, Setting $setting)
     {
@@ -223,6 +202,19 @@ class SettingController extends FOSRestController
      * Delete action
      * @var Setting $setting
      * @return array
+     *
+     * @ApiDoc(
+     *  section="Setting",
+     *  description="Delete a setting",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
      *
      * @View()
      * @ParamConverter("setting", class="KernelBundle:Setting")
