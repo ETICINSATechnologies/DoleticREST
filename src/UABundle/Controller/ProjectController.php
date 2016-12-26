@@ -262,7 +262,7 @@ class ProjectController extends FOSRestController
      * @ParamConverter("consultant", class="KernelBundle:User")
      * @Get("/projects/consultant/{id}", requirements={"id" = "\d+"})
      */
-    public function getProjectsByConsultant(User $consultant)
+    public function getProjectsByConsultantAction(User $consultant)
     {
 
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
@@ -293,7 +293,7 @@ class ProjectController extends FOSRestController
      * @ParamConverter("contact", class="GRCBundle:Contact")
      * @Get("/projects/contact/{id}", requirements={"id" = "\d+"})
      */
-    public function getProjectsByContact(Contact $contact)
+    public function getProjectsByContactAction(Contact $contact)
     {
 
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
