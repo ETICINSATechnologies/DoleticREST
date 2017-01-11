@@ -31,7 +31,7 @@ class ProjectFieldController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "ua" = "#0033ff",
-     *   "guest" = "#85d893"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
@@ -40,9 +40,39 @@ class ProjectFieldController extends FOSRestController
      */
     public function getProjectFieldsAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
 
         $project_fields = $this->getDoctrine()->getRepository("UABundle:ProjectField")
             ->findAll();
+
+        return array('project_fields' => $project_fields);
+    }
+
+    /**
+     * Get all the enabled project_fields
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="ProjectField",
+     *  description="Get all enabled project_fields",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/project_fields/enabled")
+     */
+    public function getEnabledProjectFieldsAction()
+    {
+
+        $project_fields = $this->getDoctrine()->getRepository("UABundle:ProjectField")
+            ->findBy(['enabled' => true]);
 
         return array('project_fields' => $project_fields);
     }
@@ -194,6 +224,80 @@ class ProjectFieldController extends FOSRestController
         return array(
             'form' => $form,
         );
+    }
+
+    /**
+     * Disable a ProjectField
+     * Put action
+     * @var Request $request
+     * @var ProjectField $project_field
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="ProjectField",
+     *  description="Disable a ProjectField",
+     *  output="UABundle\Entity\ProjectField",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project_field", class="UABundle:ProjectField")
+     * @Post("/project_field/{id}/disable", requirements={"id" = "\d+"})
+     */
+    public function disableProjectFieldAction(Request $request, ProjectField $project_field)
+    {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
+        $project_field->setEnabled(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($project_field);
+        $em->flush();
+
+        return array("project_field" => $project_field);
+    }
+
+    /**
+     * Enable a ProjectField
+     * Put action
+     * @var Request $request
+     * @var ProjectField $project_field
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="ProjectField",
+     *  description="Enable a ProjectField",
+     *  output="UABundle\Entity\ProjectField",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project_field", class="UABundle:ProjectField")
+     * @Post("/project_field/{id}/enable", requirements={"id" = "\d+"})
+     */
+    public function enableProjectFieldAction(Request $request, ProjectField $project_field)
+    {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
+        $project_field->setEnabled(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($project_field);
+        $em->flush();
+
+        return array("project_field" => $project_field);
     }
 
     /**

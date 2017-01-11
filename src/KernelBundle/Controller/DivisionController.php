@@ -31,7 +31,7 @@ class DivisionController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "kernel" = "#0033ff",
-     *   "guest" = "#85d893"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
@@ -40,9 +40,39 @@ class DivisionController extends FOSRestController
      */
     public function getDivisionsAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $divisions = $this->getDoctrine()->getRepository("KernelBundle:Division")
             ->findAll();
+
+        return array('divisions' => $divisions);
+    }
+
+    /**
+     * Get all the enabled divisions
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Division",
+     *  description="Get all enabled divisions",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/divisions/enabled")
+     */
+    public function getEnabledDivisionsAction()
+    {
+
+        $divisions = $this->getDoctrine()->getRepository("KernelBundle:Division")
+            ->findBy(['enabled' => true]);
 
         return array('divisions' => $divisions);
     }
@@ -195,6 +225,80 @@ class DivisionController extends FOSRestController
         return array(
             'form' => $form,
         );
+    }
+
+    /**
+     * Disable a Division
+     * Put action
+     * @var Request $request
+     * @var Division $division
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Division",
+     *  description="Disable a Division",
+     *  output="KernelBundle\Entity\Division",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("division", class="KernelBundle:Division")
+     * @Post("/division/{id}/disable", requirements={"id" = "\d+"})
+     */
+    public function disableDivisionAction(Request $request, Division $division)
+    {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
+        $division->setEnabled(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($division);
+        $em->flush();
+
+        return array("division" => $division);
+    }
+
+    /**
+     * Enable a Division
+     * Put action
+     * @var Request $request
+     * @var Division $division
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Division",
+     *  description="Enable a Division",
+     *  output="KernelBundle\Entity\Division",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("division", class="KernelBundle:Division")
+     * @Post("/division/{id}/enable", requirements={"id" = "\d+"})
+     */
+    public function enableDivisionAction(Request $request, Division $division)
+    {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
+        $division->setEnabled(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($division);
+        $em->flush();
+
+        return array("division" => $division);
     }
 
     /**

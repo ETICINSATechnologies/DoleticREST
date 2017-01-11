@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Department
  *
  * @ORM\Table(name="rh_department")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="RHBundle\Repository\DepartmentRepository")
  */
 class Department
@@ -38,15 +39,14 @@ class Department
     /**
      * @var bool
      *
-     * @ORM\Column(name="disabled", type="boolean")
+     * @ORM\Column(name="enabled", type="boolean")
      */
-    private $disabled;
-
+    private $enabled;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -69,7 +69,7 @@ class Department
     /**
      * Get label
      *
-     * @return string 
+     * @return string
      */
     public function getLabel()
     {
@@ -92,7 +92,7 @@ class Department
     /**
      * Get details
      *
-     * @return string 
+     * @return string
      */
     public function getDetail()
     {
@@ -102,22 +102,30 @@ class Department
     /**
      * @return boolean
      */
-    public function isDisabled()
+    public function isEnabled()
     {
-        return $this->disabled;
+        return $this->enabled;
     }
 
     /**
-     * Set disabled
+     * Set enabled
      *
-     * @param boolean $disabled
+     * @param boolean $enabled
      * @return Department
      */
-    public function setDisabled($disabled)
+    public function setEnabled($enabled)
     {
-        $this->disabled = $disabled;
+        $this->enabled = $enabled;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function enableByDefault()
+    {
+        $this->setEnabled(true);
     }
 
 }

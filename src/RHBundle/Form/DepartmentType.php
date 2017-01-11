@@ -19,7 +19,7 @@ class DepartmentType extends AbstractType
         $builder
             ->add('label', TextType::class)
             ->add('detail', TextType::class)
-            ->add('disabled', CheckboxType::class);
+            ->add('enabled', CheckboxType::class, ['disabled' => true]);
     }
 
     /**

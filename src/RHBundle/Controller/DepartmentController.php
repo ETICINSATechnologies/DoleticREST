@@ -31,17 +31,47 @@ class DepartmentController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "rh" = "#0033ff",
-     *   "guest" = "#85d893"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
      * @View()
      * @Get("/departments")
      */
-    public function getDepartmentsAction(){
+    public function getDepartmentsAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
 
         $departments = $this->getDoctrine()->getRepository("RHBundle:Department")
             ->findAll();
+
+        return array('departments' => $departments);
+    }
+
+    /**
+     * Get all the enabled departments
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Department",
+     *  description="Get all enabled departments",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/departments/enabled")
+     */
+    public function getEnabledDepartmentsAction()
+    {
+        $departments = $this->getDoctrine()->getRepository("RHBundle:Department")
+            ->findBy(['enabled' => true]);
 
         return array('departments' => $departments);
     }
@@ -68,7 +98,8 @@ class DepartmentController extends FOSRestController
      * @ParamConverter("department", class="RHBundle:Department")
      * @Get("/department/{id}", requirements={"id" = "\d+"})
      */
-    public function getDepartmentAction(Department $department){
+    public function getDepartmentAction(Department $department)
+    {
 
         return array('department' => $department);
 
@@ -95,7 +126,8 @@ class DepartmentController extends FOSRestController
      * @View()
      * @Get("/department/{label}")
      */
-    public function getDepartmentByLabelAction($label){
+    public function getDepartmentByLabelAction($label)
+    {
 
         $department = $this->getDoctrine()->getRepository('RHBundle:Department')->findOneBy(['label' => $label]);
         return array('department' => $department);
@@ -191,6 +223,80 @@ class DepartmentController extends FOSRestController
         return array(
             'form' => $form,
         );
+    }
+
+    /**
+     * Disable a Department
+     * Put action
+     * @var Request $request
+     * @var Department $department
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Department",
+     *  description="Disable a Department",
+     *  output="RHBundle\Entity\Department",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("department", class="RHBundle:Department")
+     * @Post("/department/{id}/disable", requirements={"id" = "\d+"})
+     */
+    public function disableDepartmentAction(Request $request, Department $department)
+    {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
+        $department->setEnabled(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($department);
+        $em->flush();
+
+        return array("department" => $department);
+    }
+
+    /**
+     * Enable a Department
+     * Put action
+     * @var Request $request
+     * @var Department $department
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Department",
+     *  description="Enable a Department",
+     *  output="RHBundle\Entity\Department",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("department", class="RHBundle:Department")
+     * @Post("/department/{id}/enable", requirements={"id" = "\d+"})
+     */
+    public function enableDepartmentAction(Request $request, Department $department)
+    {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
+        $department->setEnabled(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($department);
+        $em->flush();
+
+        return array("department" => $department);
     }
 
     /**

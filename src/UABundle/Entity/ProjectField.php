@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ProjectField
  *
  * @ORM\Table(name="ua_project_field")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="UABundle\Repository\ProjectFieldRepository")
  */
 class ProjectField
@@ -35,6 +36,12 @@ class ProjectField
      */
     private $detail;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled;
 
     /**
      * Get id
@@ -90,5 +97,32 @@ class ProjectField
     public function getDetail()
     {
         return $this->detail;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     * @return ProjectField
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function enableByDefault()
+    {
+        $this->setEnabled(true);
     }
 }

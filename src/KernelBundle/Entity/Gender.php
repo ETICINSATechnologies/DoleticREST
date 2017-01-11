@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Gender
  *
  * @ORM\Table(name="kernel_gender")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="KernelBundle\Repository\GenderRepository")
  */
 class Gender
@@ -34,6 +35,13 @@ class Gender
      * @ORM\Column(name="detail", type="string", length=255, nullable=true)
      */
     private $detail;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled;
 
 
     /**
@@ -90,5 +98,32 @@ class Gender
     public function getDetail()
     {
         return $this->detail;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     * @return Gender
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function enableByDefault()
+    {
+        $this->setEnabled(true);
     }
 }

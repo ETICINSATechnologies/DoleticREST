@@ -31,7 +31,7 @@ class TicketTypeController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "support" = "#0033ff",
-     *   "guest" = "#85d893"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
@@ -40,9 +40,39 @@ class TicketTypeController extends FOSRestController
      */
     public function getTicketTypesAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_SUPERADMIN');
 
         $ticket_types = $this->getDoctrine()->getRepository("SupportBundle:TicketType")
             ->findAll();
+
+        return array('ticket_types' => $ticket_types);
+    }
+
+    /**
+     * Get all the enabled ticket_types
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="TicketType",
+     *  description="Get all enabled ticket_types",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "support" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/ticket_types/enabled")
+     */
+    public function getEnabledTicketTypesAction()
+    {
+
+        $ticket_types = $this->getDoctrine()->getRepository("SupportBundle:TicketType")
+            ->findBy(['enabled' => true]);
 
         return array('ticket_types' => $ticket_types);
     }
@@ -194,6 +224,80 @@ class TicketTypeController extends FOSRestController
         return array(
             'form' => $form,
         );
+    }
+
+    /**
+     * Disable a TicketType
+     * Put action
+     * @var Request $request
+     * @var TicketType $ticket_type
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="TicketType",
+     *  description="Disable a TicketType",
+     *  output="SupportBundle\Entity\TicketType",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "support" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("ticket_type", class="SupportBundle:TicketType")
+     * @Post("/ticket_type/{id}/disable", requirements={"id" = "\d+"})
+     */
+    public function disableTicketTypeAction(Request $request, TicketType $ticket_type)
+    {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_SUPERADMIN');
+
+        $ticket_type->setEnabled(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($ticket_type);
+        $em->flush();
+
+        return array("ticket_type" => $ticket_type);
+    }
+
+    /**
+     * Enable a TicketType
+     * Put action
+     * @var Request $request
+     * @var TicketType $ticket_type
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="TicketType",
+     *  description="Enable a TicketType",
+     *  output="SupportBundle\Entity\TicketType",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "support" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("ticket_type", class="SupportBundle:TicketType")
+     * @Post("/ticket_type/{id}/enable", requirements={"id" = "\d+"})
+     */
+    public function enableTicketTypeAction(Request $request, TicketType $ticket_type)
+    {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_SUPERADMIN');
+
+        $ticket_type->setEnabled(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($ticket_type);
+        $em->flush();
+
+        return array("ticket_type" => $ticket_type);
     }
 
     /**

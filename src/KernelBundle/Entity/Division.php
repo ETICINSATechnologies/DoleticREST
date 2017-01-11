@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Division
  *
  * @ORM\Table(name="kernel_division")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="KernelBundle\Repository\DivisionRepository")
  */
 class Division
@@ -34,6 +35,13 @@ class Division
      * @ORM\Column(name="detail", type="string", length=255)
      */
     private $detail;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled;
 
 
     /**
@@ -90,5 +98,32 @@ class Division
     public function getDetail()
     {
         return $this->detail;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     * @return Division
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function enableByDefault()
+    {
+        $this->setEnabled(true);
     }
 }

@@ -14,7 +14,7 @@ class ProjectFixture extends AbstractFixture implements OrderedFixtureInterface
         $project = new Project();
         $project
             ->setName('Site web')
-            ->setFirm($this->getReference('firm_type'))
+            ->setFirm($this->getReference('firm'))
             ->setOrigin($this->getReference('origin'))
             ->setField($this->getReference('field'))
             ->setStatus($this->getReference('status'))

@@ -14,8 +14,7 @@ class DepartmentFixture extends AbstractFixture implements OrderedFixtureInterfa
         $department = new Department();
         $department
             ->setLabel('IF')
-            ->setDetail('Informatique')
-            ->setDisabled(false);
+            ->setDetail('Informatique');
 
         $manager->persist($department);
         $manager->flush();
