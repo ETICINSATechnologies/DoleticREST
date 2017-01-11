@@ -227,6 +227,80 @@ class ProjectFieldController extends FOSRestController
     }
 
     /**
+     * Disable a ProjectField
+     * Put action
+     * @var Request $request
+     * @var ProjectField $project_field
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="ProjectField",
+     *  description="Disable a ProjectField",
+     *  output="UABundle\Entity\ProjectField",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project_field", class="UABundle:ProjectField")
+     * @Post("/project_field/{id}/disable", requirements={"id" = "\d+"})
+     */
+    public function disableProjectFieldAction(Request $request, ProjectField $project_field)
+    {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
+        $project_field->setEnabled(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($project_field);
+        $em->flush();
+
+        return array("project_field" => $project_field);
+    }
+
+    /**
+     * Enable a ProjectField
+     * Put action
+     * @var Request $request
+     * @var ProjectField $project_field
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="ProjectField",
+     *  description="Enable a ProjectField",
+     *  output="UABundle\Entity\ProjectField",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project_field", class="UABundle:ProjectField")
+     * @Post("/project_field/{id}/enable", requirements={"id" = "\d+"})
+     */
+    public function enableProjectFieldAction(Request $request, ProjectField $project_field)
+    {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
+        $project_field->setEnabled(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($project_field);
+        $em->flush();
+
+        return array("project_field" => $project_field);
+    }
+
+    /**
      * Delete a ProjectField
      * Delete action
      * @var ProjectField $project_field

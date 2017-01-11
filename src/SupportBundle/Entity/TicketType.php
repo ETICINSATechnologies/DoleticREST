@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * TicketType
  *
  * @ORM\Table(name="support_ticket_type")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="SupportBundle\Repository\TicketTypeRepository")
  */
 class TicketType
@@ -116,5 +117,13 @@ class TicketType
         $this->enabled = $enabled;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function enableByDefault()
+    {
+        $this->setEnabled(true);
     }
 }

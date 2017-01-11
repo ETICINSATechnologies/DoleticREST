@@ -228,6 +228,80 @@ class DivisionController extends FOSRestController
     }
 
     /**
+     * Disable a Division
+     * Put action
+     * @var Request $request
+     * @var Division $division
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Division",
+     *  description="Disable a Division",
+     *  output="KernelBundle\Entity\Division",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("division", class="KernelBundle:Division")
+     * @Post("/division/{id}/disable", requirements={"id" = "\d+"})
+     */
+    public function disableDivisionAction(Request $request, Division $division)
+    {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
+        $division->setEnabled(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($division);
+        $em->flush();
+
+        return array("division" => $division);
+    }
+
+    /**
+     * Enable a Division
+     * Put action
+     * @var Request $request
+     * @var Division $division
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Division",
+     *  description="Enable a Division",
+     *  output="KernelBundle\Entity\Division",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("division", class="KernelBundle:Division")
+     * @Post("/division/{id}/enable", requirements={"id" = "\d+"})
+     */
+    public function enableDivisionAction(Request $request, Division $division)
+    {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
+        $division->setEnabled(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($division);
+        $em->flush();
+
+        return array("division" => $division);
+    }
+
+    /**
      * Delete a Division
      * Delete action
      * @var Division $division

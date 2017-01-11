@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Gender
  *
  * @ORM\Table(name="kernel_gender")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="KernelBundle\Repository\GenderRepository")
  */
 class Gender
@@ -116,5 +117,13 @@ class Gender
         $this->enabled = $enabled;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function enableByDefault()
+    {
+        $this->setEnabled(true);
     }
 }

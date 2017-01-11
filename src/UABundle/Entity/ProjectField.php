@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ProjectField
  *
  * @ORM\Table(name="ua_project_field")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="UABundle\Repository\ProjectFieldRepository")
  */
 class ProjectField
@@ -115,5 +116,13 @@ class ProjectField
         $this->enabled = $enabled;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function enableByDefault()
+    {
+        $this->setEnabled(true);
     }
 }

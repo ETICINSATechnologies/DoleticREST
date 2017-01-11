@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Division
  *
  * @ORM\Table(name="kernel_division")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="KernelBundle\Repository\DivisionRepository")
  */
 class Division
@@ -116,5 +117,13 @@ class Division
         $this->enabled = $enabled;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function enableByDefault()
+    {
+        $this->setEnabled(true);
     }
 }

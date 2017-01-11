@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Department
  *
  * @ORM\Table(name="rh_department")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="RHBundle\Repository\DepartmentRepository")
  */
 class Department
@@ -45,7 +46,7 @@ class Department
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -68,7 +69,7 @@ class Department
     /**
      * Get label
      *
-     * @return string 
+     * @return string
      */
     public function getLabel()
     {
@@ -91,7 +92,7 @@ class Department
     /**
      * Get details
      *
-     * @return string 
+     * @return string
      */
     public function getDetail()
     {
@@ -117,6 +118,14 @@ class Department
         $this->enabled = $enabled;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function enableByDefault()
+    {
+        $this->setEnabled(true);
     }
 
 }

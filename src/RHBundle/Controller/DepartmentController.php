@@ -226,6 +226,80 @@ class DepartmentController extends FOSRestController
     }
 
     /**
+     * Disable a Department
+     * Put action
+     * @var Request $request
+     * @var Department $department
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Department",
+     *  description="Disable a Department",
+     *  output="RHBundle\Entity\Department",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("department", class="RHBundle:Department")
+     * @Post("/department/{id}/disable", requirements={"id" = "\d+"})
+     */
+    public function disableDepartmentAction(Request $request, Department $department)
+    {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
+        $department->setEnabled(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($department);
+        $em->flush();
+
+        return array("department" => $department);
+    }
+
+    /**
+     * Enable a Department
+     * Put action
+     * @var Request $request
+     * @var Department $department
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Department",
+     *  description="Enable a Department",
+     *  output="RHBundle\Entity\Department",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("department", class="RHBundle:Department")
+     * @Post("/department/{id}/enable", requirements={"id" = "\d+"})
+     */
+    public function enableDepartmentAction(Request $request, Department $department)
+    {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+
+        $department->setEnabled(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($department);
+        $em->flush();
+
+        return array("department" => $department);
+    }
+
+    /**
      * Delete a Department
      * Delete action
      * @var Department $department

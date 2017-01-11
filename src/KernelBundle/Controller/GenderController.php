@@ -228,6 +228,80 @@ class GenderController extends FOSRestController
     }
 
     /**
+     * Disable a Gender
+     * Put action
+     * @var Request $request
+     * @var Gender $gender
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Gender",
+     *  description="Disable a Gender",
+     *  output="KernelBundle\Entity\Gender",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("gender", class="KernelBundle:Gender")
+     * @Post("/gender/{id}/disable", requirements={"id" = "\d+"})
+     */
+    public function disableGenderAction(Request $request, Gender $gender)
+    {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
+        $gender->setEnabled(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($gender);
+        $em->flush();
+
+        return array("gender" => $gender);
+    }
+
+    /**
+     * Enable a Gender
+     * Put action
+     * @var Request $request
+     * @var Gender $gender
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Gender",
+     *  description="Enable a Gender",
+     *  output="KernelBundle\Entity\Gender",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("gender", class="KernelBundle:Gender")
+     * @Post("/gender/{id}/enable", requirements={"id" = "\d+"})
+     */
+    public function enableGenderAction(Request $request, Gender $gender)
+    {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
+        $gender->setEnabled(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($gender);
+        $em->flush();
+
+        return array("gender" => $gender);
+    }
+
+    /**
      * Delete a Gender
      * Delete action
      * @var Gender $gender
