@@ -35,6 +35,13 @@ class TicketType
      */
     private $detail;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled;
+
 
     /**
      * Get id
@@ -90,5 +97,24 @@ class TicketType
     public function getDetail()
     {
         return $this->detail;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     * @return TicketType
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
     }
 }

@@ -38,10 +38,9 @@ class Department
     /**
      * @var bool
      *
-     * @ORM\Column(name="disabled", type="boolean")
+     * @ORM\Column(name="enabled", type="boolean")
      */
-    private $disabled;
-
+    private $enabled;
 
     /**
      * Get id
@@ -102,20 +101,20 @@ class Department
     /**
      * @return boolean
      */
-    public function isDisabled()
+    public function isEnabled()
     {
-        return $this->disabled;
+        return $this->enabled;
     }
 
     /**
-     * Set disabled
+     * Set enabled
      *
-     * @param boolean $disabled
+     * @param boolean $enabled
      * @return Department
      */
-    public function setDisabled($disabled)
+    public function setEnabled($enabled)
     {
-        $this->disabled = $disabled;
+        $this->enabled = $enabled;
 
         return $this;
     }

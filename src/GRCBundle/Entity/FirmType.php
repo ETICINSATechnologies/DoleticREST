@@ -35,7 +35,6 @@ class FirmType
      */
     private $detail;
 
-
     /**
      * Get id
      *
