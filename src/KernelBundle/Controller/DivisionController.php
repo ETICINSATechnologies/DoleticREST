@@ -31,7 +31,7 @@ class DivisionController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "kernel" = "#0033ff",
-     *   "guest" = "#85d893"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
@@ -40,9 +40,39 @@ class DivisionController extends FOSRestController
      */
     public function getDivisionsAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $divisions = $this->getDoctrine()->getRepository("KernelBundle:Division")
             ->findAll();
+
+        return array('divisions' => $divisions);
+    }
+
+    /**
+     * Get all the enabled divisions
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Division",
+     *  description="Get all enabled divisions",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/divisions/enabled")
+     */
+    public function getEnabledDivisionsAction()
+    {
+
+        $divisions = $this->getDoctrine()->getRepository("KernelBundle:Division")
+            ->findBy(['enabled' => true]);
 
         return array('divisions' => $divisions);
     }

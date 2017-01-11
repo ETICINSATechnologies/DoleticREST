@@ -31,7 +31,7 @@ class TicketTypeController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "support" = "#0033ff",
-     *   "guest" = "#85d893"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
@@ -40,9 +40,39 @@ class TicketTypeController extends FOSRestController
      */
     public function getTicketTypesAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPPORT_SUPERADMIN');
 
         $ticket_types = $this->getDoctrine()->getRepository("SupportBundle:TicketType")
             ->findAll();
+
+        return array('ticket_types' => $ticket_types);
+    }
+
+    /**
+     * Get all the enabled ticket_types
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="TicketType",
+     *  description="Get all enabled ticket_types",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "support" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/ticket_types/enabled")
+     */
+    public function getEnabledTicketTypesAction()
+    {
+
+        $ticket_types = $this->getDoctrine()->getRepository("SupportBundle:TicketType")
+            ->findBy(['enabled' => true]);
 
         return array('ticket_types' => $ticket_types);
     }

@@ -31,7 +31,7 @@ class ProjectFieldController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "ua" = "#0033ff",
-     *   "guest" = "#85d893"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
@@ -40,9 +40,39 @@ class ProjectFieldController extends FOSRestController
      */
     public function getProjectFieldsAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
 
         $project_fields = $this->getDoctrine()->getRepository("UABundle:ProjectField")
             ->findAll();
+
+        return array('project_fields' => $project_fields);
+    }
+
+    /**
+     * Get all the enabled project_fields
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="ProjectField",
+     *  description="Get all enabled project_fields",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/project_fields/enabled")
+     */
+    public function getEnabledProjectFieldsAction()
+    {
+
+        $project_fields = $this->getDoctrine()->getRepository("UABundle:ProjectField")
+            ->findBy(['enabled' => true]);
 
         return array('project_fields' => $project_fields);
     }

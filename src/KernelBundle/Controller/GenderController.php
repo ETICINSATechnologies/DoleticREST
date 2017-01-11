@@ -31,7 +31,7 @@ class GenderController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "kernel" = "#0033ff",
-     *   "guest" = "#85d893"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
@@ -40,9 +40,39 @@ class GenderController extends FOSRestController
      */
     public function getGendersAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $genders = $this->getDoctrine()->getRepository("KernelBundle:Gender")
             ->findAll();
+
+        return array('genders' => $genders);
+    }
+
+    /**
+     * Get all the enabled genders
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Gender",
+     *  description="Get all enabled genders",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/genders/enabled")
+     */
+    public function getEnabledGendersAction()
+    {
+
+        $genders = $this->getDoctrine()->getRepository("KernelBundle:Gender")
+            ->findBy(['enabled' => true]);
 
         return array('genders' => $genders);
     }

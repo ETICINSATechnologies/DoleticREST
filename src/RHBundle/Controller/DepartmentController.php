@@ -31,17 +31,47 @@ class DepartmentController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "rh" = "#0033ff",
-     *   "guest" = "#85d893"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
      * @View()
      * @Get("/departments")
      */
-    public function getDepartmentsAction(){
+    public function getDepartmentsAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
 
         $departments = $this->getDoctrine()->getRepository("RHBundle:Department")
             ->findAll();
+
+        return array('departments' => $departments);
+    }
+
+    /**
+     * Get all the enabled departments
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Department",
+     *  description="Get all enabled departments",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/departments/enabled")
+     */
+    public function getEnabledDepartmentsAction()
+    {
+        $departments = $this->getDoctrine()->getRepository("RHBundle:Department")
+            ->findBy(['enabled' => true]);
 
         return array('departments' => $departments);
     }
@@ -68,7 +98,8 @@ class DepartmentController extends FOSRestController
      * @ParamConverter("department", class="RHBundle:Department")
      * @Get("/department/{id}", requirements={"id" = "\d+"})
      */
-    public function getDepartmentAction(Department $department){
+    public function getDepartmentAction(Department $department)
+    {
 
         return array('department' => $department);
 
@@ -95,7 +126,8 @@ class DepartmentController extends FOSRestController
      * @View()
      * @Get("/department/{label}")
      */
-    public function getDepartmentByLabelAction($label){
+    public function getDepartmentByLabelAction($label)
+    {
 
         $department = $this->getDoctrine()->getRepository('RHBundle:Department')->findOneBy(['label' => $label]);
         return array('department' => $department);
