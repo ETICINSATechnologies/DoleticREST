@@ -321,7 +321,7 @@ class UserController extends FOSRestController
      * @ApiDoc(
      *  section="User",
      *  description="Edit current User password",
-     *  input="KernelBundle\Form\UserType",
+     *  input="KernelBundle\Form\ChangePasswordType",
      *  output="KernelBundle\Entity\User",
      *  statusCodes={
      *         200="Returned when successful"
