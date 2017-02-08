@@ -33,7 +33,7 @@ class UserPositionListener
                 if ($position->getId() == $userPosition->getId()) {
                     continue;
                 } elseif (!$position->getPosition()->isOld()) {
-                    $position->setActive(false)->setEndDate(new DateTime());
+                    $position->setActive(false)->setEndDate(new DateTime())->setMain(false);
                 } else {
                     $alreadyOld = true;
                 }
