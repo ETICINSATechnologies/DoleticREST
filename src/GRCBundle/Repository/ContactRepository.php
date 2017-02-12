@@ -22,4 +22,17 @@ class ContactRepository extends EntityRepository
             ->from('GRCBundle:Contact', 'e', 'e.id')
             ->getQuery()->getResult();
     }
+
+    /**
+     * @return array
+     */
+    public function findByOneAttribute($attribute, $value)
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('GRCBundle:Contact', 'e', 'e.id')
+            ->where('e.' . $attribute . ' = ?1')
+            ->setParameter(1, $value)
+            ->getQuery()->getResult();
+    }
 }
