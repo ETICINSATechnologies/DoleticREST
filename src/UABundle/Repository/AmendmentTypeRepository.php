@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class AmendmentTypeRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('UABundle:AmendmentType', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

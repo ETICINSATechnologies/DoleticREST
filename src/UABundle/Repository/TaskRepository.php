@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class TaskRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('UABundle:Task', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

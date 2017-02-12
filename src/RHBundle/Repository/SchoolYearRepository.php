@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class SchoolYearRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('RHBundle:SchoolYear', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

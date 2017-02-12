@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class FirmTypeRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('GRCBundle:FirmType', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

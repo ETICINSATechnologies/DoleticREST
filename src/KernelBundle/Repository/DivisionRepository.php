@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class DivisionRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('KernelBundle:Division', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

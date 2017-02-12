@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserPositionRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('KernelBundle:UserPosition', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

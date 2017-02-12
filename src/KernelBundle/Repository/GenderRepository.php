@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class GenderRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('KernelBundle:Gender', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

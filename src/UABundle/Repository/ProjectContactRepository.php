@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProjectContactRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('UABundle:ProjectContact', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }
