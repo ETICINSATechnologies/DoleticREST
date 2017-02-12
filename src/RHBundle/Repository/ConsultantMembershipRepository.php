@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class ConsultantMembershipRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('RHBundle:ConsultantMembership', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

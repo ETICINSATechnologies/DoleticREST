@@ -19,4 +19,15 @@ class DeliveryRepository extends EntityRepository
         $qb->join('d.task', 't')->where($qb->expr()->eq('t.project', $project->getId()));
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('UABundle:Delivery', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

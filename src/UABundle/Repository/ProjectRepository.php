@@ -37,4 +37,15 @@ class ProjectRepository extends EntityRepository
             ->orderBy('p.number', 'DESC');
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('UABundle:Project', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

@@ -19,4 +19,15 @@ class AmendmentRepository extends EntityRepository
         $qb->join('a.types', 't')->where($qb->expr()->eq('t.id', $type->getId()));
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('UABundle:Amendment', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

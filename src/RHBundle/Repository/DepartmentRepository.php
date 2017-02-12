@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class DepartmentRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('RHBundle:Department', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class TicketRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('SupportBundle:Ticket', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

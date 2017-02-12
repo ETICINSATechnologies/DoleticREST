@@ -10,4 +10,14 @@ namespace UABundle\Repository;
  */
 class ProjectFileRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('UABundle:ProjectFile', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

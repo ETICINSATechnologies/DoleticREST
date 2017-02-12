@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProjectDocumentRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('UABundle:ProjectDocument', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class RecruitmentEventRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('RHBundle:RecruitmentEvent', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

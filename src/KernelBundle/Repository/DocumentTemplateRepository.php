@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class DocumentTemplateRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('KernelBundle:DocumentTemplate', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

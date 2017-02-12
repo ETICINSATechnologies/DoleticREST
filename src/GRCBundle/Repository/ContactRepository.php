@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class ContactRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('GRCBundle:Contact', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }

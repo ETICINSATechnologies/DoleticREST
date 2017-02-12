@@ -19,4 +19,15 @@ class TeamRepository extends EntityRepository
         $qb->join('t.members', 'm')->where($qb->expr()->eq('m.id', $member->getId()));
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->createQueryBuilder('q')
+            ->select('e')
+            ->from('RHBundle:Team', 'e', 'e.id')
+            ->getQuery()->getResult();
+    }
 }
