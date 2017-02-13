@@ -104,6 +104,13 @@ class Contact
     /**
      * @var \DateTime
      *
+     * @ORM\Column(name="next_prospecting", type="datetime", nullable=true)
+     */
+    private $nextProspecting;
+
+    /**
+     * @var \DateTime
+     *
      * @ORM\Column(name="creation_date", type="datetime")
      */
     private $creationDate;
@@ -332,6 +339,25 @@ class Contact
     public function getNotes()
     {
         return $this->notes;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNextProspecting()
+    {
+        return $this->nextProspecting;
+    }
+
+    /**
+     * @param mixed $nextProspecting
+     * @return Contact
+     */
+    public function setNextProspecting($nextProspecting)
+    {
+        $this->nextProspecting = $nextProspecting;
+
+        return $this;
     }
 
     /**
