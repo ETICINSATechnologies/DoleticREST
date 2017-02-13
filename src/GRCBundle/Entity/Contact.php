@@ -157,6 +157,11 @@ class Contact
      */
     private $actions;
 
+    /**
+     * @var string
+     */
+    private $fullName;
+
 
     /**
      * Get id
@@ -212,16 +217,6 @@ class Contact
     public function getLastName()
     {
         return $this->lastName;
-    }
-
-    /**
-     * Get full name
-     *
-     * @return string
-     */
-    public function getFullName()
-    {
-        return $this->firstName . ' ' . $this->lastName;
     }
 
     /**
@@ -571,6 +566,25 @@ class Contact
     public function setActions($actions)
     {
         $this->actions = $actions;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
+
+    /**
+     * @param string $fullName
+     * @return Contact
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
 
         return $this;
     }

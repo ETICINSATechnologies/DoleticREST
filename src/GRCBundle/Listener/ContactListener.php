@@ -30,4 +30,9 @@ class ContactListener
     {
         $contact->setLastUpdate(new \DateTime());
     }
+
+    public function postLoad(Contact $contact, LifecycleEventArgs $event)
+    {
+        $contact->setFullName($contact->getFirstName() . ' ' . $contact->getLastName());
+    }
 }
