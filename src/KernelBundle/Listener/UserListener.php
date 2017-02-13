@@ -25,7 +25,7 @@ class UserListener
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
         if ($userName = $this->makeUserName($user->getFirstName(), $user->getLastName())) {
             $userPassword = $user->getPlainPassword();
-            if(!isset($userPassword)) {
+            if (!isset($userPassword)) {
                 $password = $this->makeRandomPassword();
                 $user->setPlainPassword($password);
             }
@@ -54,6 +54,11 @@ class UserListener
             $entityManager->remove($user);
             $entityManager->flush();
         }
+    }
+
+    public function postLoad(User $user, LifecycleEventArgs $event)
+    {
+        $user->setFullName($user->getFirstName() . ' ' . $user->getLastName());
     }
 
     private function makeUserName($firstName, $lastName)

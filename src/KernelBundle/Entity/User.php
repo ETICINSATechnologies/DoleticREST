@@ -135,6 +135,11 @@ class User extends BaseUser
     private $administratorMemberships;
 
     /**
+     * @var string
+     */
+    private $fullName;
+
+    /**
      * Get id
      *
      * @return integer
@@ -444,13 +449,21 @@ class User extends BaseUser
     }
 
     /**
-     * Get full name
-     *
      * @return string
      */
     public function getFullName()
     {
-        return $this->firstName . ' ' . $this->lastName;
+        return $this->fullName;
+    }
+
+    /**
+     * @param string $fullName
+     * @return User
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
+        return $this;
     }
 
 }
