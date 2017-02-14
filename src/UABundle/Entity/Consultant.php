@@ -2,6 +2,7 @@
 
 namespace UABundle\Entity;
 
+use JMS\Serializer\Annotation\SerializedName;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use KernelBundle\Entity\User;
