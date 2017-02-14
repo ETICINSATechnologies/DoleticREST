@@ -48,6 +48,7 @@ class Consultant
     /**
      * @var int
      *
+     * @SerializedName("jehAssigned")
      * @ORM\Column(name="jeh_assigned", type="integer")
      */
     private $jehAssigned;
@@ -55,6 +56,7 @@ class Consultant
     /**
      * @var int
      *
+     * @SerializedName("payByJeh")
      * @ORM\Column(name="pay_by_jeh", type="integer")
      */
     private $payByJeh;

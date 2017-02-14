@@ -33,6 +33,7 @@ class AdministratorMembership
     /**
      * @var \DateTime
      *
+     * @SerializedName("startDate")
      * @ORM\Column(name="start_date", type="date")
      */
     private $startDate;
@@ -40,6 +41,7 @@ class AdministratorMembership
     /**
      * @var \DateTime
      *
+     * @SerializedName("endDate")
      * @ORM\Column(name="end_date", type="date")
      */
     private $endDate;
@@ -47,6 +49,7 @@ class AdministratorMembership
     /**
      * @var bool
      *
+     * @SerializedName("feePaid")
      * @ORM\Column(name="fee_paid", type="boolean")
      */
     private $feePaid;
@@ -54,6 +57,7 @@ class AdministratorMembership
     /**
      * @var bool
      *
+     * @SerializedName("formFilled")
      * @ORM\Column(name="form_filled", type="boolean")
      */
     private $formFilled;

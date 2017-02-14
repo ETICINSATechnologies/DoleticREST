@@ -32,6 +32,7 @@ class ConsultantMembership
     /**
      * @var \DateTime
      *
+     * @SerializedName("startDate")
      * @ORM\Column(name="start_date", type="date")
      */
     private $startDate;
@@ -39,6 +40,7 @@ class ConsultantMembership
     /**
      * @var string
      *
+     * @SerializedName("socialNumber")
      * @ORM\Column(name="social_number", type="string", length=15, nullable=true)
      */
     private $socialNumber;
@@ -46,6 +48,7 @@ class ConsultantMembership
     /**
      * @var bool
      *
+     * @SerializedName("feePaid")
      * @ORM\Column(name="fee_paid", type="boolean")
      */
     private $feePaid;
@@ -53,6 +56,7 @@ class ConsultantMembership
     /**
      * @var bool
      *
+     * @SerializedName("formFilled")
      * @ORM\Column(name="form_filled", type="boolean")
      */
     private $formFilled;
@@ -60,6 +64,7 @@ class ConsultantMembership
     /**
      * @var bool
      *
+     * @SerializedName("ribGiven")
      * @ORM\Column(name="rib_given", type="boolean")
      */
     private $ribGiven;
@@ -67,6 +72,7 @@ class ConsultantMembership
     /**
      * @var bool
      *
+     * @SerializedName("idGiven")
      * @ORM\Column(name="id_given", type="boolean")
      */
     private $idGiven;

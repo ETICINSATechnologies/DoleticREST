@@ -5,6 +5,7 @@ namespace GRCBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use KernelBundle\Entity\Gender;
 use KernelBundle\Entity\User;
+use JMS\Serializer\Annotation\SerializedName;
 
 /**
  * Contact
@@ -27,6 +28,7 @@ class Contact
     /**
      * @var string
      *
+     * @SerializedName("firstName")
      * @ORM\Column(name="first_name", type="string", length=255)
      */
     private $firstName;
@@ -34,6 +36,7 @@ class Contact
     /**
      * @var string
      *
+     * @SerializedName("lastName")
      * @ORM\Column(name="last_name", type="string", length=255)
      */
     private $lastName;
@@ -55,6 +58,7 @@ class Contact
     /**
      * @var int
      *
+     * @SerializedName("cellPhone")
      * @ORM\Column(name="cell_phone", type="integer", nullable=true)
      */
     private $cellPhone;
@@ -76,6 +80,7 @@ class Contact
     /**
      * @var boolean
      *
+     * @SerializedName("fromProspecting")
      * @ORM\Column(name="from_prospecting", type="boolean")
      */
     private $fromProspecting;
@@ -104,6 +109,7 @@ class Contact
     /**
      * @var \DateTime
      *
+     * @SerializedName("nextProspecting")
      * @ORM\Column(name="next_prospecting", type="datetime", nullable=true)
      */
     private $nextProspecting;
@@ -111,6 +117,7 @@ class Contact
     /**
      * @var \DateTime
      *
+     * @SerializedName("creationDate")
      * @ORM\Column(name="creation_date", type="datetime")
      */
     private $creationDate;
@@ -118,6 +125,7 @@ class Contact
     /**
      * @var \DateTime
      *
+     * @SerializedName("lastUpdate")
      * @ORM\Column(name="last_update", type="datetime")
      */
     private $lastUpdate;
@@ -166,6 +174,8 @@ class Contact
 
     /**
      * @var string
+     *
+     * @SerializedName("fullName")
      */
     private $fullName;
 
