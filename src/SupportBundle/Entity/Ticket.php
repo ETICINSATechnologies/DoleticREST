@@ -68,6 +68,7 @@ class Ticket
     /**
      * @var \DateTime
      *
+     * @SerializedName("archivedSince")
      * @ORM\Column(name="archived_since", type="datetime", nullable=true)
      */
     private $archivedSince;
@@ -75,6 +76,7 @@ class Ticket
     /**
      * @var \DateTime
      *
+     * @SerializedName("creationDate")
      * @ORM\Column(name="creation_date", type="datetime")
      */
     private $creationDate;

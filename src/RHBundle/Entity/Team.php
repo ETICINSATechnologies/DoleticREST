@@ -34,6 +34,7 @@ class Team
     /**
      * @var \DateTime
      *
+     * @SerializedName("creationDate")
      * @ORM\Column(name="creation_date", type="datetime")
      */
     private $creationDate;

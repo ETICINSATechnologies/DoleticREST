@@ -53,6 +53,7 @@ class Delivery
     /**
      * @var \DateTime
      *
+     * @SerializedName("deliveryDate")
      * @ORM\Column(name="delivery_date", type="date", nullable=true)
      */
     private $deliveryDate;
@@ -74,6 +75,7 @@ class Delivery
     /**
      * @var \DateTime
      *
+     * @SerializedName("paymentDate")
      * @ORM\Column(name="payment_date", type="date", nullable=true)
      */
     private $paymentDate;

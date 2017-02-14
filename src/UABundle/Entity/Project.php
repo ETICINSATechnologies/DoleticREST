@@ -49,6 +49,7 @@ class Project
     /**
      * @var \DateTime
      *
+     * @SerializedName("signDate")
      * @ORM\Column(name="sign_date", type="date", nullable=true)
      */
     private $signDate;
@@ -56,6 +57,7 @@ class Project
     /**
      * @var \DateTime
      *
+     * @SerializedName("endDate")
      * @ORM\Column(name="end_date", type="date", nullable=true)
      */
     private $endDate;
@@ -63,6 +65,7 @@ class Project
     /**
      * @var int
      *
+     * @SerializedName("managementFee")
      * @ORM\Column(name="management_fee", type="integer")
      */
     private $managementFee;
@@ -70,6 +73,7 @@ class Project
     /**
      * @var int
      *
+     * @SerializedName("applicationFee")
      * @ORM\Column(name="application_fee", type="integer")
      */
     private $applicationFee;
@@ -77,6 +81,7 @@ class Project
     /**
      * @var int
      *
+     * @SerializedName("rebilledFee")
      * @ORM\Column(name="rebilled_fee", type="integer")
      */
     private $rebilledFee;
@@ -91,6 +96,7 @@ class Project
     /**
      * @var int
      *
+     * @SerializedName("expectedDuration")
      * @ORM\Column(name="expected_duration", type="integer", nullable=true)
      */
     private $expectedDuration;
@@ -112,6 +118,7 @@ class Project
     /**
      * @var \DateTime
      *
+     * @SerializedName("creationDate")
      * @ORM\Column(name="creation_date", type="datetime")
      */
     private $creationDate;
@@ -119,6 +126,7 @@ class Project
     /**
      * @var \DateTime
      *
+     * @SerializedName("lastUpdate")
      * @ORM\Column(name="last_update", type="datetime")
      */
     private $lastUpdate;
@@ -133,6 +141,7 @@ class Project
     /**
      * @var \DateTime
      *
+     * @SerializedName("disabledSince")
      * @ORM\Column(name="disabled_since", type="datetime", nullable=true)
      */
     private $disabledSince;
@@ -140,6 +149,7 @@ class Project
     /**
      * @var \DateTime
      *
+     * @SerializedName("disabledUntil")
      * @ORM\Column(name="disabled_until", type="datetime", nullable=true)
      */
     private $disabledUntil;
@@ -154,6 +164,7 @@ class Project
     /**
      * @var \DateTime
      *
+     * @SerializedName("archivedSince")
      * @ORM\Column(name="archived_since", type="datetime", nullable=true)
      */
     private $archivedSince;
