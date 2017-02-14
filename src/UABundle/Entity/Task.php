@@ -89,7 +89,7 @@ class Task
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Delivery", mappedBy="task"))
+     * @ORM\OneToMany(targetEntity="Delivery", mappedBy="task", fetch="EXTRA_LAZY")
      */
     private $deliveries;
 

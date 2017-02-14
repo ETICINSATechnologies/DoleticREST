@@ -160,7 +160,7 @@ class Contact
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="ContactAction", mappedBy="contact")
+     * @ORM\OneToMany(targetEntity="ContactAction", mappedBy="contact", fetch="EXTRA_LAZY")
      */
     private $actions;
 
