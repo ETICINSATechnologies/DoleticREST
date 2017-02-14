@@ -77,7 +77,7 @@ class ContactController extends FOSRestController
     {
 
         $contacts = $this->getDoctrine()->getRepository("GRCBundle:Contact")
-            ->findByOneAttribute('type', $type);
+            ->findBy(['type' => $type]);
 
         return array('contacts' => $contacts);
     }
@@ -108,7 +108,7 @@ class ContactController extends FOSRestController
     {
 
         $contacts = $this->getDoctrine()->getRepository("GRCBundle:Contact")
-            ->findByOneAttribute('firm', $firm);
+            ->findBy(['firm' => $firm]);
 
         return array('contacts' => $contacts);
     }

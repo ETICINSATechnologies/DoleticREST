@@ -123,14 +123,14 @@ class User extends BaseUser
     /**
      * @var ConsultantMembership
      *
-     * @ORM\OneToOne(targetEntity="RHBundle\Entity\ConsultantMembership", mappedBy="user"))
+     * @ORM\OneToOne(targetEntity="RHBundle\Entity\ConsultantMembership", mappedBy="user", fetch="EXTRA_LAZY")
      */
     private $consultantMembership;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="RHBundle\Entity\AdministratorMembership", mappedBy="user"))
+     * @ORM\OneToMany(targetEntity="RHBundle\Entity\AdministratorMembership", mappedBy="user", fetch="EXTRA_LAZY")
      */
     private $administratorMemberships;
 

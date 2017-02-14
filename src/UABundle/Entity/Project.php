@@ -175,7 +175,7 @@ class Project
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="ProjectManager", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="ProjectManager", mappedBy="project", fetch="EXTRA_LAZY")
      *
      */
     private $managers;
@@ -183,7 +183,7 @@ class Project
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="ProjectContact", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="ProjectContact", mappedBy="project", fetch="EXTRA_LAZY")
      *
      */
     private $contacts;
@@ -191,7 +191,7 @@ class Project
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Consultant", mappedBy="project"))
+     * @ORM\OneToMany(targetEntity="Consultant", mappedBy="project", fetch="EXTRA_LAZY")
      */
     private $consultants;
 
@@ -219,28 +219,28 @@ class Project
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Task", mappedBy="project"))
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="project", fetch="EXTRA_LAZY")
      */
     private $tasks;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Amendment", mappedBy="project"))
+     * @ORM\OneToMany(targetEntity="Amendment", mappedBy="project", fetch="EXTRA_LAZY")
      */
     private $amendments;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="ProjectDocument", mappedBy="project"))
+     * @ORM\OneToMany(targetEntity="ProjectDocument", mappedBy="project", fetch="EXTRA_LAZY")
      */
     private $documents;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="ProjectFile", mappedBy="project"))
+     * @ORM\OneToMany(targetEntity="ProjectFile", mappedBy="project", fetch="EXTRA_LAZY")
      */
     private $files;
 
