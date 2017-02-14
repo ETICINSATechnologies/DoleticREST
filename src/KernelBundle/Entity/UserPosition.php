@@ -2,6 +2,7 @@
 
 namespace KernelBundle\Entity;
 
+use JMS\Serializer\Annotation\SerializedName;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
