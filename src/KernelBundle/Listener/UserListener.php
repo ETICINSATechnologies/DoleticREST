@@ -56,6 +56,16 @@ class UserListener
         }
     }
 
+    public function postPersist(User $user, LifecycleEventArgs $event)
+    {
+        $user->setFullName($user->getFirstName() . ' ' . $user->getLastName());
+    }
+
+    public function postUpdate(User $user, LifecycleEventArgs $event)
+    {
+        $user->setFullName($user->getFirstName() . ' ' . $user->getLastName());
+    }
+
     public function postLoad(User $user, LifecycleEventArgs $event)
     {
         $user->setFullName($user->getFirstName() . ' ' . $user->getLastName());
