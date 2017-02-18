@@ -45,7 +45,7 @@ class ContactActionController extends FOSRestController
     public function getContactActionsAction()
     {
 
-        $contact_actions = $this->getDoctrine()->getRepository("ContactAction.php")
+        $contact_actions = $this->getDoctrine()->getRepository("GRCBundle:ContactAction")
             ->findAll();
 
         return array('contact_actions' => $contact_actions);
@@ -76,7 +76,7 @@ class ContactActionController extends FOSRestController
     public function getContactActionsByTypeAction(Type $type)
     {
 
-        $contact_actions = $this->getDoctrine()->getRepository("ContactAction.php")
+        $contact_actions = $this->getDoctrine()->getRepository("GRCBundle:ContactAction")
             ->findBy(['type' => $type]);
 
         return array('contact_actions' => $contact_actions);
@@ -107,7 +107,7 @@ class ContactActionController extends FOSRestController
     public function getContactActionsByContactAction(Contact $contact)
     {
 
-        $contact_actions = $this->getDoctrine()->getRepository("ContactAction.php")
+        $contact_actions = $this->getDoctrine()->getRepository("GRCBundle:ContactAction")
             ->findBy(['contact' => $contact]);
 
         return array('contact_actions' => $contact_actions);
@@ -138,7 +138,7 @@ class ContactActionController extends FOSRestController
     public function getContactActionsByProspectorAction(User $prospector)
     {
 
-        $contact_actions = $this->getDoctrine()->getRepository("ContactAction.php")
+        $contact_actions = $this->getDoctrine()->getRepository("GRCBundle:ContactAction")
             ->findBy(['prospector' => $prospector]);
 
         return array('contact_actions' => $contact_actions);
@@ -167,7 +167,7 @@ class ContactActionController extends FOSRestController
     public function getCurrentUserContactActionsAction()
     {
 
-        $contact_actions = $this->getDoctrine()->getRepository("ContactAction.php")
+        $contact_actions = $this->getDoctrine()->getRepository("GRCBundle:ContactAction")
             ->findBy(['prospector' => $this->getUser()]);
 
         return array('contact_actions' => $contact_actions);
