@@ -134,6 +134,7 @@ class Contact
      * @var ContactType
      *
      * @ORM\ManyToOne(targetEntity="ContactType")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id", nullable=false)
      */
     private $type;
 
