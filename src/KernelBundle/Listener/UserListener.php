@@ -59,16 +59,34 @@ class UserListener
     public function postPersist(User $user, LifecycleEventArgs $event)
     {
         $user->setFullName($user->getFirstName() . ' ' . $user->getLastName());
+        foreach ($user->getPositions() as $userPosition) {
+            if ($userPosition->isMain()) {
+                $user->setMainPosition($userPosition->getPosition());
+                break;
+            }
+        }
     }
 
     public function postUpdate(User $user, LifecycleEventArgs $event)
     {
         $user->setFullName($user->getFirstName() . ' ' . $user->getLastName());
+        foreach ($user->getPositions() as $userPosition) {
+            if ($userPosition->isMain()) {
+                $user->setMainPosition($userPosition->getPosition());
+                break;
+            }
+        }
     }
 
     public function postLoad(User $user, LifecycleEventArgs $event)
     {
         $user->setFullName($user->getFirstName() . ' ' . $user->getLastName());
+        foreach ($user->getPositions() as $userPosition) {
+            if ($userPosition->isMain()) {
+                $user->setMainPosition($userPosition->getPosition());
+                break;
+            }
+        }
     }
 
     private function makeUserName($firstName, $lastName)

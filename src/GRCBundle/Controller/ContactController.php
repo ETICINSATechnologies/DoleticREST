@@ -295,7 +295,7 @@ class ContactController extends FOSRestController
     }
 
     /**
-     * Edit a Contact
+     * Change the type of a Contact
      * Put action
      * @var Request $request
      * @var Contact $contact
@@ -303,7 +303,7 @@ class ContactController extends FOSRestController
      *
      * @ApiDoc(
      *  section="Contact",
-     *  description="Edit a Contact",
+     *  description="Change the type of a Contact",
      *  input="GRCBundle\Form\ContactType",
      *  output="GRCBundle\Entity\Contact",
      *  statusCodes={
