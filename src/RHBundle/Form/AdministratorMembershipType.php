@@ -32,7 +32,8 @@ class AdministratorMembershipType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'RHBundle\Entity\AdministratorMembership'
+            'data_class' => 'RHBundle\Entity\AdministratorMembership',
+            'allow_extra_fields' => true
         ));
     }
 

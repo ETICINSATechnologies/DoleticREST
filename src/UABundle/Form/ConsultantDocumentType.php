@@ -27,7 +27,8 @@ class ConsultantDocumentType extends DocumentType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\ConsultantDocument'
+            'data_class' => 'UABundle\Entity\ConsultantDocument',
+            'allow_extra_fields' => true
         ));
     }
 

@@ -31,7 +31,8 @@ class ProjectManagerType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\ProjectManager'
+            'data_class' => 'UABundle\Entity\ProjectManager',
+            'allow_extra_fields' => true
         ));
     }
 

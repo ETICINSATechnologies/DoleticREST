@@ -28,7 +28,8 @@ class RecruitmentEventType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'RHBundle\Entity\RecruitmentEvent'
+            'data_class' => 'RHBundle\Entity\RecruitmentEvent',
+            'allow_extra_fields' => true
         ));
     }
 

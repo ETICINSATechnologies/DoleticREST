@@ -37,7 +37,8 @@ class TaskType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\Task'
+            'data_class' => 'UABundle\Entity\Task',
+            'allow_extra_fields' => true
         ));
     }
 

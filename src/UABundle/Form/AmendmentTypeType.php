@@ -27,7 +27,8 @@ class AmendmentTypeType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\AmendmentType'
+            'data_class' => 'UABundle\Entity\AmendmentType',
+            'allow_extra_fields' => true
         ));
     }
 

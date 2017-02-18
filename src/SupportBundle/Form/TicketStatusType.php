@@ -27,7 +27,8 @@ class TicketStatusType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'SupportBundle\Entity\TicketStatus'
+            'data_class' => 'SupportBundle\Entity\TicketStatus',
+            'allow_extra_fields' => true
         ));
     }
 

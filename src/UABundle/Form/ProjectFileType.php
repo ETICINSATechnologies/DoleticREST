@@ -32,7 +32,8 @@ class ProjectFileType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\ProjectFile'
+            'data_class' => 'UABundle\Entity\ProjectFile',
+            'allow_extra_fields' => true
         ));
     }
 

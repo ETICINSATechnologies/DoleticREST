@@ -31,7 +31,8 @@ class DocumentType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\Document'
+            'data_class' => 'UABundle\Entity\Document',
+            'allow_extra_fields' => true
         ));
     }
 

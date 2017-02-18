@@ -35,7 +35,8 @@ class ConsultantMembershipType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'RHBundle\Entity\ConsultantMembership'
+            'data_class' => 'RHBundle\Entity\ConsultantMembership',
+            'allow_extra_fields' => true
         ));
     }
 

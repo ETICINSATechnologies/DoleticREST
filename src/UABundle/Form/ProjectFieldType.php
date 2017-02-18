@@ -29,7 +29,8 @@ class ProjectFieldType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\ProjectField'
+            'data_class' => 'UABundle\Entity\ProjectField',
+            'allow_extra_fields' => true
         ));
     }
 

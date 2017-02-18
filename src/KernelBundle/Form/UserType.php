@@ -46,7 +46,8 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'KernelBundle\Entity\User'
+            'data_class' => 'KernelBundle\Entity\User',
+            'allow_extra_fields' => true
         ));
     }
 

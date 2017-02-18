@@ -30,7 +30,8 @@ class ConsultantType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\Consultant'
+            'data_class' => 'UABundle\Entity\Consultant',
+            'allow_extra_fields' => true
         ));
     }
 

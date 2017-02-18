@@ -45,7 +45,8 @@ class DeliveryType extends AbstractType
         $resolver->setDefaults(array(
             'csrf_protection' => false,
             'data_class' => 'UABundle\Entity\Delivery',
-            'mode' => self::ADD_MODE
+            'mode' => self::ADD_MODE,
+            'allow_extra_fields' => true
         ));
     }
 

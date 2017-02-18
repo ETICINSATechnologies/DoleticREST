@@ -27,7 +27,8 @@ class DocumentTemplateType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'KernelBundle\Entity\DocumentTemplate'
+            'data_class' => 'KernelBundle\Entity\DocumentTemplate',
+            'allow_extra_fields' => true
         ));
     }
 

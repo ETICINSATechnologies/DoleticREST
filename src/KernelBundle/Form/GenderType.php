@@ -29,7 +29,8 @@ class GenderType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'KernelBundle\Entity\Gender'
+            'data_class' => 'KernelBundle\Entity\Gender',
+            'allow_extra_fields' => true
         ));
     }
 
