@@ -151,6 +151,13 @@ class User extends BaseUser
     private $fullName;
 
     /**
+     * @var Position
+     *
+     * @SerializedName("mainPosition")
+     */
+    private $mainPosition;
+
+    /**
      * Get id
      *
      * @return integer
@@ -474,6 +481,26 @@ class User extends BaseUser
     public function setFullName($fullName)
     {
         $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMainPosition()
+    {
+        return $this->mainPosition;
+    }
+
+    /**
+     * @param mixed $mainPosition
+     * @return User
+     */
+    public function setMainPosition($mainPosition)
+    {
+        $this->mainPosition = $mainPosition;
+
         return $this;
     }
 
