@@ -27,7 +27,8 @@ class DeliveryDocumentType extends DocumentType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\DeliveryDocument'
+            'data_class' => 'UABundle\Entity\DeliveryDocument',
+            'allow_extra_fields' => true
         ));
     }
 

@@ -31,7 +31,8 @@ class TicketType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'SupportBundle\Entity\Ticket'
+            'data_class' => 'SupportBundle\Entity\Ticket',
+            'allow_extra_fields' => true
         ));
     }
 

@@ -26,7 +26,8 @@ class CountryType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'KernelBundle\Entity\Country'
+            'data_class' => 'KernelBundle\Entity\Country',
+            'allow_extra_fields' => true
         ));
     }
 

@@ -62,7 +62,8 @@ class PositionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'KernelBundle\Entity\Position'
+            'data_class' => 'KernelBundle\Entity\Position',
+            'allow_extra_fields' => true
         ));
     }
 

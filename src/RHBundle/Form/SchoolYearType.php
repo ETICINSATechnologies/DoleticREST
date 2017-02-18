@@ -26,7 +26,8 @@ class SchoolYearType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'RHBundle\Entity\SchoolYear'
+            'data_class' => 'RHBundle\Entity\SchoolYear',
+            'allow_extra_fields' => true
         ));
     }
 

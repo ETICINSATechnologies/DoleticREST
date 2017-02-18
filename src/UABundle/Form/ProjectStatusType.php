@@ -27,7 +27,8 @@ class ProjectStatusType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\ProjectStatus'
+            'data_class' => 'UABundle\Entity\ProjectStatus',
+            'allow_extra_fields' => true
         ));
     }
 

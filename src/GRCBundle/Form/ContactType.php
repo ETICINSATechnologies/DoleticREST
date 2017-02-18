@@ -47,7 +47,8 @@ class ContactType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'GRCBundle\Entity\Contact'
+            'data_class' => 'GRCBundle\Entity\Contact',
+            'allow_extra_fields' => true
         ));
     }
 

@@ -27,7 +27,8 @@ class ProjectDocumentType extends DocumentType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\ProjectDocument'
+            'data_class' => 'UABundle\Entity\ProjectDocument',
+            'allow_extra_fields' => true
         ));
     }
 

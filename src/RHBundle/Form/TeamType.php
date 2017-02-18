@@ -29,7 +29,8 @@ class TeamType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'RHBundle\Entity\Team'
+            'data_class' => 'RHBundle\Entity\Team',
+            'allow_extra_fields' => true
         ));
     }
 

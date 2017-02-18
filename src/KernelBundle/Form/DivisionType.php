@@ -29,7 +29,8 @@ class DivisionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'KernelBundle\Entity\Division'
+            'data_class' => 'KernelBundle\Entity\Division',
+            'allow_extra_fields' => true
         ));
     }
 

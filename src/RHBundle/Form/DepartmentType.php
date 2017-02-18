@@ -29,7 +29,8 @@ class DepartmentType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'RHBundle\Entity\Department'
+            'data_class' => 'RHBundle\Entity\Department',
+            'allow_extra_fields' => true
         ));
     }
 

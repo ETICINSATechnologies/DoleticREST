@@ -34,7 +34,8 @@ class ContactActionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'GRCBundle\Entity\ContactAction'
+            'data_class' => 'GRCBundle\Entity\ContactAction',
+            'allow_extra_fields' => true
         ));
     }
 

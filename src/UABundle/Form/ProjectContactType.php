@@ -31,7 +31,8 @@ class ProjectContactType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\ProjectContact'
+            'data_class' => 'UABundle\Entity\ProjectContact',
+            'allow_extra_fields' => true
         ));
     }
 

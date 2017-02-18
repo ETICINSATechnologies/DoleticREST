@@ -34,7 +34,8 @@ class FirmType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'GRCBundle\Entity\Firm'
+            'data_class' => 'GRCBundle\Entity\Firm',
+            'allow_extra_fields' => true
         ));
     }
 

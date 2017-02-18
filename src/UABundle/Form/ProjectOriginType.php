@@ -27,7 +27,8 @@ class ProjectOriginType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'data_class' => 'UABundle\Entity\ProjectOrigin'
+            'data_class' => 'UABundle\Entity\ProjectOrigin',
+            'allow_extra_fields' => true
         ));
     }
 
