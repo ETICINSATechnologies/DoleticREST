@@ -295,6 +295,45 @@ class ContactController extends FOSRestController
     }
 
     /**
+     * Edit a Contact
+     * Put action
+     * @var Request $request
+     * @var Contact $contact
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Contact",
+     *  description="Edit a Contact",
+     *  input="GRCBundle\Form\ContactType",
+     *  output="GRCBundle\Entity\Contact",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "grc" = "#0033ff",
+     *   "admin" = "#e0a157"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("contact", class="GRCBundle:Contact")
+     * @Post("/contact/{id}/type/{typeId}", requirements={"id" = "\d+", "typeId" = "\d+"})
+     */
+    public function updateContactTypeAction(Request $request, Contact $contact, $typeId)
+    {
+        $this->denyAccessUnlessGranted('ROLE_GRC_ADMIN');
+
+        $type = $this->getDoctrine()->getRepository('GRCBundle:ContactType')->find($typeId);
+        $contact->setType($type);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($contact);
+        $em->flush();
+
+        return ['contact' => $contact];
+    }
+
+    /**
      * Delete a Contact
      * Delete action
      * @var Contact $contact
