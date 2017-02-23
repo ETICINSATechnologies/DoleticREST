@@ -38,6 +38,18 @@ class ProjectRepository extends DoleticRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findUnsigned()
+    {
+        $qb = $this->createQueryBuilder('q')
+            ->select('p')
+            ->from($this->getClassName(), 'p', 'p.id');
+        $qb->andWhere($qb->expr()->isNull('p.signDate'))
+            ->andWhere('p.disabled = ?1')
+            ->andWhere('p.archived = ?2')
+            ->setParameters([1 => false, 2 => false]);
+        return $qb->getQuery()->getResult();
+    }
+
     public function findCurrent()
     {
         $qb = $this->createQueryBuilder('q')

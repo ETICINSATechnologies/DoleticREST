@@ -326,7 +326,7 @@ class ProjectController extends FOSRestController
     {
 
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
-            ->findBy(['signDate' => null, 'disabled' => false, 'archived' => false]);
+            ->findUnsigned();
 
         return array('projects' => $projects);
     }
