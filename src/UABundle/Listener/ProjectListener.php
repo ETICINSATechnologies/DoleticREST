@@ -21,7 +21,7 @@ class ProjectListener
         $lastProject = $entityManager->getRepository('UABundle:Project')->findBy([], ['number' => 'DESC'], 1);
         $number = 1;
         if(isset($lastProject) && !empty($lastProject)) {
-            $number = $lastProject[0]->getNumber() + 1;
+            $number = $lastProject[max(array_keys($lastProject))]->getNumber() + 1;
         }
         $project
             ->setNumber($number)
