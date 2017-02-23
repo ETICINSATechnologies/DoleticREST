@@ -37,4 +37,17 @@ class ProjectRepository extends DoleticRepository
             ->orderBy('p.number', 'DESC');
         return $qb->getQuery()->getResult();
     }
+
+    public function findCurrent()
+    {
+        $qb = $this->createQueryBuilder('q')
+            ->select('p')
+            ->from($this->getClassName(), 'p', 'p.id');
+        $qb->andWhere($qb->expr()->isNotNull('p.signDate'))
+            ->andWhere($qb->expr()->isNull('p.endDate'))
+            ->andWhere('p.disabled = ?1')
+            ->andWhere('p.archived = ?2')
+            ->setParameters([1 => false, 2 => false]);
+        return $qb->getQuery()->getResult();
+    }
 }

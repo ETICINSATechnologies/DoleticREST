@@ -25,7 +25,7 @@ class DoleticRepository extends EntityRepository
         if (isset($criteria)) {
             $i = 1;
             foreach ($criteria as $key => $value) {
-                $qb->where('e.' . $key . '= ?' . $i)
+                $qb->andWhere('e.' . $key . '= ?' . $i)
                     ->setParameter($i, $value);
                 $i++;
             }
