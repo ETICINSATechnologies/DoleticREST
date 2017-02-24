@@ -737,7 +737,8 @@ class ProjectController extends FOSRestController
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $project->setDisabled(true)->setDisabledSince(new \DateTime());
-            if ($project->getDisabledSince() > $project->getDisabledUntil()) {
+            $until = $project->getDisabledUntil();
+            if (isset($until) && $project->getDisabledSince() > $until) {
                 return ["error" => "Date invalide."];
             }
             $em->persist($project);
