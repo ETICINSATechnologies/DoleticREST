@@ -257,6 +257,13 @@ class Project
     private $files;
 
     /**
+     * @var boolean
+     *
+     * @SerializedName("userHasRights")
+     */
+    private $userHasRights;
+
+    /**
      * Get id
      *
      * @return integer
@@ -940,6 +947,25 @@ class Project
     public function setFiles($files)
     {
         $this->files = $files;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getUserHasRights()
+    {
+        return $this->userHasRights;
+    }
+
+    /**
+     * @param boolean $userHasRights
+     * @return Project
+     */
+    public function setUserHasRights($userHasRights)
+    {
+        $this->userHasRights = $userHasRights;
 
         return $this;
     }

@@ -37,7 +37,7 @@ class ProjectType extends AbstractType
             ->add('origin', EntityType::class, ['class' => 'UABundle\Entity\ProjectOrigin', 'choice_label' => 'label', 'disabled' => $mode > self::EDIT_MODE])
             ->add('status', EntityType::class, ['class' => 'UABundle\Entity\ProjectStatus', 'choice_label' => 'label', 'disabled' => $mode > self::EDIT_MODE])
             ->add('name', TextType::class, ['disabled' => $mode > self::EDIT_MODE])
-            ->add('description', TextareaType::class, ['required' => false, 'disabled' => $mode > self::EDIT_MODE])
+            ->add('description', TextareaType::class, ['disabled' => $mode > self::EDIT_MODE])
             ->add('signDate', DateType::class, ['disabled' => $mode !== self::SIGN_MODE, 'format' => 'dd/MM/yyyy', 'widget' => 'single_text'])
             ->add('endDate', DateType::class, ['disabled' => $mode !== self::END_MODE, 'format' => 'dd/MM/yyyy', 'widget' => 'single_text'])
             ->add('managementFee', IntegerType::class, ['disabled' => $mode !== self::EDIT_MODE])
