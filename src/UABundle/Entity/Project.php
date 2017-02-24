@@ -201,7 +201,7 @@ class Project
     private $contacts;
 
     /**
-     * @var ArrayCollection
+     * @var array
      *
      * @ORM\OneToMany(targetEntity="Consultant", mappedBy="project", fetch="EXTRA_LAZY")
      */
@@ -229,32 +229,39 @@ class Project
     private $status;
 
     /**
-     * @var ArrayCollection
+     * @var array
      *
      * @ORM\OneToMany(targetEntity="Task", mappedBy="project", fetch="EXTRA_LAZY")
      */
     private $tasks;
 
     /**
-     * @var ArrayCollection
+     * @var array
      *
      * @ORM\OneToMany(targetEntity="Amendment", mappedBy="project", fetch="EXTRA_LAZY")
      */
     private $amendments;
 
     /**
-     * @var ArrayCollection
+     * @var array
      *
      * @ORM\OneToMany(targetEntity="ProjectDocument", mappedBy="project", fetch="EXTRA_LAZY")
      */
     private $documents;
 
     /**
-     * @var ArrayCollection
+     * @var array
      *
      * @ORM\OneToMany(targetEntity="ProjectFile", mappedBy="project", fetch="EXTRA_LAZY")
      */
     private $files;
+
+    /**
+     * @var boolean
+     *
+     * @SerializedName("userHasRights")
+     */
+    private $userHasRights;
 
     /**
      * Get id
@@ -940,6 +947,25 @@ class Project
     public function setFiles($files)
     {
         $this->files = $files;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getUserHasRights()
+    {
+        return $this->userHasRights;
+    }
+
+    /**
+     * @param boolean $userHasRights
+     * @return Project
+     */
+    public function setUserHasRights($userHasRights)
+    {
+        $this->userHasRights = $userHasRights;
 
         return $this;
     }

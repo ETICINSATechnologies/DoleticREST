@@ -18,6 +18,7 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use UABundle\Entity\Project;
 use UABundle\Entity\ProjectField;
+use UABundle\Entity\ProjectManager;
 use UABundle\Entity\ProjectOrigin;
 use UABundle\Entity\ProjectStatus;
 use UABundle\Form\ProjectType;
@@ -507,6 +508,8 @@ class ProjectController extends FOSRestController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $currentAsManager = $form['currentAsManager']->getData();
+
             $em = $this->getDoctrine()->getManager();
             $project
                 ->setDisabled(false)
@@ -516,6 +519,15 @@ class ProjectController extends FOSRestController
                 ->setAdvance(0)
                 ->setRebilledFee(0);
             $em->persist($project);
+
+            if ($currentAsManager) {
+                $manager = new ProjectManager();
+                $manager
+                    ->setManager($this->getUser())
+                    ->setProject($project);
+                $em->persist($manager);
+                $project->setManagers([$manager]);
+            }
             $em->flush();
 
             return array("project" => $project);

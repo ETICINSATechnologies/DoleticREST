@@ -20,7 +20,7 @@ class ProjectListener
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
         $lastProject = $entityManager->getRepository('UABundle:Project')->findBy([], ['number' => 'DESC'], 1);
         $number = 1;
-        if(isset($lastProject) && !empty($lastProject)) {
+        if (isset($lastProject) && !empty($lastProject)) {
             $number = $lastProject[max(array_keys($lastProject))]->getNumber() + 1;
         }
         $project
@@ -33,5 +33,23 @@ class ProjectListener
     public function preUpdate(Project $project, LifecycleEventArgs $event)
     {
         $project->setLastUpdate(new \DateTime());
+    }
+
+    public function postLoad(Project $project, LifecycleEventArgs $event)
+    {
+        $currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
+        $project->setUserHasRights($this->container->get('ua.project.rights_service')->userHasRights($currentUser, $project));
+    }
+
+    public function postPersist(Project $project, LifecycleEventArgs $event)
+    {
+        $currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
+        $project->setUserHasRights($this->container->get('ua.project.rights_service')->userHasRights($currentUser, $project));
+    }
+
+    public function postUpdate(Project $project, LifecycleEventArgs $event)
+    {
+        $currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
+        $project->setUserHasRights($this->container->get('ua.project.rights_service')->userHasRights($currentUser, $project));
     }
 }
