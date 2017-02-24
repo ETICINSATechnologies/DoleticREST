@@ -187,7 +187,7 @@ class Project
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="ProjectManager", mappedBy="project", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="ProjectManager", mappedBy="project", fetch="EXTRA_LAZY", cascade={"remove"})
      *
      */
     private $managers;
@@ -195,7 +195,7 @@ class Project
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="ProjectContact", mappedBy="project", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="ProjectContact", mappedBy="project", fetch="EXTRA_LAZY", cascade={"remove"})
      *
      */
     private $contacts;
@@ -203,7 +203,7 @@ class Project
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="Consultant", mappedBy="project", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Consultant", mappedBy="project", fetch="EXTRA_LAZY", cascade={"remove"})
      */
     private $consultants;
 
@@ -231,28 +231,28 @@ class Project
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="Task", mappedBy="project", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="project", fetch="EXTRA_LAZY", cascade={"remove"})
      */
     private $tasks;
 
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="Amendment", mappedBy="project", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Amendment", mappedBy="project", fetch="EXTRA_LAZY", cascade={"remove"})
      */
     private $amendments;
 
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="ProjectDocument", mappedBy="project", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="ProjectDocument", mappedBy="project", fetch="EXTRA_LAZY", cascade={"remove"})
      */
     private $documents;
 
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="ProjectFile", mappedBy="project", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="ProjectFile", mappedBy="project", fetch="EXTRA_LAZY", cascade={"remove"})
      */
     private $files;
 
