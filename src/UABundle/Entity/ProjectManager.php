@@ -25,7 +25,7 @@ class ProjectManager
     /**
      * @var Project
      *
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="managers", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="managers")
      *
      */
     private $project;
