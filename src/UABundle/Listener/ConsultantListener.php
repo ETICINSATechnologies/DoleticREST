@@ -21,7 +21,7 @@ class ConsultantListener
         $lastConsultant = $entityManager->getRepository('UABundle:Consultant')->findBy(['project' => $consultant->getProject()], ['number' => 'DESC'], 1);
         $number = 1;
         if(isset($lastConsultant) && !empty($lastConsultant)) {
-            $number = $lastConsultant[0]->getNumber() + 1;
+            $number = $lastConsultant[max(array_keys($lastConsultant))]->getNumber() + 1;
         }
         $consultant->setNumber($number);
     }

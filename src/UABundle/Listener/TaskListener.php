@@ -21,7 +21,7 @@ class TaskListener
         $lastTask = $entityManager->getRepository('UABundle:Task')->findBy(['project' => $task->getProject()], ['number' => 'DESC'], 1);
         $number = 1;
         if(isset($lastTask) && !empty($lastTask)) {
-            $number = $lastTask[0]->getNumber() + 1;
+            $number = $lastTask[max(array_keys($lastTask))]->getNumber() + 1;
         }
         $task->setNumber($number);
     }

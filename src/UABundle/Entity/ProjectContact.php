@@ -25,7 +25,7 @@ class ProjectContact
     /**
      * @var Project
      *
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="contacts", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="contacts")
      *
      */
     private $project;
