@@ -95,7 +95,7 @@ class ConsultantDocumentTemplateController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "ua" = "#0033ff",
-     *   "admin" = "#e0a157"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
@@ -104,6 +104,8 @@ class ConsultantDocumentTemplateController extends FOSRestController
      */
     public function postConsultantDocumentTemplateAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $consultant_document_template = new ConsultantDocumentTemplate();
         $form = $this->createForm(new ConsultantDocumentTemplateType(), $consultant_document_template);
         $form->handleRequest($request);
@@ -140,7 +142,7 @@ class ConsultantDocumentTemplateController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "ua" = "#0033ff",
-     *   "admin" = "#e0a157"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
@@ -150,6 +152,8 @@ class ConsultantDocumentTemplateController extends FOSRestController
      */
     public function putConsultantDocumentTemplateAction(Request $request, ConsultantDocumentTemplate $consultant_document_template)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $form = $this->createForm(new ConsultantDocumentTemplateType(), $consultant_document_template);
         $form->handleRequest($request);
 
@@ -182,7 +186,7 @@ class ConsultantDocumentTemplateController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "ua" = "#0033ff",
-     *   "admin" = "#e0a157"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
@@ -192,6 +196,8 @@ class ConsultantDocumentTemplateController extends FOSRestController
      */
     public function deleteConsultantDocumentTemplateAction(ConsultantDocumentTemplate $consultant_document_template)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($consultant_document_template);
         $em->flush();

@@ -96,7 +96,7 @@ class ProjectDocumentTemplateController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "ua" = "#0033ff",
-     *   "admin" = "#e0a157"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
@@ -105,6 +105,8 @@ class ProjectDocumentTemplateController extends FOSRestController
      */
     public function postProjectDocumentTemplateAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $project_document_template = new ProjectDocumentTemplate();
         $form = $this->createForm(new ProjectDocumentTemplateType(), $project_document_template);
         $form->handleRequest($request);
@@ -141,7 +143,7 @@ class ProjectDocumentTemplateController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "ua" = "#0033ff",
-     *   "admin" = "#e0a157"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
@@ -151,6 +153,8 @@ class ProjectDocumentTemplateController extends FOSRestController
      */
     public function putProjectDocumentTemplateAction(Request $request, ProjectDocumentTemplate $project_document_template)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $form = $this->createForm(new ProjectDocumentTemplateType(), $project_document_template);
         $form->handleRequest($request);
 
@@ -183,7 +187,7 @@ class ProjectDocumentTemplateController extends FOSRestController
      *  tags={
      *   "stable" = "#4A7023",
      *   "ua" = "#0033ff",
-     *   "admin" = "#e0a157"
+     *   "super-admin" = "#da4932"
      *  }
      * )
      *
@@ -193,6 +197,8 @@ class ProjectDocumentTemplateController extends FOSRestController
      */
     public function deleteProjectDocumentTemplateAction(ProjectDocumentTemplate $project_document_template)
     {
+        $this->denyAccessUnlessGranted('ROLE_UA_SUPERADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($project_document_template);
         $em->flush();

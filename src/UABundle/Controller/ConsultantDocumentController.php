@@ -10,6 +10,7 @@ use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use KernelBundle\Entity\DocumentTemplate;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use UABundle\Entity\ConsultantDocumentTemplate;
 use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -231,6 +232,10 @@ class ConsultantDocumentController extends FOSRestController
         $form = $this->createForm(new ConsultantDocumentType(), $consultant_document);
         $form->handleRequest($request);
 
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $consultant_document->getConsultant()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($consultant_document);
@@ -276,6 +281,10 @@ class ConsultantDocumentController extends FOSRestController
         $form = $this->createForm(new ConsultantDocumentType(), $consultant_document);
         $form->handleRequest($request);
 
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $consultant_document->getConsultant()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
@@ -315,6 +324,10 @@ class ConsultantDocumentController extends FOSRestController
      */
     public function deleteConsultantDocumentAction(ConsultantDocument $consultant_document)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $consultant_document->getConsultant()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($consultant_document);
         $em->flush();

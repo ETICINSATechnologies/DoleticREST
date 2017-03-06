@@ -9,6 +9,7 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use UABundle\Entity\DeliveryDocumentTemplate;
 use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -230,6 +231,10 @@ class DeliveryDocumentController extends FOSRestController
         $form = $this->createForm(new DeliveryDocumentType(), $delivery_document);
         $form->handleRequest($request);
 
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery_document->getDelivery()->getTask()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($delivery_document);
@@ -275,6 +280,10 @@ class DeliveryDocumentController extends FOSRestController
         $form = $this->createForm(new DeliveryDocumentType(), $delivery_document);
         $form->handleRequest($request);
 
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery_document->getDelivery()->getTask()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
@@ -314,6 +323,10 @@ class DeliveryDocumentController extends FOSRestController
      */
     public function deleteDeliveryDocumentAction(DeliveryDocument $delivery_document)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery_document->getDelivery()->getTask()->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($delivery_document);
         $em->flush();
