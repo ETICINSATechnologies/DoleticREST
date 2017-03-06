@@ -27,6 +27,13 @@ class ConsultantDocument extends Document
      */
     private $consultant;
 
+    /**
+     * @var ConsultantDocumentTemplate
+     *
+     * @ORM\ManyToOne(targetEntity="UABundle\Entity\ConsultantDocumentTemplate")
+     */
+    private $template;
+
 
     /**
      * Get id
@@ -53,6 +60,25 @@ class ConsultantDocument extends Document
     public function setConsultant($consultant)
     {
         $this->consultant = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * @return ConsultantDocumentTemplate
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param ConsultantDocumentTemplate $template
+     * @return ConsultantDocument
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
 
         return $this;
     }

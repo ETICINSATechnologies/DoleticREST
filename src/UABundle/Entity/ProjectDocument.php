@@ -28,6 +28,13 @@ class ProjectDocument extends Document
     private $project;
 
     /**
+     * @var ProjectDocumentTemplate
+     *
+     * @ORM\ManyToOne(targetEntity="UABundle\Entity\ProjectDocumentTemplate")
+     */
+    private $template;
+
+    /**
      * Get id
      *
      * @return integer
@@ -56,5 +63,23 @@ class ProjectDocument extends Document
         return $this;
     }
 
+    /**
+     * @return ProjectDocumentTemplate
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param ProjectDocumentTemplate $template
+     * @return ProjectDocument
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+        
+        return $this;
+    }
 
 }

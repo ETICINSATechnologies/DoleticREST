@@ -10,7 +10,7 @@ use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use KernelBundle\Entity\DocumentTemplate;
-use KernelBundle\Entity\ProjectDocumentTemplate;
+use UABundle\Entity\ProjectDocumentTemplate;
 use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -84,7 +84,7 @@ class ProjectDocumentController extends FOSRestController
 
     /**
      * Get all the project_documents from a template
-     * @param DocumentTemplate $template
+     * @param ProjectDocumentTemplate $template
      * @return array
      *
      * @ApiDoc(
@@ -104,7 +104,7 @@ class ProjectDocumentController extends FOSRestController
      * @ParamConverter("template", class="KernelBundle:DocumentTemplate")
      * @Get("/project_documents/template/{id}", requirements={"id" = "\d+"})
      */
-    public function getProjectDocumentsByTemplateAction(DocumentTemplate $template)
+    public function getProjectDocumentsByTemplateAction(ProjectDocumentTemplate $template)
     {
 
         $project_documents = $this->getDoctrine()->getRepository("UABundle:ProjectDocument")

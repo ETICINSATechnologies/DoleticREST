@@ -9,8 +9,7 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
-use KernelBundle\Entity\DocumentTemplate;
-use KernelBundle\Entity\DeliveryDocumentTemplate;
+use UABundle\Entity\DeliveryDocumentTemplate;
 use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -84,7 +83,7 @@ class DeliveryDocumentController extends FOSRestController
 
     /**
      * Get all the delivery_documents from a template
-     * @param DocumentTemplate $template
+     * @param DeliveryDocumentTemplate $template
      * @return array
      *
      * @ApiDoc(
@@ -104,7 +103,7 @@ class DeliveryDocumentController extends FOSRestController
      * @ParamConverter("template", class="KernelBundle:DocumentTemplate")
      * @Get("/delivery_documents/template/{id}", requirements={"id" = "\d+"})
      */
-    public function getDeliveryDocumentsByTemplateAction(DocumentTemplate $template)
+    public function getDeliveryDocumentsByTemplateAction(DeliveryDocumentTemplate $template)
     {
 
         $delivery_documents = $this->getDoctrine()->getRepository("UABundle:DeliveryDocument")

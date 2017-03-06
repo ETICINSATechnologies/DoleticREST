@@ -27,6 +27,13 @@ class DeliveryDocument extends Document
      */
     private $delivery;
 
+    /**
+     * @var DeliveryDocumentTemplate
+     *
+     * @ORM\ManyToOne(targetEntity="UABundle\Entity\DeliveryDocumentTemplate")
+     */
+    private $template;
+
 
     /**
      * Get id
@@ -56,5 +63,25 @@ class DeliveryDocument extends Document
 
         return $this;
     }
+
+    /**
+     * @return DeliveryDocumentTemplate
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param DeliveryDocumentTemplate $template
+     * @return DeliveryDocument
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
 
 }

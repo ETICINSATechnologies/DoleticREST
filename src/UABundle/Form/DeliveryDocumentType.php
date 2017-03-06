@@ -17,7 +17,9 @@ class DeliveryDocumentType extends DocumentType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('consultant', EntityType::class, ['class' => 'UABundle\Entity\DeliveryDocument']);
+        $builder
+            ->add('template', EntityType::class, ['class' => 'UABundle\Entity\DeliveryDocumentTemplate', 'choice_label' => 'label'])
+            ->add('delivery', EntityType::class, ['class' => 'UABundle\Entity\Delivery']);
     }
 
     /**

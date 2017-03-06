@@ -17,7 +17,9 @@ class ProjectDocumentType extends DocumentType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('project', EntityType::class, ['class' => 'UABundle\Entity\ProjectDocument']);
+        $builder
+            ->add('template', EntityType::class, ['class' => 'UABundle\Entity\ProjectDocumentTemplate', 'choice_label' => 'label'])
+            ->add('project', EntityType::class, ['class' => 'UABundle\Entity\Project']);
     }
 
     /**
