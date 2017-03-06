@@ -29,7 +29,7 @@ class DeliveryType extends AbstractType
         $mode = isset($options['mode']) ? $options['mode'] : self::ADD_MODE;
 
         $builder
-            ->add('task', EntityType::class, ['class' => 'UABundle\Entity\Task', 'choice_label' => 'name', 'disabled' => $mode !== self::ADD_MODE])
+            ->add('task', EntityType::class, ['class' => 'UABundle\Entity\Task', 'choice_label' => 'name', 'disabled' => $mode > self::EDIT_MODE])
             ->add('number', IntegerType::class, ['disabled' => $mode > self::EDIT_MODE])
             ->add('content', TextareaType::class, ['disabled' => $mode > self::EDIT_MODE])
             ->add('deliveryDate', DateType::class, ['disabled' => $mode !== self::DELIVER_MODE, 'format' => 'dd/MM/yyyy', 'widget' => 'single_text'])
