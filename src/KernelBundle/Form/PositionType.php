@@ -29,7 +29,7 @@ class PositionType extends AbstractType
             ->add('divisionLeader', CheckboxType::class)
             ->add('president', CheckboxType::class)
             ->add('treasurer', CheckboxType::class)
-            ->add('roles', EntityType::class, [
+            ->add('division', EntityType::class, [
                 'class' => 'KernelBundle\Entity\Division',
                 'choice_label' => 'label'
             ]);
@@ -63,7 +63,8 @@ class PositionType extends AbstractType
         $resolver->setDefaults(array(
             'csrf_protection' => false,
             'data_class' => 'KernelBundle\Entity\Position',
-            'allow_extra_fields' => true
+            'allow_extra_fields' => true,
+            'roles' => []
         ));
     }
 

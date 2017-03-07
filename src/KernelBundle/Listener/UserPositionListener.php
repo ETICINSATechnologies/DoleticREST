@@ -17,11 +17,13 @@ class UserPositionListener
         $this->container = $container;
     }
 
-    public function postPersist(UserPosition $userPosition, LifecycleEventArgs $event)
-    {
+    public function prePersist(UserPosition $userPosition, LifecycleEventArgs $event) {
         // Set start date
         $userPosition->setStartDate(new \DateTime())->setActive(true);
+    }
 
+    public function postPersist(UserPosition $userPosition, LifecycleEventArgs $event)
+    {
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
         $positions = $entityManager->getRepository('KernelBundle:UserPosition')
             ->findBy(['user' => $userPosition->getUser()]);

@@ -10,4 +10,23 @@ namespace KernelBundle\Repository;
  */
 class UserRepository extends DoleticRepository
 {
+    public function findPresident()
+    {
+        $presidentPosition = $this->getEntityManager()->getRepository('KernelBundle:Position')->findOneBy(['president' => true]);
+        if (isset($presidentPosition)) {
+            $userPosition = $this->getEntityManager()->getRepository('KernelBundle:UserPosition')
+                ->findOneBy(
+                    [
+                        'position' => $presidentPosition,
+                        'active' => true,
+                        'main' => true
+                    ],
+                    [
+                        'startDate' => 'ASC'
+                    ]
+                );
+            return isset($userPosition) ? $userPosition->getUser() : null;
+        }
+        return null;
+    }
 }
