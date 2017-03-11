@@ -4,12 +4,14 @@ namespace UABundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use KernelBundle\Entity\User;
+use JMS\Serializer\Annotation\SerializedName;
 
 /**
  * ProjectManager
  *
  * @ORM\Table(name="ua_project_manager", uniqueConstraints={@ORM\UniqueConstraint(name="manager", columns={"project_id", "manager_id"})})
  * @ORM\Entity(repositoryClass="UABundle\Repository\ProjectManagerRepository")
+ * @ORM\EntityListeners({ "UABundle\Listener\ProjectManagerListener" })
  */
 class ProjectManager
 {
@@ -37,6 +39,13 @@ class ProjectManager
      *
      */
     private $manager;
+
+    /**
+     * @var string
+     *
+     * @SerializedName("managerFullName")
+     */
+    private $managerFullName;
 
 
     /**
@@ -86,5 +95,23 @@ class ProjectManager
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getManagerFullName()
+    {
+        return $this->managerFullName;
+    }
+
+    /**
+     * @param string $managerFullName
+     * @return ProjectManager
+     */
+    public function setManagerFullName($managerFullName)
+    {
+        $this->managerFullName = $managerFullName;
+
+        return $this;
+    }
 
 }

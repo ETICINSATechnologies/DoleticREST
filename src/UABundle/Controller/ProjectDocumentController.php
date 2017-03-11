@@ -11,6 +11,9 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use KernelBundle\Entity\DocumentTemplate;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use UABundle\Entity\ProjectDocumentTemplate;
 use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -204,6 +207,38 @@ class ProjectDocumentController extends FOSRestController
     }
 
     /**
+     * Download the file attached to a project_document by ID
+     * @param ProjectDocument $project_document
+     * @return BinaryFileResponse
+     *
+     * @ApiDoc(
+     *  section="ProjectDocument",
+     *  description="Download the file attached to a project_document",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project_document", class="UABundle:ProjectDocument")
+     * @Get("/project_document/{id}/download", requirements={"id" = "\d+"})
+     */
+    public function downloadProjectDocumentAction(ProjectDocument $project_document)
+    {
+        $fileName = $project_document->getFile();
+
+        $response = new BinaryFileResponse($fileName);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
+
+        return $response;
+    }
+
+    /**
      * Create a new ProjectDocument
      * @var Request $request
      * @return View|array
@@ -237,6 +272,8 @@ class ProjectDocumentController extends FOSRestController
         }
 
         if ($form->isValid()) {
+            $project_document->setValid(false);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($project_document);
             $em->flush();
@@ -281,13 +318,15 @@ class ProjectDocumentController extends FOSRestController
         $form = $this->createForm(new ProjectDocumentType(), $project_document);
         $form->handleRequest($request);
 
-        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project_document->getProject())) {
-            throw new AccessDeniedException();
-        }
-
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project_document->getProject())) {
+                throw new AccessDeniedException();
+            }
 
+            // Invalidate the document, since it's a different file
+            $project_document->setValid(false);
+
+            $em = $this->getDoctrine()->getManager();
             $em->persist($project_document);
             $em->flush();
 

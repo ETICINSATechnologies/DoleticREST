@@ -20,7 +20,7 @@ class ConsultantListener
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
         $lastConsultant = $entityManager->getRepository('UABundle:Consultant')->findBy(['project' => $consultant->getProject()], ['number' => 'DESC'], 1);
         $number = 1;
-        if(isset($lastConsultant) && !empty($lastConsultant)) {
+        if (isset($lastConsultant) && !empty($lastConsultant)) {
             $number = $lastConsultant[max(array_keys($lastConsultant))]->getNumber() + 1;
         }
         $consultant->setNumber($number);
@@ -30,17 +30,32 @@ class ConsultantListener
     {
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
         $consultants = $entityManager->getRepository('UABundle:Consultant')->findBy(['project' => $consultant->getProject()], ['number' => 'ASC']);
-        if(isset($consultants) && !empty($consultants)) {
+        if (isset($consultants) && !empty($consultants)) {
             $n = 1;
             foreach ($consultants as $currentConsultant) {
                 if ($currentConsultant->getNumber() != $n) {
                     $currentConsultant->setNumber($n);
                     $entityManager->persist($currentConsultant);
                 }
-                if($currentConsultant->getId() != $consultant->getId()) {
+                if ($currentConsultant->getId() != $consultant->getId()) {
                     $n++;
                 }
             }
         }
+    }
+
+    public function postPersist(Consultant $consultant, LifecycleEventArgs $event)
+    {
+        $consultant->setConsultantFullName($consultant->getUser()->getFirstName() . " " . $consultant->getUser()->getLastName());
+    }
+
+    public function postUpdate(Consultant $consultant, LifecycleEventArgs $event)
+    {
+        $consultant->setConsultantFullName($consultant->getUser()->getFirstName() . " " . $consultant->getUser()->getLastName());
+    }
+
+    public function postLoad(Consultant $consultant, LifecycleEventArgs $event)
+    {
+        $consultant->setConsultantFullName($consultant->getUser()->getFirstName() . " " . $consultant->getUser()->getLastName());
     }
 }

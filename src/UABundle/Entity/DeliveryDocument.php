@@ -12,15 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class DeliveryDocument extends Document
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @var Delivery
      *
      * @ORM\ManyToOne(targetEntity="Delivery", inversedBy="documents"))
@@ -33,17 +24,6 @@ class DeliveryDocument extends Document
      * @ORM\ManyToOne(targetEntity="UABundle\Entity\DeliveryDocumentTemplate")
      */
     private $template;
-
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * @return Delivery

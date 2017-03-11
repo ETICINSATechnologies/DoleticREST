@@ -11,5 +11,6 @@
 /composer.phar
 /.idea
 app/cache/
-/web/uploads/templates/Propale.docx
-/web/output/documents/7Proposition commerciale.docx
+/web/uploads/templates/*.docx
+/web/output/documents/*.docx
+/web/uploads/documents/*.pdf

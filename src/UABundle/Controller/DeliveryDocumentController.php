@@ -236,6 +236,9 @@ class DeliveryDocumentController extends FOSRestController
         }
 
         if ($form->isValid()) {
+            $file = $delivery_document->getFile();
+            $fileName = $this->get('document_uploader')->upload($file);
+            $delivery_document->setFile($fileName);
             $em = $this->getDoctrine()->getManager();
             $em->persist($delivery_document);
             $em->flush();

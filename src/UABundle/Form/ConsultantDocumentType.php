@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ConsultantDocumentType extends DocumentType
+class ConsultantDocumentType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -18,6 +18,9 @@ class ConsultantDocumentType extends DocumentType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('auditor', EntityType::class, ['class' => 'KernelBundle\Entity\User', 'choice_label' => 'fullName', 'disabled' => true])
+            ->add('file', FileType::class)
+            ->add('valid', CheckboxType::class)
             ->add('template', EntityType::class, ['class' => 'UABundle\Entity\ConsultantDocumentTemplate', 'choice_label' => 'label'])
             ->add('consultant', EntityType::class, ['class' => 'UABundle\Entity\Consultant']);
     }

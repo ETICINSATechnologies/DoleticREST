@@ -237,6 +237,9 @@ class ConsultantDocumentController extends FOSRestController
         }
 
         if ($form->isValid()) {
+            $file = $consultant_document->getFile();
+            $fileName = $this->get('document_uploader')->upload($file);
+            $consultant_document->setFile($fileName);
             $em = $this->getDoctrine()->getManager();
             $em->persist($consultant_document);
             $em->flush();
