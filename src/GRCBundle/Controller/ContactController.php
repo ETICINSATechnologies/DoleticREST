@@ -168,7 +168,7 @@ class ContactController extends FOSRestController
     {
 
         $contacts = $this->getDoctrine()->getRepository("GRCBundle:Contact")
-            ->findBy(['creator' => $this->getUser()]);
+            ->findBy(['prospector' => $this->getUser()]);
 
         return array('contacts' => $contacts);
     }
