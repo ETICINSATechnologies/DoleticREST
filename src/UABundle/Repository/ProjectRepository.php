@@ -2,6 +2,7 @@
 
 namespace UABundle\Repository;
 
+use Doctrine\ORM\Query\Expr\Join;
 use GRCBundle\Entity\Contact;
 use KernelBundle\Entity\User;
 use KernelBundle\Repository\DoleticRepository;
@@ -16,25 +17,25 @@ class ProjectRepository extends DoleticRepository
 {
     public function findByManager(User $user)
     {
-        $qb = $this->createQueryBuilder('p');
-        $qb->join('p.managers', 'm')->where($qb->expr()->eq('m.id', $user->getId()))
-            ->orderBy('p.number', 'DESC');
+        $qb = $this->createQueryBuilder('q');
+        $qb->select('p')->from($this->getClassName(), 'p', 'p.id')
+            ->join('p.managers', 'm', Join::WITH, $qb->expr()->eq('m.manager', $user->getId()));
         return $qb->getQuery()->getResult();
     }
 
     public function findByContact(Contact $contact)
     {
-        $qb = $this->createQueryBuilder('p');
-        $qb->join('p.contacts', 'c')->where($qb->expr()->eq('c.id', $contact->getId()))
-            ->orderBy('p.number', 'DESC');
+        $qb = $this->createQueryBuilder('q');
+        $qb->select('p')->from($this->getClassName(), 'p', 'p.id')
+            ->join('p.contacts', 'c', Join::WITH, $qb->expr()->eq('c.contact', $contact->getId()));
         return $qb->getQuery()->getResult();
     }
 
     public function findByConsultant(User $user)
     {
-        $qb = $this->createQueryBuilder('p');
-        $qb->join('p.consultants', 'c')->where($qb->expr()->eq('c.user', $user->getId()))
-            ->orderBy('p.number', 'DESC');
+        $qb = $this->createQueryBuilder('q');
+        $qb->select('p')->from($this->getClassName(), 'p', 'p.id')
+            ->join('p.consultants', 'c', Join::WITH, $qb->expr()->eq('c.user', $user->getId()));
         return $qb->getQuery()->getResult();
     }
 
