@@ -59,10 +59,13 @@ class UserListener
     public function postPersist(User $user, LifecycleEventArgs $event)
     {
         $user->setFullName($user->getFirstName() . ' ' . $user->getLastName());
-        foreach ($user->getPositions() as $userPosition) {
-            if ($userPosition->isMain()) {
-                $user->setMainPosition($userPosition->getPosition());
-                break;
+        $userPositions = $user->getPositions();
+        if (isset($userPositions)) {
+            foreach ($userPositions as $userPosition) {
+                if ($userPosition->isMain()) {
+                    $user->setMainPosition($userPosition->getPosition());
+                    break;
+                }
             }
         }
     }
@@ -70,10 +73,13 @@ class UserListener
     public function postUpdate(User $user, LifecycleEventArgs $event)
     {
         $user->setFullName($user->getFirstName() . ' ' . $user->getLastName());
-        foreach ($user->getPositions() as $userPosition) {
-            if ($userPosition->isMain()) {
-                $user->setMainPosition($userPosition->getPosition());
-                break;
+        $userPositions = $user->getPositions();
+        if (isset($userPositions)) {
+            foreach ($userPositions as $userPosition) {
+                if ($userPosition->isMain()) {
+                    $user->setMainPosition($userPosition->getPosition());
+                    break;
+                }
             }
         }
     }

@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProjectDocumentType extends DocumentType
+class ProjectDocumentType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,7 +17,12 @@ class ProjectDocumentType extends DocumentType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('project', EntityType::class, ['class' => 'UABundle\Entity\ProjectDocument']);
+        $builder
+            ->add('auditor', EntityType::class, ['class' => 'KernelBundle\Entity\User', 'choice_label' => 'fullName', 'disabled' => true])
+            ->add('file', FileType::class)
+            ->add('valid', CheckboxType::class, ['disabled' => true, 'value' => false])
+            ->add('template', EntityType::class, ['class' => 'UABundle\Entity\ProjectDocumentTemplate', 'choice_label' => 'label'])
+            ->add('project', EntityType::class, ['class' => 'UABundle\Entity\Project']);
     }
 
     /**

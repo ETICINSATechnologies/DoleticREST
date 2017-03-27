@@ -1021,8 +1021,7 @@ class ProjectController extends FOSRestController
      *   "stable" = "#4A7023",
      *   "ua" = "#0033ff",
      *   "super-admin" = "#da4932"
-     *  },
-     *  views = { "premium" }
+     *  }
      * )
      *
      * @View()

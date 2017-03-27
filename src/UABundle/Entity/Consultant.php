@@ -69,6 +69,13 @@ class Consultant
      */
     private $documents;
 
+    /**
+     * @var string
+     *
+     * @SerializedName("consultantFullName")
+     */
+    private $consultantFullName;
+
 
     /**
      * Get id
@@ -202,7 +209,26 @@ class Consultant
     public function setDocuments($documents)
     {
         $this->documents = $documents;
-        
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConsultantFullName()
+    {
+        return $this->consultantFullName;
+    }
+
+    /**
+     * @param mixed $consultantFullName
+     * @return Consultant
+     */
+    public function setConsultantFullName($consultantFullName)
+    {
+        $this->consultantFullName = $consultantFullName;
+
         return $this;
     }
 

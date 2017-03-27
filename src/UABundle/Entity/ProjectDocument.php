@@ -12,15 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class ProjectDocument extends Document
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @var Project
      *
      * @ORM\ManyToOne(targetEntity="Project", inversedBy="documents"))
@@ -28,14 +19,11 @@ class ProjectDocument extends Document
     private $project;
 
     /**
-     * Get id
+     * @var ProjectDocumentTemplate
      *
-     * @return integer
+     * @ORM\ManyToOne(targetEntity="UABundle\Entity\ProjectDocumentTemplate")
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $template;
 
     /**
      * @return Project
@@ -56,5 +44,23 @@ class ProjectDocument extends Document
         return $this;
     }
 
+    /**
+     * @return ProjectDocumentTemplate
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param ProjectDocumentTemplate $template
+     * @return ProjectDocument
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
 
 }

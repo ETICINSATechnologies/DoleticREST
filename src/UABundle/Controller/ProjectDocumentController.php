@@ -10,7 +10,11 @@ use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use KernelBundle\Entity\DocumentTemplate;
-use KernelBundle\Entity\ProjectDocumentTemplate;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use UABundle\Entity\ProjectDocumentTemplate;
 use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -84,7 +88,7 @@ class ProjectDocumentController extends FOSRestController
 
     /**
      * Get all the project_documents from a template
-     * @param DocumentTemplate $template
+     * @param ProjectDocumentTemplate $template
      * @return array
      *
      * @ApiDoc(
@@ -104,7 +108,7 @@ class ProjectDocumentController extends FOSRestController
      * @ParamConverter("template", class="KernelBundle:DocumentTemplate")
      * @Get("/project_documents/template/{id}", requirements={"id" = "\d+"})
      */
-    public function getProjectDocumentsByTemplateAction(DocumentTemplate $template)
+    public function getProjectDocumentsByTemplateAction(ProjectDocumentTemplate $template)
     {
 
         $project_documents = $this->getDoctrine()->getRepository("UABundle:ProjectDocument")
@@ -203,6 +207,38 @@ class ProjectDocumentController extends FOSRestController
     }
 
     /**
+     * Download the file attached to a project_document by ID
+     * @param ProjectDocument $project_document
+     * @return BinaryFileResponse
+     *
+     * @ApiDoc(
+     *  section="ProjectDocument",
+     *  description="Download the file attached to a project_document",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("project_document", class="UABundle:ProjectDocument")
+     * @Get("/project_document/{id}/download", requirements={"id" = "\d+"})
+     */
+    public function downloadProjectDocumentAction(ProjectDocument $project_document)
+    {
+        $fileName = $project_document->getFile();
+
+        $response = new BinaryFileResponse($fileName);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
+
+        return $response;
+    }
+
+    /**
      * Create a new ProjectDocument
      * @var Request $request
      * @return View|array
@@ -231,7 +267,13 @@ class ProjectDocumentController extends FOSRestController
         $form = $this->createForm(new ProjectDocumentType(), $project_document);
         $form->handleRequest($request);
 
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project_document->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         if ($form->isValid()) {
+            $project_document->setValid(false);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($project_document);
             $em->flush();
@@ -277,8 +319,14 @@ class ProjectDocumentController extends FOSRestController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project_document->getProject())) {
+                throw new AccessDeniedException();
+            }
 
+            // Invalidate the document, since it's a different file
+            $project_document->setValid(false);
+
+            $em = $this->getDoctrine()->getManager();
             $em->persist($project_document);
             $em->flush();
 
@@ -315,6 +363,10 @@ class ProjectDocumentController extends FOSRestController
      */
     public function deleteProjectDocumentAction(ProjectDocument $project_document)
     {
+        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $project_document->getProject())) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($project_document);
         $em->flush();

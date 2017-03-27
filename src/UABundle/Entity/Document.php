@@ -28,13 +28,6 @@ abstract class Document
     private $id;
 
     /**
-     * @var DocumentTemplate
-     *
-     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\DocumentTemplate")
-     */
-    private $template;
-
-    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
@@ -87,25 +80,6 @@ abstract class Document
     public function getValid()
     {
         return $this->valid;
-    }
-
-    /**
-     * @return DocumentTemplate
-     */
-    public function getTemplate()
-    {
-        return $this->template;
-    }
-
-    /**
-     * @param DocumentTemplate $template
-     * @return Document
-     */
-    public function setTemplate($template)
-    {
-        $this->template = $template;
-
-        return $this;
     }
 
     /**

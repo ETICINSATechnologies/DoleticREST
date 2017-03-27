@@ -9,8 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="kernel_document_template")
  * @ORM\Entity(repositoryClass="KernelBundle\Repository\DocumentTemplateRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({
+ *     "project" = "UABundle\Entity\ProjectDocumentTemplate",
+ *     "consultant" = "UABundle\Entity\ConsultantDocumentTemplate",
+ *     "delivery" = "UABundle\Entity\DeliveryDocumentTemplate"
+ * })
  */
-class DocumentTemplate
+abstract class DocumentTemplate
 {
     /**
      * @var int
@@ -26,14 +33,14 @@ class DocumentTemplate
      *
      * @ORM\Column(name="label", type="string", length=255, unique=true)
      */
-    private $label;
+    protected $label;
 
     /**
      * @var string
      *
      * @ORM\Column(name="path", type="string", length=255)
      */
-    private $path;
+    protected $path;
 
 
     /**

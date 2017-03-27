@@ -49,7 +49,7 @@ services:
     ## TEMPLATING SERVICES
     document_publisher:
         class: KernelBundle\Service\DocumentPublisher
-        arguments: ['%output_dir%']
+        arguments: ['%output_dir%', '%templates_dir%']
 
     ## OTHER SERVICES
     mailing_list_service:

@@ -4,12 +4,14 @@ namespace UABundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use GRCBundle\Entity\Contact;
+use JMS\Serializer\Annotation\SerializedName;
 
 /**
  * ProjectContact
  *
  * @ORM\Table(name="ua_project_contact", uniqueConstraints={@ORM\UniqueConstraint(name="contact", columns={"project_id", "contact_id"})})
  * @ORM\Entity(repositoryClass="UABundle\Repository\ProjectContactRepository")
+ * @ORM\EntityListeners({ "UABundle\Listener\ProjectContactListener" })
  */
 class ProjectContact
 {
@@ -38,6 +40,12 @@ class ProjectContact
      */
     private $contact;
 
+    /**
+     * @var string
+     *
+     * @SerializedName("contactFullName")
+     */
+    private $contactFullName;
 
     /**
      * Get id
@@ -82,6 +90,26 @@ class ProjectContact
     public function setContact($contact)
     {
         $this->contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactFullName()
+    {
+        return $this->contactFullName;
+    }
+
+    /**
+     * @param string $contactFullName
+     * @return ProjectContact
+     */
+    public function setContactFullName($contactFullName)
+    {
+        $this->contactFullName = $contactFullName;
+
         return $this;
     }
 

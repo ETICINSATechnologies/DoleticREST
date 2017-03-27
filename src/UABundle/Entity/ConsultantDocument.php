@@ -12,31 +12,18 @@ use Doctrine\ORM\Mapping as ORM;
 class ConsultantDocument extends Document
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @var Consultant
      *
      * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="documents"))
      */
     private $consultant;
 
-
     /**
-     * Get id
+     * @var ConsultantDocumentTemplate
      *
-     * @return integer
+     * @ORM\ManyToOne(targetEntity="UABundle\Entity\ConsultantDocumentTemplate")
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $template;
 
     /**
      * @return Consultant
@@ -53,6 +40,25 @@ class ConsultantDocument extends Document
     public function setConsultant($consultant)
     {
         $this->consultant = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * @return ConsultantDocumentTemplate
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param ConsultantDocumentTemplate $template
+     * @return ConsultantDocument
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
 
         return $this;
     }

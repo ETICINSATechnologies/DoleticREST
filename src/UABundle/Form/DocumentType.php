@@ -18,8 +18,7 @@ class DocumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('template', EntityType::class, ['class' => 'KernelBundle\Entity\DocumentTemplate', 'choice_label' => 'label'])
-            ->add('auditor', EntityType::class, ['class' => 'KernelBundle\Entity\User', 'choice_label' => 'fullName'])
+            ->add('auditor', EntityType::class, ['class' => 'KernelBundle\Entity\User', 'choice_label' => 'fullName', 'disabled' => true])
             ->add('file', FileType::class)
             ->add('valid', CheckboxType::class);
     }
