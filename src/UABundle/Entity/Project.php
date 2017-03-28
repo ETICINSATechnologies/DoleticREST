@@ -222,9 +222,8 @@ class Project
     private $origin;
 
     /**
-     * @var ProjectStatus
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="ProjectStatus")
      */
     private $status;
 
@@ -821,7 +820,7 @@ class Project
     }
 
     /**
-     * @return ProjectStatus
+     * @return string
      */
     public function getStatus()
     {
@@ -829,7 +828,7 @@ class Project
     }
 
     /**
-     * @param ProjectStatus $status
+     * @param string $status
      * @return Project
      */
     public function setStatus($status)
@@ -840,7 +839,7 @@ class Project
     }
 
     /**
-     * @return ArrayCollection
+     * @return array
      */
     public function getConsultants()
     {
@@ -859,7 +858,7 @@ class Project
     }
 
     /**
-     * @return ArrayCollection
+     * @return array
      */
     public function getTasks()
     {
@@ -878,7 +877,7 @@ class Project
     }
 
     /**
-     * @return ArrayCollection
+     * @return array
      */
     public function getAmendments()
     {
@@ -897,7 +896,7 @@ class Project
     }
 
     /**
-     * @return ArrayCollection
+     * @return array
      */
     public function getDocuments()
     {
@@ -933,7 +932,7 @@ class Project
     }
 
     /**
-     * @return ArrayCollection
+     * @return array
      */
     public function getFiles()
     {

@@ -5,6 +5,7 @@ namespace UABundle\Listener;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use UABundle\Entity\Project;
+use UABundle\Entity\ProjectContact;
 
 class ProjectListener
 {
@@ -39,17 +40,33 @@ class ProjectListener
     {
         $currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
         $project->setUserHasRights($this->container->get('ua.project.rights_service')->userHasRights($currentUser, $project));
+        $project->setStatus($this->resolveStatus($project));
     }
 
     public function postPersist(Project $project, LifecycleEventArgs $event)
     {
         $currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
         $project->setUserHasRights($this->container->get('ua.project.rights_service')->userHasRights($currentUser, $project));
+        $project->setStatus($this->resolveStatus($project));
     }
 
     public function postUpdate(Project $project, LifecycleEventArgs $event)
     {
         $currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
         $project->setUserHasRights($this->container->get('ua.project.rights_service')->userHasRights($currentUser, $project));
+        $project->setStatus($this->resolveStatus($project));
+    }
+
+    private function resolveStatus(Project $project)
+    {
+        if ($project->getSignDate() == null) {
+            return $project->getArchived() ? "Avortée" : "En sollicitation";
+        } else if ($project->getEndDate() == null) {
+            return $project->getArchived() ? "Rompue" : "En cours";
+        } else if (!$project->getArchived()) {
+            return "En clôture";
+        }
+        return "Clôturée";
+
     }
 }

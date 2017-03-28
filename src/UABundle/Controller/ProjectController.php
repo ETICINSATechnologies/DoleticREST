@@ -20,7 +20,6 @@ use UABundle\Entity\Project;
 use UABundle\Entity\ProjectField;
 use UABundle\Entity\ProjectManager;
 use UABundle\Entity\ProjectOrigin;
-use UABundle\Entity\ProjectStatus;
 use UABundle\Form\ProjectType;
 
 class ProjectController extends FOSRestController
@@ -113,37 +112,6 @@ class ProjectController extends FOSRestController
 
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
             ->findBy(['field' => $field], ['number' => 'DESC']);
-
-        return array('projects' => $projects);
-    }
-
-    /**
-     * Get all the projects at a status
-     * @param ProjectStatus $status
-     * @return array
-     *
-     * @ApiDoc(
-     *  section="Project",
-     *  description="Get all projects at a status",
-     *  statusCodes={
-     *         200="Returned when successful"
-     *  },
-     *  tags={
-     *   "stable" = "#4A7023",
-     *   "ua" = "#0033ff",
-     *   "guest" = "#85d893"
-     *  }
-     * )
-     *
-     * @View()
-     * @ParamConverter("status", class="UABundle:ProjectOrigin")
-     * @Get("/projects/status/{id}", requirements={"id" = "\d+"})
-     */
-    public function getProjectsByStatusAction(ProjectStatus $status)
-    {
-
-        $projects = $this->getDoctrine()->getRepository("UABundle:Project")
-            ->findBy(['status' => $status], ['number' => 'DESC']);
 
         return array('projects' => $projects);
     }
