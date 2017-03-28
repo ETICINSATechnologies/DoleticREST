@@ -57,7 +57,6 @@ class ProjectRepository extends DoleticRepository
             ->select('p')
             ->from($this->getClassName(), 'p', 'p.id');
         $qb->andWhere($qb->expr()->isNotNull('p.signDate'))
-            ->andWhere($qb->expr()->isNull('p.endDate'))
             ->andWhere('p.disabled = ?1')
             ->andWhere('p.archived = ?2')
             ->setParameters([1 => false, 2 => false]);
