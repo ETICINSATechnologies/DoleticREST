@@ -461,6 +461,78 @@ class UserController extends FOSRestController
 
     }
 
+    /**
+     * Disable a User
+     * Post action
+     * @var User $user
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Disable a user",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("user", class="KernelBundle:User")
+     * @Post("/user/{id}/disable", requirements={"id" = "\d+"})
+     */
+    public function disableUserAction(User $user)
+    {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
+        $user->setEnabled(false);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return array("user" => $user);
+    }
+
+    /**
+     * Enable a User
+     * Post action
+     * @var User $user
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Enable a user",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("user", class="KernelBundle:User")
+     * @Post("/user/{id}/enable", requirements={"id" = "\d+"})
+     */
+    public function enableUserAction(User $user)
+    {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
+        $user->setEnabled(true);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return array("user" => $user);
+    }
+
 
     /**
      * Delete a User
