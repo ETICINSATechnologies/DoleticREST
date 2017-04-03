@@ -78,6 +78,10 @@ class ConsultantMembership
      */
     private $idGiven;
 
+    /**
+     * @var bool
+     */
+    private $valid;
 
     /**
      * Get id
@@ -242,6 +246,25 @@ class ConsultantMembership
     public function setUser($user)
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValid()
+    {
+        return $this->valid;
+    }
+
+    /**
+     * @param mixed $valid
+     * @return ConsultantMembership
+     */
+    public function setValid($valid)
+    {
+        $this->valid = $valid;
 
         return $this;
     }

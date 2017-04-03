@@ -52,6 +52,93 @@ class UserController extends FOSRestController
     }
 
     /**
+     * Get all the current users
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Get all current users",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/users/current")
+     */
+    public function getCurrentUsersAction()
+    {
+
+        $users = $this->getDoctrine()->getRepository("KernelBundle:User")
+            ->findUsersByOld(false);
+
+        return array('users' => $users);
+    }
+
+    /**
+     * Get all the users
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Get all old users",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/users/old")
+     */
+    public function getOldUsersAction()
+    {
+
+        $users = $this->getDoctrine()->getRepository("KernelBundle:User")
+            ->findUsersByOld(true);
+
+        return array('users' => $users);
+    }
+
+    /**
+     * Get all the disabled users
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Get all disabled users",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/users/disabled")
+     */
+    public function getDisabledUsersAction()
+    {
+
+        $users = $this->getDoctrine()->getRepository("KernelBundle:User")
+            ->findBy(['enabled' => false]);
+
+        return array('users' => $users);
+    }
+
+    /**
      * Get all the users
      * @return array
      *

@@ -63,6 +63,15 @@ class AdministratorMembership
      */
     private $formFilled;
 
+    /**
+     * @var bool
+     */
+    private $valid;
+
+    /**
+     * @var bool
+     */
+    private $active;
 
     /**
      * Get id
@@ -191,9 +200,46 @@ class AdministratorMembership
      */
     public function setDefaultEndDate()
     {
-        if(!isset($this->endDate)) {
+        if (!isset($this->endDate)) {
             $this->endDate = $this->startDate;
             $this->endDate->modify('+1 year');
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid()
+    {
+        return $this->valid;
+    }
+
+    /**
+     * @param bool $valid
+     * @return AdministratorMembership
+     */
+    public function setValid($valid)
+    {
+        $this->valid = $valid;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool $active
+     * @return AdministratorMembership
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
     }
 }

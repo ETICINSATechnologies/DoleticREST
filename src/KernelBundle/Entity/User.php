@@ -158,6 +158,16 @@ class User extends BaseUser
     private $mainPosition;
 
     /**
+     * @var int
+     */
+    private $administrator;
+
+    /**
+     * @var int
+     */
+    private $consultant;
+
+    /**
      * Get id
      *
      * @return integer
@@ -501,6 +511,44 @@ class User extends BaseUser
     {
         $this->mainPosition = $mainPosition;
 
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAdministrator()
+    {
+        return $this->administrator;
+    }
+
+    /**
+     * @param int $administrator
+     * @return User
+     */
+    public function setAdministrator($administrator)
+    {
+        $this->administrator = $administrator;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
+    }
+
+    /**
+     * @param int $consultant
+     * @return User
+     */
+    public function setConsultant($consultant)
+    {
+        $this->consultant = $consultant;
+        
         return $this;
     }
 

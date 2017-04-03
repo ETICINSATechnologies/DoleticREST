@@ -68,6 +68,7 @@ class UserListener
                 }
             }
         }
+        $this->setMemberships($user);
     }
 
     public function postUpdate(User $user, LifecycleEventArgs $event)
@@ -82,6 +83,7 @@ class UserListener
                 }
             }
         }
+        $this->setMemberships($user);
     }
 
     public function postLoad(User $user, LifecycleEventArgs $event)
@@ -93,6 +95,7 @@ class UserListener
                 break;
             }
         }
+        $this->setMemberships($user);
     }
 
     private function makeUserName($firstName, $lastName)
@@ -119,5 +122,30 @@ class UserListener
     private function makeRandomPassword()
     {
         return substr(str_shuffle(self::BASE_STRING), 0, self::PASSWORD_LENGTH);
+    }
+
+    private function setMemberships(&$user) {
+        // Set consultant value
+        if ($user->getConsultantMembership() == null) {
+            $user->setConsultant(0);
+        } else if ($user->getConsultantMembership()->getValid()) {
+            $user->setConsultant(2);
+        } else {
+            $user->setConsultant(1);
+        }
+
+        // Set administrator value
+        foreach ($user->getAdministratorMemberships() as $membership) {
+            if ($membership->isActive() && $membership->getValid()) {
+                $user->setAdministrator(2);
+                break;
+            } else if ($membership->isActive() && !$membership->getValid()) {
+                $user->setAdministrator(1);
+                break;
+            }
+        }
+        if ($user->getAdministrator() == null || $user->getAdministrator() < 1) {
+            $user->setAdministrator(0);
+        }
     }
 }
