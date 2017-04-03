@@ -33,7 +33,7 @@ class User extends BaseUser
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="UserPosition", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="UserPosition", mappedBy="user", cascade={"persist", "remove"})
      */
     private $positions;
 

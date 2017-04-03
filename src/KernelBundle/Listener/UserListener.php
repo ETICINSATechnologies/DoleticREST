@@ -135,13 +135,16 @@ class UserListener
         }
 
         // Set administrator value
-        foreach ($user->getAdministratorMemberships() as $membership) {
-            if ($membership->isActive() && $membership->getValid()) {
-                $user->setAdministrator(2);
-                break;
-            } else if ($membership->isActive() && !$membership->getValid()) {
-                $user->setAdministrator(1);
-                break;
+        $memberships = $user->getAdministratorMemberships();
+        if(isset($memberships)) {
+            foreach ($memberships as $membership) {
+                if ($membership->isActive() && $membership->getValid()) {
+                    $user->setAdministrator(2);
+                    break;
+                } else if ($membership->isActive() && !$membership->getValid()) {
+                    $user->setAdministrator(1);
+                    break;
+                }
             }
         }
         if ($user->getAdministrator() == null || $user->getAdministrator() < 1) {

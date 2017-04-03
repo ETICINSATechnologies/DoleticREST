@@ -30,13 +30,14 @@ class UserType extends AbstractType
             ->add('email', EmailType::class)
             ->add('birthDate', DateType::class, ['widget' => 'single_text', 'format' => 'dd/MM/yyyy', 'required' => false])
             ->add('department', EntityType::class, ['class' => 'RHBundle\Entity\Department', 'choice_label' => 'label'])
-            ->add('schoolYear', EntityType::class, ['class' => 'RHBundle\Entity\SchoolYear', 'choice_label' => 'label'])
+            ->add('schoolYear', EntityType::class, ['class' => 'RHBundle\Entity\SchoolYear', 'choice_label' => 'year'])
             ->add('recruitmentEvent', EntityType::class, ['class' => 'RHBundle\Entity\RecruitmentEvent', 'choice_label' => 'label', 'required' => false])
             ->add('tel', IntegerType::class, ['required' => false])
             ->add('address', TextType::class, ['required' => false])
             ->add('city', TextType::class, ['required' => false])
             ->add('postalCode', IntegerType::class, ['required' => false])
-            ->add('country', EntityType::class, ['class' => 'KernelBundle\Entity\Country', 'choice_label' => 'label']);
+            ->add('country', EntityType::class, ['class' => 'KernelBundle\Entity\Country', 'choice_label' => 'label'])
+            ->add('mainPosition', EntityType::class, ['class' => 'KernelBundle\Entity\Position', 'choice_label' => 'label']);
     }
 
     /**

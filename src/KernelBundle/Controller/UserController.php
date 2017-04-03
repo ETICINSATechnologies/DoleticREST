@@ -10,6 +10,7 @@ use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\UserBundle\Model\UserInterface;
+use KernelBundle\Entity\UserPosition;
 use KernelBundle\Form\ChangePasswordType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -293,8 +294,18 @@ class UserController extends FOSRestController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $position = $user->getMainPosition();
             $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
+            if (isset($position)) {
+                $userPosition = new UserPosition();
+                $userPosition->setActive(true)->setMain(true)->setPosition($position);
+                $user->setPositions([$userPosition]);
+                $userPosition->setUser($user);
+                $em->persist($user);
+                $em->persist($userPosition);
+            } else {
+                $em->persist($user);
+            }
             $em->flush();
 
             return array("user" => $user);
