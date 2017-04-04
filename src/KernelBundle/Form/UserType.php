@@ -15,12 +15,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
+
+    const ADD_MODE = 0;
+    const EDIT_MODE = 1;
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $mode = isset($options['mode']) ? $options['mode'] : self::ADD_MODE;
+
         $builder
             ->add('username', TextType::class, ['disabled' => true])
             ->add('password', PasswordType::class, ['disabled' => true])
@@ -37,7 +43,12 @@ class UserType extends AbstractType
             ->add('city', TextType::class, ['required' => false])
             ->add('postalCode', IntegerType::class, ['required' => false])
             ->add('country', EntityType::class, ['class' => 'KernelBundle\Entity\Country', 'choice_label' => 'label'])
-            ->add('mainPosition', EntityType::class, ['class' => 'KernelBundle\Entity\Position', 'choice_label' => 'label']);
+            ->add('mainPosition', EntityType::class, [
+                'class' => 'KernelBundle\Entity\Position',
+                'choice_label' => 'label',
+                'disabled' => $mode == self::EDIT_MODE,
+                'required' => $mode == self::ADD_MODE
+            ]);
     }
 
     /**
@@ -48,6 +59,7 @@ class UserType extends AbstractType
         $resolver->setDefaults(array(
             'csrf_protection' => false,
             'data_class' => 'KernelBundle\Entity\User',
+            'mode' => self::ADD_MODE,
             'allow_extra_fields' => true
         ));
     }

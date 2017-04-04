@@ -290,7 +290,7 @@ class UserController extends FOSRestController
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $user = new User();
-        $form = $this->createForm(new UserType(), $user);
+        $form = $this->createForm(new UserType(), $user, ['mode' => UserType::ADD_MODE]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -348,7 +348,7 @@ class UserController extends FOSRestController
 
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
-        $form = $this->createForm(new UserType(), $user);
+        $form = $this->createForm(new UserType(), $user, ['mode' => UserType::EDIT_MODE]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
