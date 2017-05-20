@@ -65,6 +65,14 @@ class ConsultantMembership
     /**
      * @var bool
      *
+     * @SerializedName("certificateGiven")
+     * @ORM\Column(name="certificate_given", type="boolean")
+     */
+    private $certificateGiven;
+
+    /**
+     * @var bool
+     *
      * @SerializedName("ribGiven")
      * @ORM\Column(name="rib_given", type="boolean")
      */
@@ -183,6 +191,24 @@ class ConsultantMembership
     public function getFormFilled()
     {
         return $this->formFilled;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCertificateGiven()
+    {
+        return $this->certificateGiven;
+    }
+
+    /**
+     * @param bool $certificateGiven
+     * @return ConsultantMembership
+     */
+    public function setCertificateGiven($certificateGiven)
+    {
+        $this->certificateGiven = $certificateGiven;
+        return $this;
     }
 
     /**
