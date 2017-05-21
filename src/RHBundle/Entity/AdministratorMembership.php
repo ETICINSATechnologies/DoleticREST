@@ -207,6 +207,17 @@ class AdministratorMembership
     }
 
     /**
+     * @ORM\PostLoad
+     * @ORM\PostUpdate
+     * @ORM\PostPersist
+     */
+    public function setActiveAndValid()
+    {
+        $this->active = $this->endDate >= new \DateTime() && $this->startDate <= new \DateTime();
+        $this->valid = $this->feePaid && $this->formFilled;
+    }
+
+    /**
      * @return bool
      */
     public function isValid()

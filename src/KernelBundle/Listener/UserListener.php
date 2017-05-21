@@ -128,7 +128,7 @@ class UserListener
         // Set consultant value
         if ($user->getConsultantMembership() == null) {
             $user->setConsultant(0);
-        } else if ($user->getConsultantMembership()->getValid()) {
+        } else if ($user->getConsultantMembership()->isValid()) {
             $user->setConsultant(2);
         } else {
             $user->setConsultant(1);
@@ -138,10 +138,10 @@ class UserListener
         $memberships = $user->getAdministratorMemberships();
         if(isset($memberships)) {
             foreach ($memberships as $membership) {
-                if ($membership->isActive() && $membership->getValid()) {
+                if ($membership->isActive() && $membership->isValid()) {
                     $user->setAdministrator(2);
                     break;
-                } else if ($membership->isActive() && !$membership->getValid()) {
+                } else if ($membership->isActive() && !$membership->isValid()) {
                     $user->setAdministrator(1);
                     break;
                 }

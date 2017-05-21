@@ -279,7 +279,7 @@ class ConsultantMembership
     /**
      * @return mixed
      */
-    public function getValid()
+    public function isValid()
     {
         return $this->valid;
     }
