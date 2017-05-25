@@ -9,6 +9,7 @@ use KernelBundle\Entity\User;
 /**
  * ConsultantMembership
  *
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="rh_consultant_membership")
  * @ORM\Entity(repositoryClass="RHBundle\Repository\ConsultantMembershipRepository")
  */
@@ -293,6 +294,23 @@ class ConsultantMembership
         $this->valid = $valid;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PostLoad
+     * @ORM\PostUpdate
+     * @ORM\PostPersist
+     */
+    public function setValidity()
+    {
+        $this->valid =
+            $this->startDate <= new \DateTime() &&
+            isset($this->socialNumber) &&
+            $this->feePaid &&
+            $this->formFilled &&
+            $this->certificateGiven &&
+            $this->ribGiven &&
+            $this->idGiven;
     }
 
 }
