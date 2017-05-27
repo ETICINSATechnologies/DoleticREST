@@ -393,7 +393,7 @@ class UserController extends FOSRestController
     {
         $user = $this->getUser();
 
-        $form = $this->createForm(new UserType(), $user);
+        $form = $this->createForm(new UserType(), $user, ['mode' => UserType::EDIT_MODE]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
