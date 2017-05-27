@@ -9,6 +9,7 @@ use KernelBundle\Entity\User;
 /**
  * ConsultantMembership
  *
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="rh_consultant_membership")
  * @ORM\Entity(repositoryClass="RHBundle\Repository\ConsultantMembershipRepository")
  */
@@ -65,6 +66,14 @@ class ConsultantMembership
     /**
      * @var bool
      *
+     * @SerializedName("certificateGiven")
+     * @ORM\Column(name="certificate_given", type="boolean")
+     */
+    private $certificateGiven;
+
+    /**
+     * @var bool
+     *
      * @SerializedName("ribGiven")
      * @ORM\Column(name="rib_given", type="boolean")
      */
@@ -78,6 +87,10 @@ class ConsultantMembership
      */
     private $idGiven;
 
+    /**
+     * @var bool
+     */
+    private $valid;
 
     /**
      * Get id
@@ -182,6 +195,24 @@ class ConsultantMembership
     }
 
     /**
+     * @return bool
+     */
+    public function isCertificateGiven()
+    {
+        return $this->certificateGiven;
+    }
+
+    /**
+     * @param bool $certificateGiven
+     * @return ConsultantMembership
+     */
+    public function setCertificateGiven($certificateGiven)
+    {
+        $this->certificateGiven = $certificateGiven;
+        return $this;
+    }
+
+    /**
      * Set ribGiven
      *
      * @param boolean $ribGiven
@@ -244,6 +275,42 @@ class ConsultantMembership
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function isValid()
+    {
+        return $this->valid;
+    }
+
+    /**
+     * @param mixed $valid
+     * @return ConsultantMembership
+     */
+    public function setValid($valid)
+    {
+        $this->valid = $valid;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PostLoad
+     * @ORM\PostUpdate
+     * @ORM\PostPersist
+     */
+    public function setValidity()
+    {
+        $this->valid =
+            $this->startDate <= new \DateTime() &&
+            isset($this->socialNumber) &&
+            $this->feePaid &&
+            $this->formFilled &&
+            $this->certificateGiven &&
+            $this->ribGiven &&
+            $this->idGiven;
     }
 
 }

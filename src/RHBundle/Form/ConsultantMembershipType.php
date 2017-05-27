@@ -24,6 +24,7 @@ class ConsultantMembershipType extends AbstractType
             ->add('socialNumber', TextType::class, ['required' => false])
             ->add('feePaid', CheckboxType::class)
             ->add('formFilled', CheckboxType::class)
+            ->add('certificateGiven', CheckboxType::class)
             ->add('ribGiven', CheckboxType::class)
             ->add('idGiven', CheckboxType::class);
     }

@@ -2,6 +2,8 @@
 
 namespace KernelBundle\Repository;
 
+use Doctrine\ORM\Query\Expr\Join;
+
 /**
  * UserRepository
  *
@@ -28,5 +30,16 @@ class UserRepository extends DoleticRepository
             return isset($userPosition) ? $userPosition->getUser() : null;
         }
         return null;
+    }
+
+    public function findUsersByOld($old)
+    {
+        $qb = $this->createQueryBuilder('q');
+        $qb->select('u')
+            ->from($this->getClassName(), 'u', 'u.id')
+            ->where($qb->expr()->eq('u.enabled', true))
+            ->join('u.positions', 'up')
+            ->join('up.position', 'p', Join::WITH, $qb->expr()->eq('p.old', $old ? 1 : 0));
+        return $qb->getQuery()->getResult();
     }
 }

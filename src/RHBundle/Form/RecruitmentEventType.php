@@ -17,7 +17,7 @@ class RecruitmentEventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date', DateType::class)
+            ->add('date', DateType::class, ['widget' => 'single_text', 'format' => 'dd/MM/yyyy'])
             ->add('presence', IntegerType::class);
     }
 

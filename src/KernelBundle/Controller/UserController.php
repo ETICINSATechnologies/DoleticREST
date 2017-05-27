@@ -10,6 +10,7 @@ use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\UserBundle\Model\UserInterface;
+use KernelBundle\Entity\UserPosition;
 use KernelBundle\Form\ChangePasswordType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -47,6 +48,93 @@ class UserController extends FOSRestController
 
         $users = $this->getDoctrine()->getRepository("KernelBundle:User")
             ->findAll();
+
+        return array('users' => $users);
+    }
+
+    /**
+     * Get all the current users
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Get all current users",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/users/current")
+     */
+    public function getCurrentUsersAction()
+    {
+
+        $users = $this->getDoctrine()->getRepository("KernelBundle:User")
+            ->findUsersByOld(false);
+
+        return array('users' => $users);
+    }
+
+    /**
+     * Get all the users
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Get all old users",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/users/old")
+     */
+    public function getOldUsersAction()
+    {
+
+        $users = $this->getDoctrine()->getRepository("KernelBundle:User")
+            ->findUsersByOld(true);
+
+        return array('users' => $users);
+    }
+
+    /**
+     * Get all the disabled users
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Get all disabled users",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/users/disabled")
+     */
+    public function getDisabledUsersAction()
+    {
+
+        $users = $this->getDoctrine()->getRepository("KernelBundle:User")
+            ->findBy(['enabled' => false]);
 
         return array('users' => $users);
     }
@@ -202,12 +290,22 @@ class UserController extends FOSRestController
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $user = new User();
-        $form = $this->createForm(new UserType(), $user);
+        $form = $this->createForm(new UserType(), $user, ['mode' => UserType::ADD_MODE]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $position = $user->getMainPosition();
             $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
+            if (isset($position)) {
+                $userPosition = new UserPosition();
+                $userPosition->setActive(true)->setMain(true)->setPosition($position);
+                $user->setPositions([$userPosition]);
+                $userPosition->setUser($user);
+                $em->persist($user);
+                $em->persist($userPosition);
+            } else {
+                $em->persist($user);
+            }
             $em->flush();
 
             return array("user" => $user);
@@ -250,7 +348,7 @@ class UserController extends FOSRestController
 
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
-        $form = $this->createForm(new UserType(), $user);
+        $form = $this->createForm(new UserType(), $user, ['mode' => UserType::EDIT_MODE]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -372,6 +470,78 @@ class UserController extends FOSRestController
         }
         return array("form" => $form);
 
+    }
+
+    /**
+     * Disable a User
+     * Post action
+     * @var User $user
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Disable a user",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("user", class="KernelBundle:User")
+     * @Post("/user/{id}/disable", requirements={"id" = "\d+"})
+     */
+    public function disableUserAction(User $user)
+    {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
+        $user->setEnabled(false);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return array("user" => $user);
+    }
+
+    /**
+     * Enable a User
+     * Post action
+     * @var User $user
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Enable a user",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "super-admin" = "#da4932"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("user", class="KernelBundle:User")
+     * @Post("/user/{id}/enable", requirements={"id" = "\d+"})
+     */
+    public function enableUserAction(User $user)
+    {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
+        $user->setEnabled(true);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return array("user" => $user);
     }
 
 
