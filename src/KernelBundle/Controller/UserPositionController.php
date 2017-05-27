@@ -157,7 +157,7 @@ class UserPositionController extends FOSRestController
     }
 
     /**
-     * Edit a UserPosition
+     * Set a UserPosition as main position
      * Put action
      * @var Request $request
      * @var UserPosition $user_position
@@ -165,7 +165,7 @@ class UserPositionController extends FOSRestController
      *
      * @ApiDoc(
      *  section="UserPosition",
-     *  description="Edit a UserPosition",
+     *  description="Set a UserPosition as main position",
      *  input="KernelBundle\Form\UserPositionType",
      *  output="KernelBundle\Entity\UserPosition",
      *  statusCodes={
@@ -180,30 +180,18 @@ class UserPositionController extends FOSRestController
      *
      * @View()
      * @ParamConverter("user_position", class="KernelBundle:UserPosition")
-     * @Post("/user_position/{id}", requirements={"id" = "\d+"})
+     * @Post("/user_position/{id}/main", requirements={"id" = "\d+"})
      */
-    public function putUserPositionAction(Request $request, UserPosition $user_position)
+    public function setUserPositionAsMainAction(Request $request, UserPosition $user_position)
     {
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
-        $form = $this->createForm(
-            new UserPositionType(),
-            $user_position
-        );
-        $form->handleRequest($request);
+        $user_position->setActive(true)->setMain(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user_position);
+        $em->flush();
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($user_position);
-            $em->flush();
-
-            return array("user_position" => $user_position);
-        }
-
-        return array(
-            'form' => $form,
-        );
+        return array("user_position" => $user_position);
     }
 
     /**
