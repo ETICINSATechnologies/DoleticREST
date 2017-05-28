@@ -58,7 +58,7 @@ class UserRepository extends DoleticRepository
         $qb->select('u')
             ->from($this->getClassName(), 'u', 'u.id')
             ->where($qb->expr()->eq('u.enabled', true))
-            ->join('u.positions', 'up')
+            ->join('u.positions', 'up', Join::WITH, $qb->expr()->eq('up.active', 1))
             ->join('up.position', 'p', Join::WITH, $qb->expr()->eq('p.old', $old ? 1 : 0));
         return $qb->getQuery()->getResult();
     }
