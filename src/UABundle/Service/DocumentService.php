@@ -99,7 +99,7 @@ class DocumentService
             'MONTANTTVAENT' => $totalPrice * $this->TVARate / 100,
             'TOTALENTREPRISETTC' => $totalPrice * (1 + $this->TVARate) / 100,
 
-            'DATESIGCV' => isset($signDate) ? date('d/m/Y', strtotime($signDate)) : 'DateSignature',
+            'DATESIGCV' => $signDate instanceof \DateTime ? $signDate->format('d/m/Y') : 'DateSignature',
 
             'TAUXTVA' => $this->TVARate,
 
@@ -175,6 +175,7 @@ class DocumentService
         }
 
         $project = $delivery->getTask()->getProject();
+        $signDate = $project->getSignDate();
 
         $dict = [
             'NOMENTREPRISE' => $project->getFirm()->getName(),
@@ -191,7 +192,7 @@ class DocumentService
                 : 'NomPresident',
 
             'DJOUR' => date('d/m/Y'),
-            'DATESIGCV' => isset($signDate) ? date('d/m/Y', strtotime($signDate)) : 'DateSignature'
+            'DATESIGCV' => $signDate instanceof \DateTime ? $signDate->format('d/m/Y') : 'DateSignature'
         ];
 
         return $dict;

@@ -16,7 +16,7 @@ class PublishConsultantDocumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('template', EntityType::class, ['class' => 'UABundle\Entity\ProjectDocumentTemplate', 'required' => true])
+            ->add('template', EntityType::class, ['class' => 'UABundle\Entity\ConsultantDocumentTemplate', 'required' => true])
             ->add('contact', EntityType::class, ['class' => 'UABundle\Entity\ProjectContact', 'required' => true])
             ->add('consultant', EntityType::class, ['class' => 'UABundle\Entity\Consultant', 'required' => true]);
     }

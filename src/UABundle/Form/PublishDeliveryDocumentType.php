@@ -16,7 +16,7 @@ class PublishProjectDocumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('template', EntityType::class, ['class' => 'UABundle\Entity\ProjectDocumentTemplate', 'required' => true])
+            ->add('template', EntityType::class, ['class' => 'UABundle\Entity\DeliveryDocumentTemplate', 'required' => true])
             ->add('contact', EntityType::class, ['class' => 'UABundle\Entity\ProjectContact', 'required' => true])
             ->add('delivery', EntityType::class, ['class' => 'UABundle\Entity\Delivery', 'required' => true]);
     }
