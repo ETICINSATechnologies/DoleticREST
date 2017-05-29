@@ -11,6 +11,8 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use KernelBundle\Entity\DocumentTemplate;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use UABundle\Entity\ConsultantDocumentTemplate;
 use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -204,6 +206,38 @@ class ConsultantDocumentController extends FOSRestController
     }
 
     /**
+     * Download the file attached to a consultant_document by ID
+     * @param ConsultantDocument $consultant_document
+     * @return BinaryFileResponse
+     *
+     * @ApiDoc(
+     *  section="ProjectDocument",
+     *  description="Download the file attached to a consultant_document",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("consultant_document", class="UABundle:ConsultantDocument")
+     * @Get("/consultant_document/{id}/download", requirements={"id" = "\d+"})
+     */
+    public function downloadConsultantDocumentAction(ConsultantDocument $consultant_document)
+    {
+        $fileName = $consultant_document->getFile();
+
+        $response = new BinaryFileResponse($fileName);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
+
+        return $response;
+    }
+
+    /**
      * Create a new ConsultantDocument
      * @var Request $request
      * @return View|array
@@ -237,9 +271,8 @@ class ConsultantDocumentController extends FOSRestController
         }
 
         if ($form->isValid()) {
-            $file = $consultant_document->getFile();
-            $fileName = $this->get('document_uploader')->upload($file);
-            $consultant_document->setFile($fileName);
+            $consultant_document->setValid(false);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($consultant_document);
             $em->flush();
@@ -284,13 +317,15 @@ class ConsultantDocumentController extends FOSRestController
         $form = $this->createForm(new ConsultantDocumentType(), $consultant_document);
         $form->handleRequest($request);
 
-        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $consultant_document->getConsultant()->getProject())) {
-            throw new AccessDeniedException();
-        }
-
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $consultant_document->getConsultant()->getProject())) {
+                throw new AccessDeniedException();
+            }
 
+            // Invalidate the document, since it's a different file
+            $consultant_document->setValid(false);
+
+            $em = $this->getDoctrine()->getManager();
             $em->persist($consultant_document);
             $em->flush();
 
