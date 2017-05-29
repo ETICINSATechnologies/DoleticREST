@@ -10,6 +10,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use UABundle\Form\PublishConsultantDocumentType;
+use UABundle\Form\PublishDeliveryDocumentType;
 use UABundle\Form\PublishProjectDocumentType;
 
 class UAController extends FOSRestController
@@ -157,7 +158,7 @@ class UAController extends FOSRestController
     {
         $this->denyAccessUnlessGranted('ROLE_UA_ADMIN');
 
-        $form = $this->createForm(new PublishConsultantDocumentType(), []);
+        $form = $this->createForm(new PublishDeliveryDocumentType(), []);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

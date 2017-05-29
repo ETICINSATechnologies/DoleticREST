@@ -10,6 +10,8 @@ use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use UABundle\Entity\DeliveryDocumentTemplate;
 use KernelBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -202,6 +204,39 @@ class DeliveryDocumentController extends FOSRestController
 
     }
 
+
+    /**
+     * Download the file attached to a project_document by ID
+     * @param DeliveryDocument $delivery_document
+     * @return BinaryFileResponse
+     *
+     * @ApiDoc(
+     *  section="DeliveryDocument",
+     *  description="Download the file attached to a delivery_document",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "ua" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @ParamConverter("delivery_document", class="UABundle:DeliveryDocument")
+     * @Get("/delivery_document/{id}/download", requirements={"id" = "\d+"})
+     */
+    public function downloadDeliveryDocumentAction(DeliveryDocument $delivery_document)
+    {
+        $fileName = $delivery_document->getFile();
+
+        $response = new BinaryFileResponse($fileName);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
+
+        return $response;
+    }
+
     /**
      * Create a new DeliveryDocument
      * @var Request $request
@@ -236,9 +271,8 @@ class DeliveryDocumentController extends FOSRestController
         }
 
         if ($form->isValid()) {
-            $file = $delivery_document->getFile();
-            $fileName = $this->get('document_uploader')->upload($file);
-            $delivery_document->setFile($fileName);
+            $delivery_document->setValid(false);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($delivery_document);
             $em->flush();
@@ -283,13 +317,15 @@ class DeliveryDocumentController extends FOSRestController
         $form = $this->createForm(new DeliveryDocumentType(), $delivery_document);
         $form->handleRequest($request);
 
-        if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery_document->getDelivery()->getTask()->getProject())) {
-            throw new AccessDeniedException();
-        }
-
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            if (!$this->get('ua.project.rights_service')->userHasRights($this->getUser(), $delivery_document->getDelivery()->getTask()->getProject())) {
+                throw new AccessDeniedException();
+            }
 
+            // Invalidate the document, since it's a different file
+            $delivery_document->setValid(false);
+
+            $em = $this->getDoctrine()->getManager();
             $em->persist($delivery_document);
             $em->flush();
 

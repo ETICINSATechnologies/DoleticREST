@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PublishProjectDocumentType extends AbstractType
+class PublishDeliveryDocumentType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
