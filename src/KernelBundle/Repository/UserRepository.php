@@ -32,13 +32,33 @@ class UserRepository extends DoleticRepository
         return null;
     }
 
+    public function findTreasurer()
+    {
+        $treasurerPosition = $this->getEntityManager()->getRepository('KernelBundle:Position')->findOneBy(['treasurer' => true]);
+        if (isset($treasurerPosition)) {
+            $userPosition = $this->getEntityManager()->getRepository('KernelBundle:UserPosition')
+                ->findOneBy(
+                    [
+                        'position' => $treasurerPosition,
+                        'active' => true,
+                        'main' => true
+                    ],
+                    [
+                        'startDate' => 'ASC'
+                    ]
+                );
+            return isset($userPosition) ? $userPosition->getUser() : null;
+        }
+        return null;
+    }
+
     public function findUsersByOld($old)
     {
         $qb = $this->createQueryBuilder('q');
         $qb->select('u')
             ->from($this->getClassName(), 'u', 'u.id')
             ->where($qb->expr()->eq('u.enabled', true))
-            ->join('u.positions', 'up')
+            ->join('u.positions', 'up', Join::WITH, $qb->expr()->eq('up.active', 1))
             ->join('up.position', 'p', Join::WITH, $qb->expr()->eq('p.old', $old ? 1 : 0));
         return $qb->getQuery()->getResult();
     }
