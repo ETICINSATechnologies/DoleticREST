@@ -18,7 +18,8 @@ class ConsultantMembershipFixture extends AbstractFixture implements OrderedFixt
             ->setFeePaid(true)
             ->setFormFilled(true)
             ->setIdGiven(true)
-            ->setRibGiven(true);
+            ->setRibGiven(true)
+            ->setCertificateGiven(false);
 
         $manager->persist($membership);
         $manager->flush();

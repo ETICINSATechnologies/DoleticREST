@@ -45,9 +45,13 @@ class ProjectListener
 
     public function postPersist(Project $project, LifecycleEventArgs $event)
     {
-        $currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
-        $project->setUserHasRights($this->container->get('ua.project.rights_service')->userHasRights($currentUser, $project));
-        $project->setStatus($this->resolveStatus($project));
+        try{
+            if(NULL != $this->container->get('security.token_storage')->getToken()) {
+                $currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
+                $project->setUserHasRights($this->container->get('ua.project.rights_service')->userHasRights($currentUser, $project));
+                $project->setStatus($this->resolveStatus($project));
+            }
+        }catch(Exception $e){}
     }
 
     public function postUpdate(Project $project, LifecycleEventArgs $event)

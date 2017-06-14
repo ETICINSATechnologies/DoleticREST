@@ -18,7 +18,7 @@ class ContactRightsService
 
     public function userHasRights(User $user, Contact $contact)
     {
-
+        if(!isset($user)) return false;
         if (true === $this->authorizationChecker->isGranted('ROLE_GRC_SUPERADMIN')) {
             return true;
         }
