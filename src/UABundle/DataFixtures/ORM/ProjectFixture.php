@@ -17,7 +17,6 @@ class ProjectFixture extends AbstractFixture implements OrderedFixtureInterface
             ->setFirm($this->getReference('firm'))
             ->setOrigin($this->getReference('origin'))
             ->setField($this->getReference('field'))
-            ->setStatus($this->getReference('status'))
             ->setManagementFee(0)
             ->setApplicationFee(0)
             ->setAdvance(0)
