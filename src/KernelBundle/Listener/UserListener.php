@@ -3,6 +3,11 @@
 namespace KernelBundle\Listener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Google_Client;
+use Google_Service_Directory;
+use Google_Service_Directory_User;
+use Google_Service_Directory_UserName;
+use Google_Service_Exception;
 use KernelBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -46,7 +51,6 @@ class UserListener
                             'webmaster' => $this->container->getParameter('webmaster_email')
                         ]
                     ));
-
                 $this->container->get('mailer')->send($message);
             }
 
@@ -69,6 +73,9 @@ class UserListener
             }
         }
         $this->setMemberships($user);
+
+        //Creation gmail account through gmail api
+        $this->createGMailAccount($user);
     }
 
     public function postUpdate(User $user, LifecycleEventArgs $event)
@@ -84,6 +91,53 @@ class UserListener
             }
         }
         $this->setMemberships($user);
+    }
+
+    public function createGMailAccount(User $user){
+
+        require_once __DIR__ . '/../../../vendor/autoload.php';
+        session_start();
+
+        $TOKEN_FILE = "ressources/token.json";
+        $SCOPES = array(
+            "https://www.googleapis.com/auth/admin.directory.user"
+        );
+
+        $client = new Google_Client();
+        $client->setApplicationName("Doletic");
+        $client->setScopes($SCOPES);
+        $client->setSubject("josquin.cornec@etic-insa.com");
+        $service = new Google_Service_Directory($client);
+        $token = @file_get_contents($TOKEN_FILE);
+        // Refresh token when expired
+        $client->setAccessToken($token);
+        if ($client->isAccessTokenExpired()) {
+            // the new access token comes with a refresh token as well
+            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+        }
+
+        if (isset($token))  $client->setAccessToken($token);
+
+        $userInstance = new Google_Service_Directory_User();
+        $nameInstance = new Google_Service_Directory_UserName();
+
+        $nameInstance -> setGivenName($user->getFirstName());
+        $nameInstance -> setFamilyName($user->getLastName());
+
+        $userInstance -> setName($nameInstance);
+        $userInstance -> setHashFunction("MD5");
+        $userInstance -> setPrimaryEmail($user->getEmail());
+        $userInstance -> setChangePasswordAtNextLogin(true);
+
+        try
+        {
+            $createUserResult = $service -> users -> insert($userInstance);
+            var_dump($createUserResult);
+        }
+        catch (Google_Service_Exception $gse)
+        {
+            echo $gse->getMessage();
+        }
     }
 
     public function postLoad(User $user, LifecycleEventArgs $event)

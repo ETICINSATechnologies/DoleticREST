@@ -43,38 +43,39 @@ class createGMailUserCommand extends ContainerAwareCommand
         require_once __DIR__ . '/../../../vendor/autoload.php';
         session_start();
 
-        $REDIRECT_URI = 'http://localhost:8080/';
-        $KEY_LOCATION = __DIR__ . '/../../../client_secret.json';
-        $TOKEN_FILE   = "token.txt";
+        $TOKEN_FILE = "ressources/token.json";
+        $PATH_SERVICE_ACCOUNT = "ressources/service-account.json";
+        $SCOPES = array(
+            "https://www.googleapis.com/auth/admin.directory.user"
+        );
 
         $client = new Google_Client();
         $client->setApplicationName("Doletic");
-
-        $token = $this->getContainer()->getParameter('token');
-
-        print ("debug : début test");
-
-        $client = new Google_Client();
-        $client->setApplicationName("ClientWeb2");
+        $client->setScopes($SCOPES);
+        $client->setSubject("josquin.cornec@etic-insa.com");
         $service = new Google_Service_Directory($client);
-
-        if (isset($token)) {
-            $client->setAccessToken($token);
+        $token = @file_get_contents($TOKEN_FILE);
+        // Refresh token when expired
+        $client->setAccessToken($token);
+        if ($client->isAccessTokenExpired()) {
+            // the new access token comes with a refresh token as well
+            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
         }
-        $key = file_get_contents($KEY_LOCATION);
-        $client->useApplicationDefaultCredentials();
-        $token = $client->getAccessToken();
+
+
+        if (isset($token))  $client->setAccessToken($token);
 
         $userInstance = new Google_Service_Directory_User();
         $nameInstance = new Google_Service_Directory_UserName();
 
-        $nameInstance -> setGivenName('Testing 1');
-        $nameInstance -> setFamilyName('Testing 1');
+        $nameInstance -> setGivenName('givenName3');
+        $nameInstance -> setFamilyName('familyName3');
 
         $userInstance -> setName($nameInstance);
         $userInstance -> setHashFunction("MD5");
-        $userInstance -> setPrimaryEmail('tete@domain.com');
-        $userInstance -> setPassword(hash("md5", "password"));
+        $userInstance -> setPrimaryEmail('newEmail3@etic-insa.com');
+        $userInstance -> setPassword(hash("md5", "password3"));
+
         try
         {
             $createUserResult = $service -> users -> insert($userInstance);
@@ -82,9 +83,11 @@ class createGMailUserCommand extends ContainerAwareCommand
         }
         catch (Google_Service_Exception $gse)
         {
-            echo "User already exists: ".$gse->getMessage();
+            echo $gse->getMessage();
         }
 
-        print ("debug : Fin de la méthode");
+
+
+        print ("debug : Fin de la méthode\n");
     }
 }
