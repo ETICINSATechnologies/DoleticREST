@@ -9,7 +9,9 @@ use Google_Service_Directory_User;
 use Google_Service_Directory_UserName;
 use Google_Service_Exception;
 use KernelBundle\Entity\User;
+use PhpOffice\PhpWord\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use KernelBundle\Entity\UserPosition;
 
 class UserListener
 {
@@ -75,7 +77,11 @@ class UserListener
         $this->setMemberships($user);
 
         //Creation gmail account through gmail api
-        $this->createGMailAccount($user);
+        try {
+            $this->createGMailAccount($user);
+        }catch(Exception $exception){
+            print ($exception->getMessage());
+        }
     }
 
     public function postUpdate(User $user, LifecycleEventArgs $event)
@@ -98,7 +104,7 @@ class UserListener
         require_once __DIR__ . '/../../../vendor/autoload.php';
         session_start();
 
-        $TOKEN_FILE = "ressources/token.json";
+        $TOKEN_FILE = __DIR__ . '/../../../ressources/token.json';
         $SCOPES = array(
             "https://www.googleapis.com/auth/admin.directory.user"
         );
@@ -127,7 +133,11 @@ class UserListener
         $userInstance -> setName($nameInstance);
         $userInstance -> setHashFunction("MD5");
         $userInstance -> setPrimaryEmail($user->getEmail());
+        $userInstance -> setPassword($user->getPlainPassword());
         $userInstance -> setChangePasswordAtNextLogin(true);
+        $userInstance -> setAddresses($user->getAddress());
+        $userInstance -> setPhones($user->getTel());
+        $userInstance -> setIsAdmin($user->getAdministrator());
 
         try
         {

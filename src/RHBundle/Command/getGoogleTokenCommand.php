@@ -60,9 +60,10 @@ class getGoogleTokenCommand extends ContainerAwareCommand
         $client->setIncludeGrantedScopes(true);
 
         // Allow access to Google API when the user is not present.
-        $client->setAccessType('online');
+        $client->setAccessType('offline');
         $client->setRedirectUri($REDIRECT_URI);
         $client->setScopes($SCOPES);
+        $client->setApprovalPrompt("force");
 
         $code = $this->getContainer()->getParameter('code');
         $token = @file_get_contents($TOKEN_FILE);
@@ -72,19 +73,17 @@ class getGoogleTokenCommand extends ContainerAwareCommand
             try {
                 // Exchange the one-time authorization code for an access token
                 $tokenArray = $client->fetchAccessTokenWithAuthCode($code);
-
                 //Let's see if we get a token or an error message
                 if(array_key_exists ( "access_token" , $tokenArray )){
-                    print_r($tokenArray."\n");
+                    print_r($tokenArray);
                     file_put_contents($TOKEN_FILE, json_encode($tokenArray));
                 }else if(array_key_exists ( "error" , $tokenArray )){
                     print("invalid token : " . $tokenArray["error"] . "\n");
                     exit ;
                 }else{
-                    print_r("unknown error : " . $tokenArray . "\n");
                     exit ;
                 }
-                header('Location: ' . filter_var($REDIRECT_URI, FILTER_SANITIZE_URL));
+                //header('Location: ' . filter_var($REDIRECT_URI, FILTER_SANITIZE_URL));
             }
             catch (\Google_Service_Exception $e) {
                 print_r($e . "\n");
