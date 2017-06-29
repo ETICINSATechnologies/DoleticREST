@@ -133,7 +133,7 @@ class UserListener
         $userInstance -> setName($nameInstance);
         $userInstance -> setHashFunction("MD5");
         $userInstance -> setPrimaryEmail($user->getEmail());
-        $userInstance -> setPassword($user->getPlainPassword());
+        $userInstance -> setPassword(hash("md5",$this->makeRandomPassword()));
         $userInstance -> setChangePasswordAtNextLogin(true);
         $userInstance -> setAddresses($user->getAddress());
         $userInstance -> setPhones($user->getTel());

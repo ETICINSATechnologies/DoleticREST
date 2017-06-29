@@ -43,8 +43,7 @@ class createGMailUserCommand extends ContainerAwareCommand
         require_once __DIR__ . '/../../../vendor/autoload.php';
         session_start();
 
-        $TOKEN_FILE = "ressources/token.json";
-        $PATH_SERVICE_ACCOUNT = "ressources/service-account.json";
+        $TOKEN_FILE = __DIR__ . "/../../../ressources/token.json";
         $SCOPES = array(
             "https://www.googleapis.com/auth/admin.directory.user"
         );
