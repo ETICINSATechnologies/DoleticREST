@@ -450,7 +450,6 @@ class UserController extends FOSRestController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            file_put_contents($HELP_DIR, print_r($data, true));
             $user->setPlainPassword($data['new']);
             $this->get('fos_user.user_manager')->updateUser($user);
             if ($this->container->getParameter('mailer_password') !== null) {
