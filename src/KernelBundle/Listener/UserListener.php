@@ -11,7 +11,6 @@ use Google_Service_Exception;
 use KernelBundle\Entity\User;
 use PhpOffice\PhpWord\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use KernelBundle\Entity\UserPosition;
 
 class UserListener
 {
@@ -84,6 +83,7 @@ class UserListener
         }
     }
 
+    //Mettre ici la requête pour synchroniser les passwords avec google
     public function postUpdate(User $user, LifecycleEventArgs $event)
     {
         $user->setFullName($user->getFirstName() . ' ' . $user->getLastName());

@@ -437,18 +437,20 @@ class UserController extends FOSRestController
     public function changePasswordAction(Request $request)
     {
         $user = $this->getUser();
+        $HELP_DIR = __DIR__ . '/../../../ressources/debug.txt';
+
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        $defaultData = [];
+        $form = $this->createForm(new ChangePasswordType(), []);
 
-        $form = $this->createForm(new ChangePasswordType(), $defaultData);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
+            file_put_contents($HELP_DIR, print_r($data, true));
             $user->setPlainPassword($data['new']);
             $this->get('fos_user.user_manager')->updateUser($user);
             if ($this->container->getParameter('mailer_password') !== null) {
