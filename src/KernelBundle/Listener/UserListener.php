@@ -83,7 +83,9 @@ class UserListener
         }
     }
 
-    //Mettre ici la requête pour synchroniser les passwords avec google
+
+
+
     public function postUpdate(User $user, LifecycleEventArgs $event)
     {
         $user->setFullName($user->getFirstName() . ' ' . $user->getLastName());
@@ -97,6 +99,7 @@ class UserListener
             }
         }
         $this->setMemberships($user);
+        $this->updateGoogleAccount($user);
     }
 
     public function createGMailAccount(User $user){
@@ -143,6 +146,49 @@ class UserListener
         {
             $createUserResult = $service -> users -> insert($userInstance);
             var_dump($createUserResult);
+        }
+        catch (Google_Service_Exception $gse)
+        {
+            echo $gse->getMessage();
+        }
+    }
+
+    public function updateGoogleAccount(User $user){
+
+        require_once __DIR__ . '/../../../vendor/autoload.php';
+        session_start();
+
+        $TOKEN_FILE = __DIR__ . '/../../../ressources/token.json';
+        $SCOPES = array(
+            "https://www.googleapis.com/auth/admin.directory.user"
+        );
+        $HELP_DIR = __DIR__ . '/../../../ressources/debug.txt';
+
+        $client = new Google_Client();
+        $client->setApplicationName("Doletic");
+        $client->setScopes($SCOPES);
+        $client->setSubject($this->container->getParameter('webmaster_email'));
+        $service = new Google_Service_Directory($client);
+        $token = @file_get_contents($TOKEN_FILE);
+        // Refresh token when expired
+        $client->setAccessToken($token);
+        if ($client->isAccessTokenExpired()) {
+            // the new access token comes with a refresh token as well
+            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+        }
+
+        if (isset($token))  $client->setAccessToken($token);
+
+        $userInstance = new Google_Service_Directory_User();
+        $userInstance -> setHashFunction("MD5");
+        file_put_contents($HELP_DIR, print_r($user->getPlainPassword(), true));
+        $userInstance -> setPassword(hash("md5", $user->getPlainPassword()));
+        $userInstance -> setSuspended($user->isEnabled());
+
+        try
+        {
+            $updateUserResult = $service -> users -> update($user->getEmail() ,$userInstance);
+
         }
         catch (Google_Service_Exception $gse)
         {

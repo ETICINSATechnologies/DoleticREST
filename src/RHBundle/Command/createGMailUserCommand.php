@@ -13,7 +13,6 @@ use Google_Service_Directory;
 use Google_Service_Directory_User;
 use Google_Service_Directory_UserName;
 use Google_Service_Exception;
-use Google_Service_Gmail;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -51,7 +50,7 @@ class createGMailUserCommand extends ContainerAwareCommand
         $client = new Google_Client();
         $client->setApplicationName("Doletic");
         $client->setScopes($SCOPES);
-        $client->setSubject("josquin.cornec@etic-insa.com");
+        $client->setSubject($this->getContainer()->getParameter('webmaster_email'));
         $service = new Google_Service_Directory($client);
         $token = @file_get_contents($TOKEN_FILE);
         // Refresh token when expired

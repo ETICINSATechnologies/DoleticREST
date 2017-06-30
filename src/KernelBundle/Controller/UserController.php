@@ -437,14 +437,12 @@ class UserController extends FOSRestController
     public function changePasswordAction(Request $request)
     {
         $user = $this->getUser();
-        $HELP_DIR = __DIR__ . '/../../../ressources/debug.txt';
 
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
         $form = $this->createForm(new ChangePasswordType(), []);
-
 
         $form->handleRequest($request);
 
