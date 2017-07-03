@@ -83,9 +83,6 @@ class UserListener
         }
     }
 
-
-
-
     public function postUpdate(User $user, LifecycleEventArgs $event)
     {
         $user->setFullName($user->getFirstName() . ' ' . $user->getLastName());
@@ -115,7 +112,7 @@ class UserListener
         $client = new Google_Client();
         $client->setApplicationName("Doletic");
         $client->setScopes($SCOPES);
-        $client->setSubject("josquin.cornec@etic-insa.com");
+        $client->setSubject($this->container->getParameter('webmaster_email'));
         $service = new Google_Service_Directory($client);
         $token = @file_get_contents($TOKEN_FILE);
         // Refresh token when expired
@@ -129,15 +126,15 @@ class UserListener
 
         $userInstance = new Google_Service_Directory_User();
         $nameInstance = new Google_Service_Directory_UserName();
+        $email = $user->getFirstName().".".$user->getLastName()."@".$this->container->getParameter('je_domain');
 
         $nameInstance -> setGivenName($user->getFirstName());
         $nameInstance -> setFamilyName($user->getLastName());
 
         $userInstance -> setName($nameInstance);
         $userInstance -> setHashFunction("MD5");
-        $userInstance -> setPrimaryEmail($user->getEmail());
+        $userInstance -> setPrimaryEmail($email);
         $userInstance -> setPassword(hash("md5",$this->makeRandomPassword()));
-        $userInstance -> setChangePasswordAtNextLogin(true);
         $userInstance -> setAddresses($user->getAddress());
         $userInstance -> setPhones($user->getTel());
         $userInstance -> setIsAdmin($user->getAdministrator());
@@ -162,8 +159,8 @@ class UserListener
         $SCOPES = array(
             "https://www.googleapis.com/auth/admin.directory.user"
         );
-        //$HELP_DIR = __DIR__ . '/../../../ressources/debug.txt';
-        //file_put_contents($HELP_DIR, print_r($user->getPassword(), true));
+        $HELP_DIR = __DIR__ . '/../../../ressources/debug.txt';
+
         $client = new Google_Client();
         $client->setApplicationName("Doletic");
         $client->setScopes($SCOPES);
@@ -183,10 +180,12 @@ class UserListener
         $userInstance -> setHashFunction("MD5");
         $userInstance -> setPassword(hash("md5", $user->getPassword()));
         $userInstance -> setSuspended($user->isEnabled());
+        $email = $user->getFirstName().".".$user->getLastName()."@".$this->container->getParameter('je_domain');
 
         try
         {
-            $service -> users -> update($user->getEmail() ,$userInstance);
+            $rep = $service -> users -> update($email ,$userInstance);
+            file_put_contents($HELP_DIR, print_r($rep, true));
         }
         catch (Google_Service_Exception $gse)
         {
