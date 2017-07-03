@@ -162,8 +162,8 @@ class UserListener
         $SCOPES = array(
             "https://www.googleapis.com/auth/admin.directory.user"
         );
-        $HELP_DIR = __DIR__ . '/../../../ressources/debug.txt';
-
+        //$HELP_DIR = __DIR__ . '/../../../ressources/debug.txt';
+        //file_put_contents($HELP_DIR, print_r($user->getPassword(), true));
         $client = new Google_Client();
         $client->setApplicationName("Doletic");
         $client->setScopes($SCOPES);
@@ -181,14 +181,12 @@ class UserListener
 
         $userInstance = new Google_Service_Directory_User();
         $userInstance -> setHashFunction("MD5");
-        file_put_contents($HELP_DIR, print_r($user->getPlainPassword(), true));
-        $userInstance -> setPassword(hash("md5", $user->getPlainPassword()));
+        $userInstance -> setPassword(hash("md5", $user->getPassword()));
         $userInstance -> setSuspended($user->isEnabled());
 
         try
         {
-            $updateUserResult = $service -> users -> update($user->getEmail() ,$userInstance);
-
+            $service -> users -> update($user->getEmail() ,$userInstance);
         }
         catch (Google_Service_Exception $gse)
         {
