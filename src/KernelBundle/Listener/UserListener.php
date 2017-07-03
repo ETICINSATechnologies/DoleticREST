@@ -18,7 +18,7 @@ class UserListener
     const ITERATIONS = 99;
     const PASSWORD_LENGTH = 16;
     const BASE_STRING = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
+    const TOKEN_FILE = __DIR__ . '/../../../ressources/token.json';
     private $container;
 
     public function __construct(ContainerInterface $container)
@@ -104,7 +104,6 @@ class UserListener
         require_once __DIR__ . '/../../../vendor/autoload.php';
         session_start();
 
-        $TOKEN_FILE = __DIR__ . '/../../../ressources/token.json';
         $SCOPES = array(
             "https://www.googleapis.com/auth/admin.directory.user"
         );
@@ -114,26 +113,22 @@ class UserListener
         $client->setScopes($SCOPES);
         $client->setSubject($this->container->getParameter('webmaster_email'));
         $service = new Google_Service_Directory($client);
-        $token = @file_get_contents($TOKEN_FILE);
+        $token = @file_get_contents(self::TOKEN_FILE);
         // Refresh token when expired
         $client->setAccessToken($token);
-        if ($client->isAccessTokenExpired()) {
-            // the new access token comes with a refresh token as well
-            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-        }
+        $this->refreshToken($client);
 
         if (isset($token))  $client->setAccessToken($token);
 
         $userInstance = new Google_Service_Directory_User();
         $nameInstance = new Google_Service_Directory_UserName();
-        $email = $user->getFirstName().".".$user->getLastName()."@".$this->container->getParameter('je_domain');
 
         $nameInstance -> setGivenName($user->getFirstName());
         $nameInstance -> setFamilyName($user->getLastName());
 
         $userInstance -> setName($nameInstance);
         $userInstance -> setHashFunction("MD5");
-        $userInstance -> setPrimaryEmail($email);
+        $userInstance -> setPrimaryEmail($this->getEticEmail($user));
         $userInstance -> setPassword(hash("md5",$this->makeRandomPassword()));
         $userInstance -> setAddresses($user->getAddress());
         $userInstance -> setPhones($user->getTel());
@@ -155,7 +150,7 @@ class UserListener
         require_once __DIR__ . '/../../../vendor/autoload.php';
         session_start();
 
-        $TOKEN_FILE = __DIR__ . '/../../../ressources/token.json';
+
         $SCOPES = array(
             "https://www.googleapis.com/auth/admin.directory.user"
         );
@@ -166,30 +161,26 @@ class UserListener
         $client->setScopes($SCOPES);
         $client->setSubject($this->container->getParameter('webmaster_email'));
         $service = new Google_Service_Directory($client);
-        $token = @file_get_contents($TOKEN_FILE);
+        $token = @file_get_contents(self::TOKEN_FILE);
         // Refresh token when expired
         $client->setAccessToken($token);
-        if ($client->isAccessTokenExpired()) {
-            // the new access token comes with a refresh token as well
-            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-        }
+
 
         if (isset($token))  $client->setAccessToken($token);
 
         $userInstance = new Google_Service_Directory_User();
         $userInstance -> setHashFunction("MD5");
         $userInstance -> setPassword(hash("md5", $user->getPassword()));
-        $userInstance -> setSuspended($user->isEnabled());
-        $email = $user->getFirstName().".".$user->getLastName()."@".$this->container->getParameter('je_domain');
+        $userInstance -> setSuspended(!$user->isEnabled());
 
         try
         {
-            $rep = $service -> users -> update($email ,$userInstance);
+            $rep = $service -> users -> update($this->getEticEmail($user) ,$userInstance);
             file_put_contents($HELP_DIR, print_r($rep, true));
         }
         catch (Google_Service_Exception $gse)
         {
-            echo $gse->getMessage();
+            file_put_contents($HELP_DIR, print_r($gse->getMessage(), true));
         }
     }
 
@@ -256,6 +247,18 @@ class UserListener
         }
         if ($user->getAdministrator() == null || $user->getAdministrator() < 1) {
             $user->setAdministrator(0);
+        }
+    }
+
+    public function getEticEmail(User $user){
+        return $user->getFirstName().".".$user->getLastName()."@".$this-> container->getParameter('je_domain');
+    }
+
+    public function refreshToken(Google_Client $client){
+        if ($client->isAccessTokenExpired()) {
+            // the new access token comes with a refresh token as well
+            file_put_contents(self::TOKEN_FILE, print_r(json_encode($client->getRefreshToken()), true));
+            $client->fetchAccessTokenWithRefreshToken(@file_get_contents(self::TOKEN_FILE));
         }
     }
 }

@@ -11,7 +11,7 @@ use RHBundle\Entity\Department;
 use RHBundle\Entity\RecruitmentEvent;
 use RHBundle\Entity\SchoolYear;
 use RHBundle\RHBundle;
-
+use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * User
  *
@@ -551,5 +551,4 @@ class User extends BaseUser
         
         return $this;
     }
-
 }
