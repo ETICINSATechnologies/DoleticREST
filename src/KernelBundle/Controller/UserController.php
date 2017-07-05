@@ -449,22 +449,8 @@ class UserController extends FOSRestController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $user->setPlainPassword($data['new']);
+            $this->container->get('google_api_service')->updateGoogleAccount($user);
             $this->get('fos_user.user_manager')->updateUser($user);
-            if ($this->container->getParameter('mailer_password') !== null) {
-                $message = new \Swift_Message();
-                $message
-                    ->setSubject('Ton mot de passe Doletic a été modifié.')
-                    ->setFrom($this->container->getParameter('mailer_user'))
-                    ->setTo($user->getEmail())
-                    ->setBody($this->container->get('templating')->render(
-                        ':emails:update_pass.html.twig',
-                        [
-                            'user' => $user
-                        ]
-                    ));
-
-                $this->get('mailer')->send($message);
-            }
             return array("status" => "Updated");
         }
         return array("form" => $form);

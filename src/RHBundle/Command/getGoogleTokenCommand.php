@@ -27,7 +27,7 @@ class getGoogleTokenCommand extends ContainerAwareCommand
     {
         $this
             // the name of the command (the part after "bin/console")
-            ->setName('app:getGoogleToken')
+            ->setName('getGoogleToken')
 
             // the short description shown while running "php bin/console list"
             ->setDescription('This function get a token from google API')

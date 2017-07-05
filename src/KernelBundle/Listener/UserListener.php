@@ -3,11 +3,6 @@
 namespace KernelBundle\Listener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Google_Client;
-use Google_Service_Directory;
-use Google_Service_Directory_User;
-use Google_Service_Directory_UserName;
-use Google_Service_Exception;
 use KernelBundle\Entity\User;
 use PhpOffice\PhpWord\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -16,9 +11,6 @@ class UserListener
 {
 
     const ITERATIONS = 99;
-    const PASSWORD_LENGTH = 16;
-    const BASE_STRING = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const TOKEN_FILE = __DIR__ . '/../../../ressources/token.json';
     private $container;
 
     public function __construct(ContainerInterface $container)
@@ -77,7 +69,7 @@ class UserListener
 
         //Creation gmail account through gmail api
         try {
-            $this->createGMailAccount($user);
+            $this->container->get('google_api_service')->createGMailAccount($user);
         }catch(Exception $exception){
             print ($exception->getMessage());
         }
@@ -96,92 +88,6 @@ class UserListener
             }
         }
         $this->setMemberships($user);
-        $this->updateGoogleAccount($user);
-    }
-
-    public function createGMailAccount(User $user){
-
-        require_once __DIR__ . '/../../../vendor/autoload.php';
-        session_start();
-
-        $SCOPES = array(
-            "https://www.googleapis.com/auth/admin.directory.user"
-        );
-
-        $client = new Google_Client();
-        $client->setApplicationName("Doletic");
-        $client->setScopes($SCOPES);
-        $client->setSubject($this->container->getParameter('webmaster_email'));
-        $service = new Google_Service_Directory($client);
-        $token = @file_get_contents(self::TOKEN_FILE);
-        // Refresh token when expired
-        $client->setAccessToken($token);
-        $this->refreshToken($client);
-
-        if (isset($token))  $client->setAccessToken($token);
-
-        $userInstance = new Google_Service_Directory_User();
-        $nameInstance = new Google_Service_Directory_UserName();
-
-        $nameInstance -> setGivenName($user->getFirstName());
-        $nameInstance -> setFamilyName($user->getLastName());
-
-        $userInstance -> setName($nameInstance);
-        $userInstance -> setHashFunction("MD5");
-        $userInstance -> setPrimaryEmail($this->getEticEmail($user));
-        $userInstance -> setPassword(hash("md5",$this->makeRandomPassword()));
-        $userInstance -> setAddresses($user->getAddress());
-        $userInstance -> setPhones($user->getTel());
-        $userInstance -> setIsAdmin($user->getAdministrator());
-
-        try
-        {
-            $createUserResult = $service -> users -> insert($userInstance);
-            var_dump($createUserResult);
-        }
-        catch (Google_Service_Exception $gse)
-        {
-            echo $gse->getMessage();
-        }
-    }
-
-    public function updateGoogleAccount(User $user){
-
-        require_once __DIR__ . '/../../../vendor/autoload.php';
-        session_start();
-
-
-        $SCOPES = array(
-            "https://www.googleapis.com/auth/admin.directory.user"
-        );
-        $HELP_DIR = __DIR__ . '/../../../ressources/debug.txt';
-
-        $client = new Google_Client();
-        $client->setApplicationName("Doletic");
-        $client->setScopes($SCOPES);
-        $client->setSubject($this->container->getParameter('webmaster_email'));
-        $service = new Google_Service_Directory($client);
-        $token = @file_get_contents(self::TOKEN_FILE);
-        // Refresh token when expired
-        $client->setAccessToken($token);
-
-
-        if (isset($token))  $client->setAccessToken($token);
-
-        $userInstance = new Google_Service_Directory_User();
-        $userInstance -> setHashFunction("MD5");
-        $userInstance -> setPassword(hash("md5", $user->getPassword()));
-        $userInstance -> setSuspended(!$user->isEnabled());
-
-        try
-        {
-            $rep = $service -> users -> update($this->getEticEmail($user) ,$userInstance);
-            file_put_contents($HELP_DIR, print_r($rep, true));
-        }
-        catch (Google_Service_Exception $gse)
-        {
-            file_put_contents($HELP_DIR, print_r($gse->getMessage(), true));
-        }
     }
 
     public function postLoad(User $user, LifecycleEventArgs $event)
@@ -217,11 +123,6 @@ class UserListener
         return $index == self::ITERATIONS ? false : $userName;
     }
 
-    private function makeRandomPassword()
-    {
-        return substr(str_shuffle(self::BASE_STRING), 0, self::PASSWORD_LENGTH);
-    }
-
     private function setMemberships(&$user) {
         // Set consultant value
         if ($user->getConsultantMembership() == null) {
@@ -250,15 +151,5 @@ class UserListener
         }
     }
 
-    public function getEticEmail(User $user){
-        return $user->getFirstName().".".$user->getLastName()."@".$this-> container->getParameter('je_domain');
-    }
 
-    public function refreshToken(Google_Client $client){
-        if ($client->isAccessTokenExpired()) {
-            // the new access token comes with a refresh token as well
-            file_put_contents(self::TOKEN_FILE, print_r(json_encode($client->getRefreshToken()), true));
-            $client->fetchAccessTokenWithRefreshToken(@file_get_contents(self::TOKEN_FILE));
-        }
-    }
 }

@@ -26,7 +26,7 @@ class createGMailUserCommand extends ContainerAwareCommand
     {
         $this
             // the name of the command (the part after "bin/console")
-            ->setName('app:createGMailUser')
+            ->setName('createGMailUser')
 
             // the short description shown while running "php bin/console list"
             ->setDescription('This function create a gmail account')
