@@ -24,28 +24,12 @@ class UserListener
         if ($userName = $this->makeUserName($user->getFirstName(), $user->getLastName())) {
             $userPassword = $user->getPlainPassword();
             if (!isset($userPassword)) {
-                $password = $this->makeRandomPassword();
+                $password = $this->container->get('google_api_service')->makeRandomPassword();
                 $user->setPlainPassword($password);
             }
             $user->setUsername($userName)->setEnabled(true);
 
-            if ($this->container->getParameter('mailer_password') !== null) {
-                $message = new \Swift_Message();
-                $message
-                    ->setSubject('Compte Doletic créé !')
-                    ->setFrom($this->container->getParameter('mailer_user'))
-                    ->setTo($user->getEmail())
-                    ->setBody($this->container->get('templating')->render(
-                        ':emails:welcome.html.twig',
-                        [
-                            'user' => $user,
-                            'url' => $this->container->getParameter('doletic_url'),
-                            'jeName' => $this->container->getParameter('je_name'),
-                            'webmaster' => $this->container->getParameter('webmaster_email')
-                        ]
-                    ));
-                $this->container->get('mailer')->send($message);
-            }
+            $this->container->get('google_api_service')->sendConfirmationInscriptionMail($user);
 
         } else {
             $entityManager->remove($user);
@@ -123,7 +107,7 @@ class UserListener
         return $index == self::ITERATIONS ? false : $userName;
     }
 
-    private function setMemberships(&$user) {
+    private function setMemberships(User $user) {
         // Set consultant value
         if ($user->getConsultantMembership() == null) {
             $user->setConsultant(0);

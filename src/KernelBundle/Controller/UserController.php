@@ -450,7 +450,9 @@ class UserController extends FOSRestController
             $data = $form->getData();
             $user->setPlainPassword($data['new']);
             $this->container->get('google_api_service')->updateGoogleAccount($user);
+
             $this->get('fos_user.user_manager')->updateUser($user);
+
             return array("status" => "Updated");
         }
         return array("form" => $form);
