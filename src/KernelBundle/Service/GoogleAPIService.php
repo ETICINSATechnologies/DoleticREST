@@ -96,17 +96,21 @@ class GoogleAPIService
         $client->setAccessToken($token);
         $this->refreshToken($client);
 
-        if (isset($token))  $client->setAccessToken($token);
+        if (isset($token)) $client->setAccessToken($token);
 
         $userInstance = new Google_Service_Directory_User();
-        $userInstance -> setHashFunction("MD5");
-        $userInstance -> setPassword(hash("md5", $user->getPlainPassword()));
+        if (!empty($user->getPlainPassword()) and $user->getPlainPassword() != null ) {
+            $userInstance->setHashFunction("MD5");
+            $userInstance->setPassword(hash("md5", $user->getPlainPassword()));
+            $this->sendConfirmationUpdatePasswordMail($user);
+        }
         $userInstance -> setSuspended(!$user->isEnabled());
+
+        file_put_contents(self::HELP_DIR, print_r($userInstance, true));
 
         try
         {
             $service -> users -> update($this->getEticEmail($user) ,$userInstance);
-            $this->sendConfirmationUpdatePasswordMail($user);
         }
         catch (Google_Service_Exception $gse)
         {

@@ -488,6 +488,8 @@ class UserController extends FOSRestController
 
         $user->setEnabled(false);
 
+        $this->container->get('google_api_service')->updateGoogleAccount($user);
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
@@ -523,6 +525,8 @@ class UserController extends FOSRestController
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $user->setEnabled(true);
+
+        $this->container->get('google_api_service')->updateGoogleAccount($user);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
