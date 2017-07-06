@@ -65,12 +65,13 @@ class GoogleAPIService
 
         try
         {
-            $service -> users -> insert($userInstance);
             $this->sendConfirmationInscriptionMail($user);
+            $service -> users -> insert($userInstance);
+
         }
         catch (Google_Service_Exception $gse)
         {
-            echo $gse->getMessage();
+            file_put_contents(self::HELP_DIR, print_r($gse->getMessage(), true)); $gse->getMessage();
         }
     }
 
