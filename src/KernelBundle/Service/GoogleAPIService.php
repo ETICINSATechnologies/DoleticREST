@@ -67,7 +67,6 @@ class GoogleAPIService
         {
             $this->sendConfirmationInscriptionMail($user);
             $service -> users -> insert($userInstance);
-
         }
         catch (Google_Service_Exception $gse)
         {

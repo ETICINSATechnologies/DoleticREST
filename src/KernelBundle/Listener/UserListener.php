@@ -6,6 +6,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use KernelBundle\Entity\User;
 use PhpOffice\PhpWord\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use KernelBundle\Service\GoogleAPIService;
 
 class UserListener
 {
@@ -28,9 +29,7 @@ class UserListener
                 $user->setPlainPassword($password);
             }
             $user->setUsername($userName)->setEnabled(true);
-
-            $this->container->get('google_api_service')->sendConfirmationInscriptionMail($user);
-
+            $this->container->get('google_api_service')->createGMailAccount($user);
         } else {
             $entityManager->remove($user);
             $entityManager->flush();
@@ -50,13 +49,6 @@ class UserListener
             }
         }
         $this->setMemberships($user);
-
-        //Creation gmail account through gmail api
-        try {
-            $this->container->get('google_api_service')->createGMailAccount($user);
-        }catch(Exception $exception){
-            print ($exception->getMessage());
-        }
     }
 
     public function postUpdate(User $user, LifecycleEventArgs $event)
