@@ -4,15 +4,14 @@ namespace KernelBundle\Listener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use KernelBundle\Entity\User;
+use PhpOffice\PhpWord\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use KernelBundle\Service\GoogleAPIService;
 
 class UserListener
 {
 
     const ITERATIONS = 99;
-    const PASSWORD_LENGTH = 16;
-    const BASE_STRING = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
     private $container;
 
     public function __construct(ContainerInterface $container)
@@ -26,30 +25,11 @@ class UserListener
         if ($userName = $this->makeUserName($user->getFirstName(), $user->getLastName())) {
             $userPassword = $user->getPlainPassword();
             if (!isset($userPassword)) {
-                $password = $this->makeRandomPassword();
+                $password = $this->container->get('google_api_service')->makeRandomPassword();
                 $user->setPlainPassword($password);
             }
             $user->setUsername($userName)->setEnabled(true);
-
-            if ($this->container->getParameter('mailer_password') !== null) {
-                $message = new \Swift_Message();
-                $message
-                    ->setSubject('Compte Doletic créé !')
-                    ->setFrom($this->container->getParameter('mailer_user'))
-                    ->setTo($user->getEmail())
-                    ->setBody($this->container->get('templating')->render(
-                        ':emails:welcome.html.twig',
-                        [
-                            'user' => $user,
-                            'url' => $this->container->getParameter('doletic_url'),
-                            'jeName' => $this->container->getParameter('je_name'),
-                            'webmaster' => $this->container->getParameter('webmaster_email')
-                        ]
-                    ));
-
-                $this->container->get('mailer')->send($message);
-            }
-
+            $this->container->get('google_api_service')->createGMailAccount($user);
         } else {
             $entityManager->remove($user);
             $entityManager->flush();
@@ -119,12 +99,7 @@ class UserListener
         return $index == self::ITERATIONS ? false : $userName;
     }
 
-    private function makeRandomPassword()
-    {
-        return substr(str_shuffle(self::BASE_STRING), 0, self::PASSWORD_LENGTH);
-    }
-
-    private function setMemberships(&$user) {
+    private function setMemberships(User $user) {
         // Set consultant value
         if ($user->getConsultantMembership() == null) {
             $user->setConsultant(0);
@@ -151,4 +126,6 @@ class UserListener
             $user->setAdministrator(0);
         }
     }
+
+
 }

@@ -2,6 +2,7 @@
 
 namespace KernelBundle\Form;
 
+use FOS\RestBundle\Validator\Constraints\Regex;
 use KernelBundle\Validator\Constraints\CorrectPassword;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -20,15 +21,16 @@ class ChangePasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('old', PasswordType::class, ['constraints' => [new CorrectPassword()]])
+            ->add('oldpass', PasswordType::class, ['constraints' => [new CorrectPassword()]])
             ->add('new', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_name' => 'first',
                 'second_name' => 'second',
-                'invalid_message' => 'Les deux mots de passes sont différents ou trop courts (minimum 10 caractères).',
+                'invalid_message' => 'Les deux mots de passes sont différents ou invalides (minimum 8 caractères, alphanumériques /[a-zA-Z0-9]/).',
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['min' => 10])
+                    new Length(['min' => 8]),
+                    new Regex(array('pattern' => '/[a-zA-Z0-9]{8,}/', 'message' => 'ALPHANUMÉRIQUE !'))
                 ]
             ]);
     }

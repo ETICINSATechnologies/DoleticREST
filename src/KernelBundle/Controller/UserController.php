@@ -437,35 +437,22 @@ class UserController extends FOSRestController
     public function changePasswordAction(Request $request)
     {
         $user = $this->getUser();
+
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        $defaultData = [];
-
-        $form = $this->createForm(new ChangePasswordType(), $defaultData);
+        $form = $this->createForm(new ChangePasswordType(), []);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $user->setPlainPassword($data['new']);
-            $this->get('fos_user.user_manager')->updateUser($user);
-            if ($this->container->getParameter('mailer_password') !== null) {
-                $message = new \Swift_Message();
-                $message
-                    ->setSubject('Ton mot de passe Doletic a été modifié.')
-                    ->setFrom($this->container->getParameter('mailer_user'))
-                    ->setTo($user->getEmail())
-                    ->setBody($this->container->get('templating')->render(
-                        ':emails:update_pass.html.twig',
-                        [
-                            'user' => $user
-                        ]
-                    ));
+            $this->container->get('google_api_service')->updateGoogleAccount($user);
 
-                $this->get('mailer')->send($message);
-            }
+            $this->get('fos_user.user_manager')->updateUser($user);
+
             return array("status" => "Updated");
         }
         return array("form" => $form);
@@ -500,6 +487,8 @@ class UserController extends FOSRestController
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $user->setEnabled(false);
+
+        $this->container->get('google_api_service')->updateGoogleAccount($user);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
@@ -536,6 +525,8 @@ class UserController extends FOSRestController
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $user->setEnabled(true);
+
+        $this->container->get('google_api_service')->updateGoogleAccount($user);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);

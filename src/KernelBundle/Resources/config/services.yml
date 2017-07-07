@@ -55,3 +55,7 @@ services:
     mailing_list_service:
         class: KernelBundle\Service\MailingListService
         arguments: ['@doctrine.orm.entity_manager']
+
+    google_api_service:
+        class: KernelBundle\Service\GoogleAPIService
+        arguments: ['@service_container']
