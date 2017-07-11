@@ -1,8 +1,3 @@
-dt:
-    resource: "@DTBundle/Controller/"
-    type:     rest
-    prefix:   /api/dt
-
 # app/config/routing.yml
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"

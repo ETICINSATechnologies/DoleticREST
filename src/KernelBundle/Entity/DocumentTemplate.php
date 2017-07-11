@@ -19,6 +19,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 abstract class DocumentTemplate
 {
+
+
+    public function __construct()
+    {
+        $this->lastUpload = new \Datetime();
+        $this->deprecated=false;
+    }
+
     /**
      * @var int
      *
@@ -31,22 +39,57 @@ abstract class DocumentTemplate
     /**
      * @var string
      *
-     * @ORM\Column(name="label", type="string", length=255, unique=true)
+     * @ORM\Column(name="version", type="string", length=255)
      */
-    protected $label;
+    private $version;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255)
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
-    protected $path;
+    private $description;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="visibility", type="array")
+     */
+    private $visibility;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="deprecated", type="boolean")
+     */
+    private $deprecated;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="label", type="string", length=255, unique=true)
+     */
+    private $label;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="path", type="string", length=255, unique=true)
+     */
+    private $path;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="last_upload", type="date")
+     */
+    private $lastUpload;
 
 
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -54,12 +97,109 @@ abstract class DocumentTemplate
     }
 
     /**
+     * Set version
+     *
+     * @param string $version
+     *
+     * @return DocumentTemplate
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+
+        return $this;
+    }
+
+    /**
+     * Get version
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return DocumentTemplate
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set visibility
+     *
+     * @param array $visibility
+     *
+     * @return DocumentTemplate
+     */
+    public function setVisibility($visibility)
+    {
+        $this->visibility = $visibility;
+
+        return $this;
+    }
+
+    /**
+     * Get visibility
+     *
+     * @return array
+     */
+    public function getVisibility()
+    {
+        return $this->visibility;
+    }
+
+    /**
+     * Set deprecated
+     *
+     * @param boolean $deprecated
+     *
+     * @return DocumentTemplate
+     */
+    public function setDeprecated($deprecated)
+    {
+        $this->deprecated = $deprecated;
+
+        return $this;
+    }
+
+    /**
+     * Get deprecated
+     *
+     * @return bool
+     */
+    public function getDeprecated()
+    {
+        return $this->deprecated;
+    }
+
+    /**
      * Set label
      *
      * @param string $label
-     * @return DocumentTemplate
+     *
+     * @return string
      */
-    public function setLabel($label)
+    public function setName($label)
     {
         $this->label = $label;
 
@@ -71,7 +211,7 @@ abstract class DocumentTemplate
      *
      * @return string
      */
-    public function getLabel()
+    public function getName()
     {
         return $this->label;
     }
@@ -80,9 +220,10 @@ abstract class DocumentTemplate
      * Set path
      *
      * @param string $path
+     *
      * @return DocumentTemplate
      */
-    public function setPath($path)
+    public function setDownloadLink($path)
     {
         $this->path = $path;
 
@@ -94,8 +235,32 @@ abstract class DocumentTemplate
      *
      * @return string
      */
-    public function getPath()
+    public function getDownloadLink()
     {
         return $this->path;
+    }
+
+    /**
+     * Set lastUpload
+     *
+     * @param \DateTime $lastUpload
+     *
+     * @return string
+     */
+    public function setLastUpload($lastUpload)
+    {
+        $this->lastUpload = $lastUpload;
+
+        return $this;
+    }
+
+    /**
+     * Get lastUpload
+     *
+     * @return \DateTime
+     */
+    public function getLastUpload()
+    {
+        return $this->lastUpload;
     }
 }

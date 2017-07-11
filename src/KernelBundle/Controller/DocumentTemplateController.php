@@ -71,10 +71,9 @@ class DocumentTemplateController extends FOSRestController
      */
     public function getDocumentTemplateAction(DocumentTemplate $template)
     {
-
         return array('template' => $template);
-
     }
+
 
     /**
      * Get a template by label
