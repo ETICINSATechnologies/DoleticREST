@@ -18,7 +18,7 @@ use UABundle\Entity\ConsultantDocumentTemplate;
 use UABundle\Entity\Consultant;
 use UABundle\Form\ConsultantDocumentTemplateType;
 
-class ConsultantDocumentTemplateController extends FOSRestController
+class ConsultantDocumentTemplateController extends FOSRestController    
 {
 
     /**
