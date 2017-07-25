@@ -18,6 +18,7 @@ use UABundle\Entity\ConsultantDocumentTemplate;
 use UABundle\Entity\Consultant;
 use UABundle\Form\ConsultantDocumentTemplateType;
 
+
 class ConsultantDocumentTemplateController extends FOSRestController    
 {
 
@@ -111,6 +112,11 @@ class ConsultantDocumentTemplateController extends FOSRestController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
+            $file = $consultant_document_template->getFile();
+            $file->move($this->getParameter('templates_dir'));
+            $consultant_document_template->setFile($file);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($consultant_document_template);
             $em->flush();

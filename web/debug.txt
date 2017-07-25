@@ -1,0 +1,129 @@
+Array
+(
+    [9] => UABundle\Entity\StandardDocumentTemplate Object
+        (
+            [id:KernelBundle\Entity\DocumentTemplate:private] => 9
+            [version:KernelBundle\Entity\DocumentTemplate:private] => 1.2
+            [description:KernelBundle\Entity\DocumentTemplate:private] => Célèbre peinture de Delacroix
+            [visibility:KernelBundle\Entity\DocumentTemplate:private] => restricted
+            [deprecated:KernelBundle\Entity\DocumentTemplate:private] => 1
+            [label:KernelBundle\Entity\DocumentTemplate:private] => Assassinat.jpeg
+            [file:KernelBundle\Entity\DocumentTemplate:private] => 68de8804cd1583c1c8ed7a4cab4b147a.jpeg
+            [lastUpload:KernelBundle\Entity\DocumentTemplate:private] => DateTime Object
+                (
+                    [date] => 2017-07-21 19:27:54.000000
+                    [timezone_type] => 3
+                    [timezone] => Europe/Amsterdam
+                )
+
+        )
+
+    [10] => UABundle\Entity\StandardDocumentTemplate Object
+        (
+            [id:KernelBundle\Entity\DocumentTemplate:private] => 10
+            [version:KernelBundle\Entity\DocumentTemplate:private] => 1.0
+            [description:KernelBundle\Entity\DocumentTemplate:private] => 
+            [visibility:KernelBundle\Entity\DocumentTemplate:private] => all
+            [deprecated:KernelBundle\Entity\DocumentTemplate:private] => 1
+            [label:KernelBundle\Entity\DocumentTemplate:private] => Aubergines.jpeg
+            [file:KernelBundle\Entity\DocumentTemplate:private] => 6a7c891ede32d021f62ab1fc569f4f02.jpeg
+            [lastUpload:KernelBundle\Entity\DocumentTemplate:private] => DateTime Object
+                (
+                    [date] => 2017-07-24 13:37:55.000000
+                    [timezone_type] => 3
+                    [timezone] => Europe/Amsterdam
+                )
+
+        )
+
+    [11] => UABundle\Entity\StandardDocumentTemplate Object
+        (
+            [id:KernelBundle\Entity\DocumentTemplate:private] => 11
+            [version:KernelBundle\Entity\DocumentTemplate:private] => 1.3
+            [description:KernelBundle\Entity\DocumentTemplate:private] => Célèbre peinture de Delacroix
+            [visibility:KernelBundle\Entity\DocumentTemplate:private] => all
+            [deprecated:KernelBundle\Entity\DocumentTemplate:private] => 1
+            [label:KernelBundle\Entity\DocumentTemplate:private] => Assassinat.jpeg
+            [file:KernelBundle\Entity\DocumentTemplate:private] => 2446f0821553a4f079a2abedfde2b10a.jpeg
+            [lastUpload:KernelBundle\Entity\DocumentTemplate:private] => DateTime Object
+                (
+                    [date] => 2017-07-24 14:57:19.000000
+                    [timezone_type] => 3
+                    [timezone] => Europe/Amsterdam
+                )
+
+        )
+
+    [13] => UABundle\Entity\StandardDocumentTemplate Object
+        (
+            [id:KernelBundle\Entity\DocumentTemplate:private] => 13
+            [version:KernelBundle\Entity\DocumentTemplate:private] => 1.4
+            [description:KernelBundle\Entity\DocumentTemplate:private] => Célèbre peinture de Delacroix
+            [visibility:KernelBundle\Entity\DocumentTemplate:private] => all
+            [deprecated:KernelBundle\Entity\DocumentTemplate:private] => 1
+            [label:KernelBundle\Entity\DocumentTemplate:private] => Assassinat.jpeg
+            [file:KernelBundle\Entity\DocumentTemplate:private] => 2446f0821553a4f079a2abedfde2b10a.jpeg
+            [lastUpload:KernelBundle\Entity\DocumentTemplate:private] => DateTime Object
+                (
+                    [date] => 2017-07-24 15:08:43.000000
+                    [timezone_type] => 3
+                    [timezone] => Europe/Amsterdam
+                )
+
+        )
+
+    [16] => UABundle\Entity\StandardDocumentTemplate Object
+        (
+            [id:KernelBundle\Entity\DocumentTemplate:private] => 16
+            [version:KernelBundle\Entity\DocumentTemplate:private] => 2.0
+            [description:KernelBundle\Entity\DocumentTemplate:private] => Célèbre peinture de Delacroix
+            [visibility:KernelBundle\Entity\DocumentTemplate:private] => all
+            [deprecated:KernelBundle\Entity\DocumentTemplate:private] => 1
+            [label:KernelBundle\Entity\DocumentTemplate:private] => Assassinat.jpeg
+            [file:KernelBundle\Entity\DocumentTemplate:private] => d39ce5b51224ebf361cd5e05d4461732.jpeg
+            [lastUpload:KernelBundle\Entity\DocumentTemplate:private] => DateTime Object
+                (
+                    [date] => 2017-07-24 15:15:31.000000
+                    [timezone_type] => 3
+                    [timezone] => Europe/Amsterdam
+                )
+
+        )
+
+    [17] => UABundle\Entity\StandardDocumentTemplate Object
+        (
+            [id:KernelBundle\Entity\DocumentTemplate:private] => 17
+            [version:KernelBundle\Entity\DocumentTemplate:private] => 2.1
+            [description:KernelBundle\Entity\DocumentTemplate:private] => Célèbre peinture de Delacroix
+            [visibility:KernelBundle\Entity\DocumentTemplate:private] => all
+            [deprecated:KernelBundle\Entity\DocumentTemplate:private] => 1
+            [label:KernelBundle\Entity\DocumentTemplate:private] => Assassinat.jpeg
+            [file:KernelBundle\Entity\DocumentTemplate:private] => a40e52bda3444317505b9669867cca41.jpeg
+            [lastUpload:KernelBundle\Entity\DocumentTemplate:private] => DateTime Object
+                (
+                    [date] => 2017-07-24 15:42:42.000000
+                    [timezone_type] => 3
+                    [timezone] => Europe/Amsterdam
+                )
+
+        )
+
+    [18] => UABundle\Entity\StandardDocumentTemplate Object
+        (
+            [id:KernelBundle\Entity\DocumentTemplate:private] => 18
+            [version:KernelBundle\Entity\DocumentTemplate:private] => 2.2
+            [description:KernelBundle\Entity\DocumentTemplate:private] => Très célèbre peinture de Delacroix
+            [visibility:KernelBundle\Entity\DocumentTemplate:private] => all
+            [deprecated:KernelBundle\Entity\DocumentTemplate:private] => 
+            [label:KernelBundle\Entity\DocumentTemplate:private] => Assassinat.jpeg
+            [file:KernelBundle\Entity\DocumentTemplate:private] => a40e52bda3444317505b9669867cca41.jpeg
+            [lastUpload:KernelBundle\Entity\DocumentTemplate:private] => DateTime Object
+                (
+                    [date] => 2017-07-24 15:43:08.000000
+                    [timezone_type] => 3
+                    [timezone] => Europe/Amsterdam
+                )
+
+        )
+
+)

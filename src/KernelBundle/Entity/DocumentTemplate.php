@@ -3,18 +3,25 @@
 namespace KernelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * DocumentTemplate
  *
- * @ORM\Table(name="kernel_document_template")
+ * @ORM\Table(name="kernel_document_template", uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="unique_label_version", columns={"label", "version"})
+ * })
  * @ORM\Entity(repositoryClass="KernelBundle\Repository\DocumentTemplateRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
  *     "project" = "UABundle\Entity\ProjectDocumentTemplate",
  *     "consultant" = "UABundle\Entity\ConsultantDocumentTemplate",
- *     "delivery" = "UABundle\Entity\DeliveryDocumentTemplate"
+ *     "delivery" = "UABundle\Entity\DeliveryDocumentTemplate",
+ *     "standard" = "UABundle\Entity\StandardDocumentTemplate"
  * })
  */
 abstract class DocumentTemplate
@@ -23,7 +30,7 @@ abstract class DocumentTemplate
 
     public function __construct()
     {
-        $this->lastUpload = new \Datetime();
+        $this->lastUpload = new \DateTime();
         $this->deprecated=false;
     }
 
@@ -51,9 +58,9 @@ abstract class DocumentTemplate
     private $description;
 
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\Column(name="visibility", type="array")
+     * @ORM\Column(name="visibility", type="string")
      */
     private $visibility;
 
@@ -67,24 +74,22 @@ abstract class DocumentTemplate
     /**
      * @var string
      *
-     * @ORM\Column(name="label", type="string", length=255, unique=true)
+     * @ORM\Column(name="label", type="string", length=255)
      */
     private $label;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255, unique=true)
+     * @ORM\Column(name="file", type="string", length=255)
      */
-    private $path;
+    private $file;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="last_upload", type="date")
+     * @ORM\Column(name="last_upload", type="datetime")
      */
     private $lastUpload;
-
 
     /**
      * Get id
@@ -149,7 +154,7 @@ abstract class DocumentTemplate
      *
      * @param array $visibility
      *
-     * @return DocumentTemplate
+     * @return string
      */
     public function setVisibility($visibility)
     {
@@ -161,7 +166,7 @@ abstract class DocumentTemplate
     /**
      * Get visibility
      *
-     * @return array
+     * @return string
      */
     public function getVisibility()
     {
@@ -199,7 +204,7 @@ abstract class DocumentTemplate
      *
      * @return string
      */
-    public function setName($label)
+    public function setLabel($label)
     {
         $this->label = $label;
 
@@ -211,33 +216,33 @@ abstract class DocumentTemplate
      *
      * @return string
      */
-    public function getName()
+    public function getLabel()
     {
         return $this->label;
     }
 
     /**
-     * Set path
+     * Set file
      *
-     * @param string $path
+     * @param string $file
      *
-     * @return DocumentTemplate
+     * @return string
      */
-    public function setDownloadLink($path)
+    public function setFile($file)
     {
-        $this->path = $path;
+        $this->file = $file;
 
         return $this;
     }
 
     /**
-     * Get path
+     * Get file
      *
      * @return string
-     */
-    public function getDownloadLink()
+     **/
+    public function getFile()
     {
-        return $this->path;
+        return $this->file;
     }
 
     /**
@@ -264,3 +269,7 @@ abstract class DocumentTemplate
         return $this->lastUpload;
     }
 }
+
+
+
+

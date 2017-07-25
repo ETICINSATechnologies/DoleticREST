@@ -8,8 +8,9 @@ use KernelBundle\Entity\DocumentTemplate;
 /**
  * ProjectDocument
  *
- * @ORM\Entity(repositoryClass="UABundle\Repository\ConsultantDocumentTemplateRepository")
+ * @ORM\Entity(repositoryClass="UABundle\Repository\StandardDocumentTemplateRepository")
+ *
  */
-class ConsultantDocumentTemplate extends DocumentTemplate
+class StandardDocumentTemplate extends DocumentTemplate
 {
 }

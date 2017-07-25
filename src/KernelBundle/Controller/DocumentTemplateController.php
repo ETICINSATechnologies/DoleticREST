@@ -11,9 +11,16 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use KernelBundle\Entity\DocumentTemplate;
 use KernelBundle\Form\DocumentTemplateType;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use UABundle\Entity\StandardDocumentTemplate;
+use UABundle\Form\StandardDocumentTemplateType;
 
 class DocumentTemplateController extends FOSRestController
 {
@@ -41,7 +48,7 @@ class DocumentTemplateController extends FOSRestController
     public function getDocumentTemplatesAction()
     {
 
-        $templates = $this->getDoctrine()->getRepository("KernelBundle:DocumentTemplate")
+        $templates = $this->getDoctrine()->getManager()->getRepository("KernelBundle:DocumentTemplate")
             ->findAll();
 
         return array('templates' => $templates);
@@ -49,9 +56,8 @@ class DocumentTemplateController extends FOSRestController
 
     /**
      * Get a template by ID
-     * @param DocumentTemplate $template
+     * @param $id
      * @return array
-     *
      * @ApiDoc(
      *  section="DocumentTemplate",
      *  description="Get a template",
@@ -66,12 +72,51 @@ class DocumentTemplateController extends FOSRestController
      * )
      *
      * @View()
-     * @ParamConverter("template", class="KernelBundle:DocumentTemplate")
      * @Get("/template/{id}", requirements={"id" = "\d+"})
      */
-    public function getDocumentTemplateAction(DocumentTemplate $template)
+    public function getDocumentTemplateAction($id)
     {
-        return array('template' => $template);
+        file_put_contents("debug.txt", print_r("test\n", true));
+        $templates = $this->getDoctrine()->getManager()->getRepository("KernelBundle:DocumentTemplate")
+            ->findById($id);
+
+
+        return array('templates' => $templates);
+    }
+
+    /**
+     * Get a document template by ID
+     * @param $id
+     * @ApiDoc(
+     *  section="DocumentTemplate",
+     *  description="Get a documentTemplate",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/template/document/{id}", requirements={"id" = "\d+"})
+     * @return Response
+     */
+    public function downloadDocumentTemplateAction($id)
+    {
+        /** @var DocumentTemplate $templates */
+        $templates = $this->getDoctrine()->getManager()->getRepository("KernelBundle:DocumentTemplate")
+            ->findBy(array('id' => $id))[$id];
+
+        file_put_contents(__DIR__ . "/../../../debug.txt", print_r($templates, true));
+        $path = $this->getParameter("templates_dir") . $templates->getFile();
+
+        $response = new BinaryFileResponse($path);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
+
+        return $response;
     }
 
 
@@ -127,15 +172,68 @@ class DocumentTemplateController extends FOSRestController
      * @ParamConverter("template", class="KernelBundle:DocumentTemplate")
      * @Delete("/template/{id}", requirements={"id" = "\d+"})
      */
-    public function deleteDocumentTemplateAction(DocumentTemplate $template)
+    public function deleteDocumentTemplateAction($id)
     {
         $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
+        /** @var DocumentTemplate $template */
+        $template = $this->getDoctrine()->getRepository('KernelBundle:DocumentTemplate')->find($id);
+        $template->setDeprecated(true);
+
         $em = $this->getDoctrine()->getManager();
-        $em->remove($template);
+        $em->flush();
+
+        return array("status" => "Deleted");
+    }
+
+    /**
+     * Get a template by label
+     * @param string $label
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="DocumentTemplate",
+     *  description="Get a template",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/template/{label}")
+     */
+    public function putMasterDocumentTemplateAction($id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+
+        /** @var DocumentTemplate $template */
+        $template = $this->getDoctrine()->getRepository('KernelBundle:DocumentTemplate')->find($id);
+        $template->setDeprecated(true);
+
+        $em = $this->getDoctrine()->getManager();
         $em->flush();
 
         return array("status" => "Deleted");
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

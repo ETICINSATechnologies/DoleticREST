@@ -10,4 +10,6 @@ namespace KernelBundle\Repository;
  */
 class DocumentTemplateRepository extends DoleticRepository
 {
+
+
 }
