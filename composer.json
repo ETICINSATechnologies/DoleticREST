@@ -29,7 +29,8 @@
         "phpoffice/phpword" : "dev-master",
         "zoddo/ovh-bundle": "v1.0.0.1",
         "nelmio/cors-bundle": "^1.4",
-        "google/apiclient": "^2.0"
+        "google/apiclient": "^2.0",
+        "friendsofsymfony/comment-bundle": "^2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

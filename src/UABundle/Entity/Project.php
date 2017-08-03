@@ -117,6 +117,36 @@ class Project
     private $critical;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="old_client", type="boolean")
+     */
+    private $oldClient;
+
+    /**
+     * @return bool
+     */
+    public function isPrestudy()
+    {
+        return $this->prestudy;
+    }
+
+    /**
+     * @param bool $prestudy
+     */
+    public function setPrestudy($prestudy)
+    {
+        $this->prestudy = $prestudy;
+    }
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="prestudy", type="boolean")
+     */
+    private $prestudy;
+
+    /**
      * @var \DateTime
      *
      * @SerializedName("creationDate")
@@ -806,6 +836,22 @@ class Project
     public function getOrigin()
     {
         return $this->origin;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOldClient()
+    {
+        return $this->oldClient;
+    }
+
+    /**
+     * @param bool $oldClient
+     */
+    public function setOldClient($oldClient)
+    {
+        $this->oldClient = $oldClient;
     }
 
     /**

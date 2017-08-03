@@ -76,7 +76,6 @@ class DocumentTemplateController extends FOSRestController
      */
     public function getDocumentTemplateAction($id)
     {
-        file_put_contents("debug.txt", print_r("test\n", true));
         $templates = $this->getDoctrine()->getManager()->getRepository("KernelBundle:DocumentTemplate")
             ->findById($id);
 
