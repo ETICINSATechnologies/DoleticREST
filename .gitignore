@@ -11,3 +11,6 @@
 /composer.phar
 /.idea
 app/cache/
+/web/uploads/templates/*.docx
+/web/output/documents/*.docx
+/web/uploads/documents/*.pdf
