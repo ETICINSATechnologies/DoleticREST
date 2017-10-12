@@ -1,0 +1,13 @@
+services:
+    ## ENTITY LISTENERS
+    team_listener:
+        class: RHBundle\Listener\TeamListener
+        arguments: ['@service_container']
+        tags:
+            - { name: doctrine.orm.entity_listener }
+            - { name: doctrine.orm.entity_listener, entity_manager: custom }
+
+    ## RH SERVICES
+    rh.team.rights_service:
+        class: RHBundle\Service\TeamRightsService
+        arguments: ['@security.authorization_checker']
