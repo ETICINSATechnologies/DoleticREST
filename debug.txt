@@ -1,0 +1,17 @@
+UABundle\Entity\StandardDocumentTemplate Object
+(
+    [id:KernelBundle\Entity\DocumentTemplate:private] => 9
+    [version:KernelBundle\Entity\DocumentTemplate:private] => 1.2
+    [description:KernelBundle\Entity\DocumentTemplate:private] => Célèbre peinture de Delacroix
+    [visibility:KernelBundle\Entity\DocumentTemplate:private] => restricted
+    [deprecated:KernelBundle\Entity\DocumentTemplate:private] => 1
+    [label:KernelBundle\Entity\DocumentTemplate:private] => Assassinat.jpeg
+    [file:KernelBundle\Entity\DocumentTemplate:private] => 68de8804cd1583c1c8ed7a4cab4b147a.jpeg
+    [lastUpload:KernelBundle\Entity\DocumentTemplate:private] => DateTime Object
+        (
+            [date] => 2017-07-21 19:27:54.000000
+            [timezone_type] => 3
+            [timezone] => Europe/Amsterdam
+        )
+
+)

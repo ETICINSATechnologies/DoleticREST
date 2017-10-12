@@ -1,0 +1,14 @@
+  1. Déplacez le curseur sur cette ligne.
+
+  2. Appuyez  v  et déplacez le curseur vers la cinquième ligne plus bas.
+     Remarquez que le texte est en surbrillance.
+
+  3. Appuyez  :  . En bas de l'écran  :'<,'> va apparaître.
+
+  4. Tapez   w TEST  , où TEST est un nom de fichier qui n'existe pas.
+     Vérifiez que vous voyez  :'<,'>w TEST  avant d'appuyer sur <Entrée>.
+
+  5. Vim va enregistrer les lignes sélectionnées dans le fichier TEST.
+     Utilisez  :!dir  ou  :!ls pour le voir. Ne l'effacez pas encore !
+     Nous allons l'utiliser dans la leçon suivante.
+

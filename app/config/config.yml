@@ -35,6 +35,11 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        je_name: "%je_name%"
+        doletic_url: "%doletic_url%"
+        webmaster_email: "%webmaster_email%"
+
 
 # Doctrine Configuration
 doctrine:
@@ -60,10 +65,11 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
+    transport:  "%mailer_transport%"
+    host:       "%mailer_host%"
+    username:   "%mailer_user%"
+    password:   "%mailer_password%"
+    port:       "%mailer_port%"
     spool:     { type: memory }
 
 fos_rest:
@@ -91,6 +97,12 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: KernelBundle\Entity\User
+    from_email:
+        address: "%%mailer_user%"
+        sender_name: Doletic
+    resetting:
+        email:
+            template:
 
 nelmio_api_doc: ~
 
@@ -102,3 +114,32 @@ fos_oauth_server:
     auth_code_class:     KernelBundle\Entity\AuthCode
     service:
         user_provider: fos_user.user_manager
+
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: []
+        allow_headers: []
+        allow_methods: []
+        expose_headers: []
+        max_age: 0
+        hosts: []
+        origin_regex: false
+    paths:
+        '^/api/':
+            allow_origin: ['*']
+            allow_headers: ['*']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTION']
+            max_age: 3600
+        '^/oauth/v2/token':
+            allow_origin: ['*']
+            allow_headers: ['*']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTION']
+            max_age: 3600
+
+fos_comment:
+    db_driver: orm
+    class:
+        model:
+            comment: UABundle\Entity\Comment
+            thread: UABundle\Entity\Thread

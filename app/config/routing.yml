@@ -8,8 +8,34 @@ kernel:
     prefix:   /api/kernel
     type:     rest
 
+rh:
+    resource: "@RHBundle/Controller/"
+    prefix:   /api/rh
+    type:     rest
+
+ua:
+    resource: "@UABundle/Controller/"
+    prefix:   /api/ua
+    type:     rest
+
+grc:
+    resource: "@GRCBundle/Controller/"
+    prefix:   /api/grc
+    type:     rest
+
+support:
+    resource: "@SupportBundle/Controller/"
+    prefix:   /api/support
+    type:     rest
+
 fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
 
 fos_oauth_server_authorize:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
+
+fos_comment_api:
+    type: rest
+    resource: "@FOSCommentBundle/Resources/config/routing.yml"
+    prefix: /api/ua/comment
+    defaults: { _format: html }

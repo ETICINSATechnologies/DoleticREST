@@ -12,8 +12,28 @@ parameters:
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
+    mailer_port:       587
     mailer_user:       ~
     mailer_password:   ~
+
+    ovh_endpoint:
+    ovh_application_key:
+    ovh_application_secret:
+    ovh_consumer_key:
+
+    documents_dir:  '%kernel.root_dir%/../web/uploads/documents/'
+    avatars_dir:  '%kernel.root_dir%/../web/uploads/avatars/'
+    templates_dir:  '%kernel.root_dir%/../web/uploads/templates/'
+    output_dir:  '%kernel.root_dir%/../web/output/documents/'
+
+    doletic_url: ~
+    je_name: ~
+    je_domain: ~
+    webmaster_email: ~
+    mailing_language: 'fr'
+
+    tva_percent: 20
+    consultant_tax: 10
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
