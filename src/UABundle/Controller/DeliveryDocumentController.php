@@ -81,7 +81,12 @@ class DeliveryDocumentController extends FOSRestController
         $delivery_documents = $this->getDoctrine()->getRepository("UABundle:DeliveryDocument")
             ->findBy(['delivery' => $delivery]);
 
-        return array('delivery_documents' => $delivery_documents);
+        $array = [];
+        foreach ($delivery_documents as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -112,7 +117,12 @@ class DeliveryDocumentController extends FOSRestController
         $delivery_documents = $this->getDoctrine()->getRepository("UABundle:DeliveryDocument")
             ->findBy(['template' => $template]);
 
-        return array('delivery_documents' => $delivery_documents);
+        $array = [];
+        foreach ($delivery_documents as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -143,7 +153,12 @@ class DeliveryDocumentController extends FOSRestController
         $delivery_documents = $this->getDoctrine()->getRepository("UABundle:DeliveryDocument")
             ->findBy(['auditor' => $auditor]);
 
-        return array('delivery_documents' => $delivery_documents);
+        $array = [];
+        foreach ($delivery_documents as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -172,7 +187,12 @@ class DeliveryDocumentController extends FOSRestController
         $delivery_documents = $this->getDoctrine()->getRepository("UABundle:DeliveryDocument")
             ->findBy(['auditor' => $this->getUser()]);
 
-        return array('delivery_documents' => $delivery_documents);
+        $array = [];
+        foreach ($delivery_documents as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -200,7 +220,7 @@ class DeliveryDocumentController extends FOSRestController
     public function getDeliveryDocumentAction(DeliveryDocument $delivery_document)
     {
 
-        return array('delivery_document' => $delivery_document);
+        return $delivery_document;
 
     }
 
@@ -277,7 +297,7 @@ class DeliveryDocumentController extends FOSRestController
             $em->persist($delivery_document);
             $em->flush();
 
-            return array("delivery_document" => $delivery_document);
+            return $delivery_document;
 
         }
 
@@ -329,7 +349,7 @@ class DeliveryDocumentController extends FOSRestController
             $em->persist($delivery_document);
             $em->flush();
 
-            return array("delivery_document" => $delivery_document);
+            return $delivery_document;
         }
 
         return array(

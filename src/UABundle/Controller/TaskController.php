@@ -46,7 +46,12 @@ class TaskController extends FOSRestController
         $tasks = $this->getDoctrine()->getRepository("UABundle:Task")
             ->findBy([], ['number' => 'ASC']);
 
-        return array('tasks' => $tasks);
+        $array = [];
+        foreach ($tasks as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -77,7 +82,12 @@ class TaskController extends FOSRestController
         $tasks = $this->getDoctrine()->getRepository("UABundle:Task")
             ->findBy(['project' => $project], ['number' => 'ASC']);
 
-        return array('tasks' => $tasks);
+        $array = [];
+        foreach ($tasks as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -105,7 +115,7 @@ class TaskController extends FOSRestController
     public function getTaskAction(Task $task)
     {
 
-        return array('task' => $task);
+        return $task;
 
     }
 
@@ -148,7 +158,7 @@ class TaskController extends FOSRestController
             $em->persist($task);
             $em->flush();
 
-            return array("task" => $task);
+            return $task;
 
         }
 
@@ -198,7 +208,7 @@ class TaskController extends FOSRestController
             $em->persist($task);
             $em->flush();
 
-            return array("task" => $task);
+            return $task;
         }
 
         return array(
@@ -243,7 +253,7 @@ class TaskController extends FOSRestController
         $em->persist($task);
         $em->flush();
 
-        return array("task" => $task);
+        return $task;
     }
 
 
@@ -284,7 +294,7 @@ class TaskController extends FOSRestController
         $em->persist($task);
         $em->flush();
 
-        return array("task" => $task);
+        return $task;
     }
 
     /**
@@ -328,7 +338,7 @@ class TaskController extends FOSRestController
         $em->persist($taskBis);
         $em->flush();
 
-        return array("task" => $task);
+        return $task;
     }
 
     /**

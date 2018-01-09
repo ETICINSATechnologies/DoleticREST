@@ -44,7 +44,12 @@ class PositionController extends FOSRestController
         $positions = $this->getDoctrine()->getRepository("KernelBundle:Position")
             ->findAll();
 
-        return array('positions' => $positions);
+        $array = [];
+        foreach ($positions as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -72,7 +77,7 @@ class PositionController extends FOSRestController
     public function getPositionAction(Position $position)
     {
 
-        return array('position' => $position);
+        return $position;
 
     }
 
@@ -101,7 +106,7 @@ class PositionController extends FOSRestController
     {
 
         $position = $this->getDoctrine()->getRepository('KernelBundle:Position')->findOneBy(['label' => $label]);
-        return array('position' => $position);
+        return $position;
     }
 
     /**
@@ -144,7 +149,7 @@ class PositionController extends FOSRestController
             $em->persist($position);
             $em->flush();
 
-            return array("position" => $position);
+            return $position;
 
         }
 
@@ -196,7 +201,7 @@ class PositionController extends FOSRestController
             $em->persist($position);
             $em->flush();
 
-            return array("position" => $position);
+            return $position;
         }
 
         return array(

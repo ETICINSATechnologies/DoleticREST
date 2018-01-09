@@ -47,7 +47,12 @@ class DeliveryDocumentTemplateController extends FOSRestController
         $delivery_document_templates = $this->getDoctrine()->getRepository("UABundle:DeliveryDocumentTemplate")
             ->findAll();
 
-        return array('delivery_document_templates' => $delivery_document_templates);
+        $array = [];
+        foreach ($delivery_document_templates as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -75,7 +80,7 @@ class DeliveryDocumentTemplateController extends FOSRestController
     public function getDeliveryDocumentTemplateAction(DeliveryDocumentTemplate $delivery_document_template)
     {
 
-        return array('delivery_document_template' => $delivery_document_template);
+        return $delivery_document_template;
 
     }
 
@@ -115,7 +120,7 @@ class DeliveryDocumentTemplateController extends FOSRestController
             $em->persist($delivery_document_template);
             $em->flush();
 
-            return array("delivery_document_template" => $delivery_document_template);
+            return $delivery_document_template;
 
         }
 
@@ -163,7 +168,7 @@ class DeliveryDocumentTemplateController extends FOSRestController
             $em->persist($delivery_document_template);
             $em->flush();
 
-            return array("delivery_document_template" => $delivery_document_template);
+            return $delivery_document_template;
         }
 
         return array(

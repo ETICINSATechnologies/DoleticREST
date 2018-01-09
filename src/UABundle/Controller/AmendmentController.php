@@ -47,7 +47,12 @@ class AmendmentController extends FOSRestController
         $amendments = $this->getDoctrine()->getRepository("UABundle:Amendment")
             ->findAll();
 
-        return array('amendments' => $amendments);
+        $array = [];
+        foreach ($amendments as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -78,7 +83,12 @@ class AmendmentController extends FOSRestController
         $amendments = $this->getDoctrine()->getRepository("UABundle:Amendment")
             ->findByType($type);
 
-        return array('amendments' => $amendments);
+        $array = [];
+        foreach ($amendments as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -109,7 +119,12 @@ class AmendmentController extends FOSRestController
         $amendments = $this->getDoctrine()->getRepository("UABundle:Amendment")
             ->findBy(['project' => $project]);
 
-        return array('amendments' => $amendments);
+        $array = [];
+        foreach ($amendments as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -137,7 +152,7 @@ class AmendmentController extends FOSRestController
     public function getAmendmentAction(Amendment $amendment)
     {
 
-        return array('amendment' => $amendment);
+        return $amendment;
 
     }
 
@@ -179,7 +194,7 @@ class AmendmentController extends FOSRestController
             $em->persist($amendment);
             $em->flush();
 
-            return array("amendment" => $amendment);
+            return $amendment;
 
         }
 
@@ -229,7 +244,7 @@ class AmendmentController extends FOSRestController
             $em->persist($amendment);
             $em->flush();
 
-            return array("amendment" => $amendment);
+            return $amendment;
         }
 
         return array(

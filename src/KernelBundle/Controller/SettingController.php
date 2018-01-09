@@ -44,7 +44,12 @@ class SettingController extends FOSRestController
         $settings = $this->getDoctrine()->getRepository("KernelBundle:Setting")
             ->findAll();
 
-        return array('settings' => $settings);
+        $array = [];
+        foreach ($settings as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -72,7 +77,7 @@ class SettingController extends FOSRestController
     public function getSettingAction(Setting $setting)
     {
 
-        return array('setting' => $setting);
+        return $setting;
 
     }
 
@@ -101,7 +106,7 @@ class SettingController extends FOSRestController
     {
 
         $setting = $this->getDoctrine()->getRepository('KernelBundle:Setting')->findOneBy(['label' => $label]);
-        return array('setting' => $setting);
+        return $setting;
 
     }
 
@@ -141,7 +146,7 @@ class SettingController extends FOSRestController
             $em->persist($setting);
             $em->flush();
 
-            return array("setting" => $setting);
+            return $setting;
 
         }
 
@@ -189,7 +194,7 @@ class SettingController extends FOSRestController
             $em->persist($setting);
             $em->flush();
 
-            return array("setting" => $setting);
+            return $setting;
         }
 
         return array(

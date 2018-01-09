@@ -44,7 +44,12 @@ class TicketStatusController extends FOSRestController
         $ticket_statuses = $this->getDoctrine()->getRepository("SupportBundle:TicketStatus")
             ->findAll();
 
-        return array('ticket_statuses' => $ticket_statuses);
+        $array = [];
+        foreach ($ticket_statuses as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -72,7 +77,7 @@ class TicketStatusController extends FOSRestController
     public function getTicketStatusAction(TicketStatus $ticket_status)
     {
 
-        return array('ticket_status' => $ticket_status);
+        return $ticket_status;
 
     }
 
@@ -101,7 +106,7 @@ class TicketStatusController extends FOSRestController
     {
 
         $ticket_status = $this->getDoctrine()->getRepository('SupportBundle:TicketStatus')->findOneBy(['label' => $label]);
-        return array('ticket_status' => $ticket_status);
+        return $ticket_status;
     }
 
     /**
@@ -140,7 +145,7 @@ class TicketStatusController extends FOSRestController
             $em->persist($ticket_status);
             $em->flush();
 
-            return array("ticket_status" => $ticket_status);
+            return $ticket_status;
 
         }
 
@@ -196,7 +201,7 @@ class TicketStatusController extends FOSRestController
             $em->persist($ticket_status);
             $em->flush();
 
-            return array("ticket_status" => $ticket_status);
+            return $ticket_status;
         }
 
         return array(

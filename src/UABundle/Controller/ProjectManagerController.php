@@ -45,7 +45,12 @@ class ProjectManagerController extends FOSRestController
         $project_managers = $this->getDoctrine()->getRepository("UABundle:ProjectManager")
             ->findAll();
 
-        return array('project_managers' => $project_managers);
+        $array = [];
+        foreach ($project_managers as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -76,7 +81,12 @@ class ProjectManagerController extends FOSRestController
         $project_managers = $this->getDoctrine()->getRepository("UABundle:ProjectManager")
             ->findBy(['project' => $project]);
 
-        return array('project_managers' => $project_managers);
+        $array = [];
+        foreach ($project_managers as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -104,7 +114,7 @@ class ProjectManagerController extends FOSRestController
     public function getProjectManagerAction(ProjectManager $project_manager)
     {
 
-        return array('project_manager' => $project_manager);
+        return $project_manager;
 
     }
 
@@ -147,7 +157,7 @@ class ProjectManagerController extends FOSRestController
             $em->persist($project_manager);
             $em->flush();
 
-            return array("project_manager" => $project_manager);
+            return $project_manager;
 
         }
 

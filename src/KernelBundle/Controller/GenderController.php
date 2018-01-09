@@ -40,12 +40,17 @@ class GenderController extends FOSRestController
      */
     public function getGendersAction()
     {
-        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+        //$this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $genders = $this->getDoctrine()->getRepository("KernelBundle:Gender")
             ->findAll();
 
-        return array('genders' => $genders);
+        $array = [];
+        foreach ($genders as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -74,13 +79,12 @@ class GenderController extends FOSRestController
         $genders = $this->getDoctrine()->getRepository("KernelBundle:Gender")
             ->findBy(['enabled' => true]);
 
-        return array('genders' => $genders);
+        return $genders;
     }
 
     /**
      * Get a gender by ID
      * @param Gender $gender
-     * @return array
      *
      * @ApiDoc(
      *  section="Gender",
@@ -102,14 +106,13 @@ class GenderController extends FOSRestController
     public function getGenderAction(Gender $gender)
     {
 
-        return array('gender' => $gender);
+        return $gender;
 
     }
 
     /**
      * Get a gender by label
      * @param string $label
-     * @return array
      *
      * @ApiDoc(
      *  section="Gender",
@@ -131,14 +134,13 @@ class GenderController extends FOSRestController
     {
 
         $gender = $this->getDoctrine()->getRepository('KernelBundle:Gender')->findOneBy(['label' => $label]);
-        return array('gender' => $gender);
+        return $gender;
 
     }
 
     /**
      * Create a new Gender
      * @var Request $request
-     * @return View|array
      *
      * @ApiDoc(
      *  section="Gender",
@@ -171,13 +173,11 @@ class GenderController extends FOSRestController
             $em->persist($gender);
             $em->flush();
 
-            return array("gender" => $gender);
+            return $gender;
 
         }
 
-        return array(
-            'form' => $form,
-        );
+        return $form;
     }
 
     /**
@@ -185,7 +185,6 @@ class GenderController extends FOSRestController
      * Put action
      * @var Request $request
      * @var Gender $gender
-     * @return array
      *
      * @ApiDoc(
      *  section="Gender",
@@ -219,12 +218,10 @@ class GenderController extends FOSRestController
             $em->persist($gender);
             $em->flush();
 
-            return array("gender" => $gender);
+            return $gender;
         }
 
-        return array(
-            'form' => $form,
-        );
+        return $form;
     }
 
     /**
@@ -232,7 +229,6 @@ class GenderController extends FOSRestController
      * Put action
      * @var Request $request
      * @var Gender $gender
-     * @return array
      *
      * @ApiDoc(
      *  section="Gender",
@@ -261,7 +257,7 @@ class GenderController extends FOSRestController
         $em->persist($gender);
         $em->flush();
 
-        return array("gender" => $gender);
+        return $gender;
     }
 
     /**
@@ -269,7 +265,6 @@ class GenderController extends FOSRestController
      * Put action
      * @var Request $request
      * @var Gender $gender
-     * @return array
      *
      * @ApiDoc(
      *  section="Gender",
@@ -298,14 +293,13 @@ class GenderController extends FOSRestController
         $em->persist($gender);
         $em->flush();
 
-        return array("gender" => $gender);
+        return $gender;
     }
 
     /**
      * Delete a Gender
      * Delete action
      * @var Gender $gender
-     * @return array
      *
      * @ApiDoc(
      *  section="Gender",

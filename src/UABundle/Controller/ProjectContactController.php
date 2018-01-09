@@ -46,7 +46,12 @@ class ProjectContactController extends FOSRestController
         $project_contacts = $this->getDoctrine()->getRepository("UABundle:ProjectContact")
             ->findAll();
 
-        return array('project_contacts' => $project_contacts);
+        $array = [];
+        foreach ($project_contacts as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -77,7 +82,12 @@ class ProjectContactController extends FOSRestController
         $project_contacts = $this->getDoctrine()->getRepository("UABundle:ProjectContact")
             ->findBy(['project' => $project]);
 
-        return array('project_contacts' => $project_contacts);
+        $array = [];
+        foreach ($project_contacts as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -105,7 +115,7 @@ class ProjectContactController extends FOSRestController
     public function getProjectContactAction(ProjectContact $project_contact)
     {
 
-        return array('project_contact' => $project_contact);
+        return $project_contact;
 
     }
 
@@ -150,7 +160,7 @@ class ProjectContactController extends FOSRestController
             $em->persist($project_contact);
             $em->flush();
 
-            return array("project_contact" => $project_contact);
+            return $project_contact;
 
         }
 

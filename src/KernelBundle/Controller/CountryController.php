@@ -44,7 +44,12 @@ class CountryController extends FOSRestController
         $countries = $this->getDoctrine()->getRepository("KernelBundle:Country")
             ->findAll();
 
-        return array('countries' => $countries);
+        $array = [];
+        foreach ($countries as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -72,7 +77,7 @@ class CountryController extends FOSRestController
     public function getCountryAction(Country $country)
     {
 
-        return array('country' => $country);
+        return $country;
 
     }
 
@@ -101,7 +106,7 @@ class CountryController extends FOSRestController
     {
 
         $country = $this->getDoctrine()->getRepository('KernelBundle:Country')->findOneBy(['label' => $label]);
-        return array('country' => $country);
+        return $country;
     }
 
     /**
@@ -140,7 +145,7 @@ class CountryController extends FOSRestController
             $em->persist($country);
             $em->flush();
 
-            return array("country" => $country);
+            return $country;
 
         }
 
@@ -154,7 +159,6 @@ class CountryController extends FOSRestController
      * Put action
      * @var Request $request
      * @var Country $country
-     * @return array
      *
      * @ApiDoc(
      *  section="Country",
@@ -188,7 +192,7 @@ class CountryController extends FOSRestController
             $em->persist($country);
             $em->flush();
 
-            return array("country" => $country);
+            return $country;
         }
 
         return array(
