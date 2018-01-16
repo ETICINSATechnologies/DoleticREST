@@ -47,7 +47,12 @@ class TeamController extends FOSRestController
         $teams = $this->getDoctrine()->getRepository("RHBundle:Team")
             ->findAll();
 
-        return array('teams' => $teams);
+        $array = [];
+        foreach ($teams as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -78,7 +83,12 @@ class TeamController extends FOSRestController
         $teams = $this->getDoctrine()->getRepository("RHBundle:Team")
             ->findBy(['division' => $division]);
 
-        return array('teams' => $teams);
+        $array = [];
+        foreach ($teams as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -109,7 +119,12 @@ class TeamController extends FOSRestController
         $teams = $this->getDoctrine()->getRepository("RHBundle:Team")
             ->findBy(['leader' => $leader]);
 
-        return array('teams' => $teams);
+        $array = [];
+        foreach ($teams as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -140,7 +155,12 @@ class TeamController extends FOSRestController
         $teams = $this->getDoctrine()->getRepository("RHBundle:Team")
             ->findUserTeams($member);
 
-        return array('teams' => $teams);
+        $array = [];
+        foreach ($teams as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -168,7 +188,7 @@ class TeamController extends FOSRestController
     public function getTeamAction(Team $team)
     {
 
-        return array('team' => $team);
+        return $team;
 
     }
 
@@ -197,7 +217,7 @@ class TeamController extends FOSRestController
     {
 
         $team = $this->getDoctrine()->getRepository('RHBundle:Team')->findOneBy(['name' => $name]);
-        return array('team' => $team);
+        return $team;
     }
 
     /**
@@ -236,7 +256,7 @@ class TeamController extends FOSRestController
             $em->persist($team);
             $em->flush();
 
-            return array("team" => $team);
+            return $team;
 
         }
 
@@ -287,7 +307,7 @@ class TeamController extends FOSRestController
             $em->persist($team);
             $em->flush();
 
-            return array("team" => $team);
+            return $team;
         }
 
         return array(

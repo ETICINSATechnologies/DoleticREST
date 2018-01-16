@@ -45,7 +45,12 @@ class UserPositionController extends FOSRestController
         $user_positions = $this->getDoctrine()->getRepository("KernelBundle:UserPosition")
             ->findAll();
 
-        return array('user_positions' => $user_positions);
+        $array = [];
+        foreach ($user_positions as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -73,7 +78,7 @@ class UserPositionController extends FOSRestController
     public function getUserPositionAction(UserPosition $user_position)
     {
 
-        return array('user_position' => $user_position);
+        return $user_position;
 
     }
 
@@ -147,7 +152,7 @@ class UserPositionController extends FOSRestController
             $em->persist($user_position);
             $em->flush();
 
-            return array("user_position" => $user_position);
+            return $user_position;
 
         }
 
@@ -191,7 +196,7 @@ class UserPositionController extends FOSRestController
         $em->persist($user_position);
         $em->flush();
 
-        return array("user_position" => $user_position);
+        return $user_position;
     }
 
     /**
@@ -235,7 +240,7 @@ class UserPositionController extends FOSRestController
         $em->persist($user_position);
         $em->flush();
 
-        return array("user_position" => $user_position);
+        return $user_position;
     }
 
     /**
@@ -273,7 +278,7 @@ class UserPositionController extends FOSRestController
         $em->persist($user_position);
         $em->flush();
 
-        return array("user_position" => $user_position);
+        return $user_position;
     }
 
     /**

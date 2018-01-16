@@ -45,7 +45,12 @@ class TicketTypeController extends FOSRestController
         $ticket_types = $this->getDoctrine()->getRepository("SupportBundle:TicketType")
             ->findAll();
 
-        return array('ticket_types' => $ticket_types);
+        $array = [];
+        foreach ($ticket_types as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -74,7 +79,12 @@ class TicketTypeController extends FOSRestController
         $ticket_types = $this->getDoctrine()->getRepository("SupportBundle:TicketType")
             ->findBy(['enabled' => true]);
 
-        return array('ticket_types' => $ticket_types);
+        $array = [];
+        foreach ($ticket_types as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -102,7 +112,7 @@ class TicketTypeController extends FOSRestController
     public function getTicketTypeAction(TicketType $ticket_type)
     {
 
-        return array('ticket_type' => $ticket_type);
+        return $ticket_type;
 
     }
 
@@ -131,7 +141,7 @@ class TicketTypeController extends FOSRestController
     {
 
         $ticket_type = $this->getDoctrine()->getRepository('SupportBundle:TicketType')->findOneBy(['label' => $label]);
-        return array('ticket_type' => $ticket_type);
+        return $ticket_type;
     }
 
     /**
@@ -170,7 +180,7 @@ class TicketTypeController extends FOSRestController
             $em->persist($ticket_type);
             $em->flush();
 
-            return array("ticket_type" => $ticket_type);
+            return $ticket_type;
 
         }
 
@@ -218,7 +228,7 @@ class TicketTypeController extends FOSRestController
             $em->persist($ticket_type);
             $em->flush();
 
-            return array("ticket_type" => $ticket_type);
+            return $ticket_type;
         }
 
         return array(
@@ -260,7 +270,7 @@ class TicketTypeController extends FOSRestController
         $em->persist($ticket_type);
         $em->flush();
 
-        return array("ticket_type" => $ticket_type);
+        return $ticket_type;
     }
 
     /**
@@ -297,7 +307,7 @@ class TicketTypeController extends FOSRestController
         $em->persist($ticket_type);
         $em->flush();
 
-        return array("ticket_type" => $ticket_type);
+        return $ticket_type;
     }
 
     /**

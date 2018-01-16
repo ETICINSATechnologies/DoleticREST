@@ -43,7 +43,12 @@ class RecruitmentEventController extends FOSRestController
         $recruitment_events = $this->getDoctrine()->getRepository("RHBundle:RecruitmentEvent")
             ->findAll();
 
-        return array('recruitment_events' => $recruitment_events);
+        $array = [];
+        foreach ($recruitment_events as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -70,7 +75,7 @@ class RecruitmentEventController extends FOSRestController
      */
     public function getRecruitmentEventAction(RecruitmentEvent $recruitment_event){
 
-        return array('recruitment_event' => $recruitment_event);
+        return $recruitment_event;
 
     }
 
@@ -98,7 +103,7 @@ class RecruitmentEventController extends FOSRestController
     public function getRecruitmentEventByDateAction($date){
 
         $recruitment_event = $this->getDoctrine()->getRepository('RHBundle:RecruitmentEvent')->findOneBy(['date' => $date]);
-        return array('recruitment_event' => $recruitment_event);
+        return $recruitment_event;
     }
 
     /**
@@ -137,7 +142,7 @@ class RecruitmentEventController extends FOSRestController
             $em->persist($recruitment_event);
             $em->flush();
 
-            return array("recruitment_event" => $recruitment_event);
+            return $recruitment_event;
 
         }
 
@@ -185,7 +190,7 @@ class RecruitmentEventController extends FOSRestController
             $em->persist($recruitment_event);
             $em->flush();
 
-            return array("recruitment_event" => $recruitment_event);
+            return $recruitment_event;
         }
 
         return array(

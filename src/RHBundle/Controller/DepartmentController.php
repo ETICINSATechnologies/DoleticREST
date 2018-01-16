@@ -40,12 +40,17 @@ class DepartmentController extends FOSRestController
      */
     public function getDepartmentsAction()
     {
-        $this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+        //$this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
 
         $departments = $this->getDoctrine()->getRepository("RHBundle:Department")
             ->findAll();
 
-        return array('departments' => $departments);
+        $array = [];
+        foreach ($departments as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -73,13 +78,17 @@ class DepartmentController extends FOSRestController
         $departments = $this->getDoctrine()->getRepository("RHBundle:Department")
             ->findBy(['enabled' => true]);
 
-        return array('departments' => $departments);
+        $array = [];
+        foreach ($departments as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
      * Get a department by ID
      * @param Department $department
-     * @return array
      *
      * @ApiDoc(
      *  section="Department",
@@ -101,14 +110,13 @@ class DepartmentController extends FOSRestController
     public function getDepartmentAction(Department $department)
     {
 
-        return array('department' => $department);
+        return $department;
 
     }
 
     /**
      * Get a department by label
      * @param string $label
-     * @return array
      *
      * @ApiDoc(
      *  section="Department",
@@ -130,7 +138,7 @@ class DepartmentController extends FOSRestController
     {
 
         $department = $this->getDoctrine()->getRepository('RHBundle:Department')->findOneBy(['label' => $label]);
-        return array('department' => $department);
+        return $department;
     }
 
     /**
@@ -169,13 +177,11 @@ class DepartmentController extends FOSRestController
             $em->persist($department);
             $em->flush();
 
-            return array("department" => $department);
+            return $department;
 
         }
 
-        return array(
-            'form' => $form,
-        );
+        return $form;
     }
 
     /**
@@ -217,12 +223,10 @@ class DepartmentController extends FOSRestController
             $em->persist($department);
             $em->flush();
 
-            return array("department" => $department);
+            return $department;
         }
 
-        return array(
-            'form' => $form,
-        );
+        return $form;
     }
 
     /**
@@ -259,7 +263,7 @@ class DepartmentController extends FOSRestController
         $em->persist($department);
         $em->flush();
 
-        return array("department" => $department);
+        return $department;
     }
 
     /**
@@ -296,7 +300,7 @@ class DepartmentController extends FOSRestController
         $em->persist($department);
         $em->flush();
 
-        return array("department" => $department);
+        return $department;
     }
 
     /**

@@ -56,7 +56,7 @@ class UAController extends FOSRestController
      *
      * @ApiDoc(
      *  section="UA",
-     *  description="Get current user rights",
+     *  description="Publish a ProjectDocument Template",
      *  statusCodes={
      *         200="Returned when successful"
      *  },

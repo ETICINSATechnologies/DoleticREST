@@ -47,7 +47,12 @@ class TeamMemberController extends FOSRestController
         $team_members = $this->getDoctrine()->getRepository("RHBundle:TeamMember")
             ->findAll();
 
-        return array('team_members' => $team_members);
+        $array = [];
+        foreach ($team_members as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -78,7 +83,12 @@ class TeamMemberController extends FOSRestController
         $team_members = $this->getDoctrine()->getRepository("RHBundle:TeamMember")
             ->findBy(['team' => $team]);
 
-        return array('team_members' => $team_members);
+        $array = [];
+        foreach ($team_members as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -106,7 +116,7 @@ class TeamMemberController extends FOSRestController
     public function getTeamMemberAction(TeamMember $teamMember)
     {
 
-        return array('teamMember' => $teamMember);
+        return $teamMember;
 
     }
 
@@ -151,7 +161,7 @@ class TeamMemberController extends FOSRestController
             $em->persist($teamMember);
             $em->flush();
 
-            return array("teamMember" => $teamMember);
+            return $teamMember;
 
         }
 

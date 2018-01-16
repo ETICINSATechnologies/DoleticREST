@@ -43,7 +43,12 @@ class SchoolYearController extends FOSRestController
         $years = $this->getDoctrine()->getRepository("RHBundle:SchoolYear")
             ->findAll();
 
-        return array('years' => $years);
+        $array = [];
+        foreach ($years as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -70,7 +75,7 @@ class SchoolYearController extends FOSRestController
      */
     public function getSchoolYearAction(SchoolYear $year){
 
-        return array('year' => $year);
+        return $year;
 
     }
 
@@ -98,7 +103,7 @@ class SchoolYearController extends FOSRestController
     public function getSchoolYearByYearAction($year){
 
         $year = $this->getDoctrine()->getRepository('RHBundle:SchoolYear')->findOneBy(['year' => $year]);
-        return array('year' => $year);
+        return $year;
     }
 
     /**
@@ -137,7 +142,7 @@ class SchoolYearController extends FOSRestController
             $em->persist($year);
             $em->flush();
 
-            return array("year" => $year);
+            return $year;
 
         }
 
@@ -185,7 +190,7 @@ class SchoolYearController extends FOSRestController
             $em->persist($year);
             $em->flush();
 
-            return array("year" => $year);
+            return $year;
         }
 
         return array(

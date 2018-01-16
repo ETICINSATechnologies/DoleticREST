@@ -46,7 +46,12 @@ class ProjectFileController extends FOSRestController
         $project_files = $this->getDoctrine()->getRepository("UABundle:ProjectFile")
             ->findAll();
 
-        return array('project_files' => $project_files);
+        $array = [];
+        foreach ($project_files as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -77,7 +82,12 @@ class ProjectFileController extends FOSRestController
         $project_files = $this->getDoctrine()->getRepository("UABundle:ProjectFile")
             ->findBy(['project' => $project]);
 
-        return array('project_files' => $project_files);
+        $array = [];
+        foreach ($project_files as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -108,7 +118,12 @@ class ProjectFileController extends FOSRestController
         $project_files = $this->getDoctrine()->getRepository("UABundle:ProjectFile")
             ->findBy(['auditor' => $auditor]);
 
-        return array('project_files' => $project_files);
+        $array = [];
+        foreach ($project_files as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -137,7 +152,12 @@ class ProjectFileController extends FOSRestController
         $project_files = $this->getDoctrine()->getRepository("UABundle:ProjectFile")
             ->findBy(['auditor' => $this->getUser()]);
 
-        return array('project_files' => $project_files);
+        $array = [];
+        foreach ($project_files as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -165,7 +185,7 @@ class ProjectFileController extends FOSRestController
     public function getProjectFileAction(ProjectFile $project_file)
     {
 
-        return array('project_file' => $project_file);
+        return $project_file;
 
     }
 
@@ -203,7 +223,7 @@ class ProjectFileController extends FOSRestController
             $em->persist($project_file);
             $em->flush();
 
-            return array("project_file" => $project_file);
+            return $project_file;
 
         }
 
@@ -249,7 +269,7 @@ class ProjectFileController extends FOSRestController
             $em->persist($project_file);
             $em->flush();
 
-            return array("project_file" => $project_file);
+            return $project_file;
         }
 
         return array(

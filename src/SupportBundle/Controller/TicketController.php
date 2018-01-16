@@ -49,7 +49,12 @@ class TicketController extends FOSRestController
         $tickets = $this->getDoctrine()->getRepository("SupportBundle:Ticket")
             ->findAll();
 
-        return array('tickets' => $tickets);
+        $array = [];
+        foreach ($tickets as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -81,7 +86,12 @@ class TicketController extends FOSRestController
         $tickets = $this->getDoctrine()->getRepository("SupportBundle:Ticket")
             ->findBy(['type' => $type]);
 
-        return array('tickets' => $tickets);
+        $array = [];
+        foreach ($tickets as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -113,7 +123,12 @@ class TicketController extends FOSRestController
         $tickets = $this->getDoctrine()->getRepository("SupportBundle:Ticket")
             ->findBy(['status' => $status]);
 
-        return array('tickets' => $tickets);
+        $array = [];
+        foreach ($tickets as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -145,7 +160,12 @@ class TicketController extends FOSRestController
         $tickets = $this->getDoctrine()->getRepository("SupportBundle:Ticket")
             ->findBy(['author' => $author]);
 
-        return array('tickets' => $tickets);
+        $array = [];
+        foreach ($tickets as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -174,7 +194,12 @@ class TicketController extends FOSRestController
         $tickets = $this->getDoctrine()->getRepository("SupportBundle:Ticket")
             ->findBy(['author' => $this->getUser()]);
 
-        return array('tickets' => $tickets);
+        $array = [];
+        foreach ($tickets as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -204,7 +229,7 @@ class TicketController extends FOSRestController
 
         $this->denyAccessUnlessGranted('ROLE_SUPPORT_ADMIN');
 
-        return array('ticket' => $ticket);
+        return $ticket;
 
     }
 
@@ -242,7 +267,7 @@ class TicketController extends FOSRestController
             $em->persist($ticket);
             $em->flush();
 
-            return array("ticket" => $ticket);
+            return $ticket;
 
         }
 
@@ -292,7 +317,7 @@ class TicketController extends FOSRestController
             $em->persist($ticket);
             $em->flush();
 
-            return array("ticket" => $ticket);
+            return $ticket;
         }
 
         return array(

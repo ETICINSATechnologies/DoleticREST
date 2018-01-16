@@ -46,7 +46,12 @@ class FirmController extends FOSRestController
         $firms = $this->getDoctrine()->getRepository("GRCBundle:Firm")
             ->findAll();
 
-        return array('firms' => $firms);
+        $array = [];
+        foreach ($firms as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -77,7 +82,12 @@ class FirmController extends FOSRestController
         $firms = $this->getDoctrine()->getRepository("GRCBundle:Firm")
             ->findBy(['type' => $type]);
 
-        return array('firms' => $firms);
+        $array = [];
+        foreach ($firms as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -108,7 +118,12 @@ class FirmController extends FOSRestController
         $firms = $this->getDoctrine()->getRepository("GRCBundle:Firm")
             ->findBy(['country' => $country]);
 
-        return array('firms' => $firms);
+        $array = [];
+        foreach ($firms as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -136,7 +151,7 @@ class FirmController extends FOSRestController
     public function getFirmAction(Firm $firm)
     {
 
-        return array('firm' => $firm);
+        return $firm;
 
     }
 
@@ -165,7 +180,7 @@ class FirmController extends FOSRestController
     {
 
         $firm = $this->getDoctrine()->getRepository('GRCBundle:Firm')->findOneBy(['name' => $name]);
-        return array('firm' => $firm);
+        return $firm;
     }
 
     /**
@@ -204,7 +219,7 @@ class FirmController extends FOSRestController
             $em->persist($firm);
             $em->flush();
 
-            return array("firm" => $firm);
+            return $firm;
 
         }
 
@@ -252,7 +267,7 @@ class FirmController extends FOSRestController
             $em->persist($firm);
             $em->flush();
 
-            return array("firm" => $firm);
+            return $firm;
         }
 
         return array(

@@ -48,7 +48,12 @@ class ContactActionController extends FOSRestController
         $contact_actions = $this->getDoctrine()->getRepository("GRCBundle:ContactAction")
             ->findAll();
 
-        return array('contact_actions' => $contact_actions);
+        $array = [];
+        foreach ($contact_actions as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -79,7 +84,12 @@ class ContactActionController extends FOSRestController
         $contact_actions = $this->getDoctrine()->getRepository("GRCBundle:ContactAction")
             ->findBy(['type' => $type]);
 
-        return array('contact_actions' => $contact_actions);
+        $array = [];
+        foreach ($contact_actions as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -110,7 +120,12 @@ class ContactActionController extends FOSRestController
         $contact_actions = $this->getDoctrine()->getRepository("GRCBundle:ContactAction")
             ->findBy(['contact' => $contact]);
 
-        return array('contact_actions' => $contact_actions);
+        $array = [];
+        foreach ($contact_actions as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -141,7 +156,12 @@ class ContactActionController extends FOSRestController
         $contact_actions = $this->getDoctrine()->getRepository("GRCBundle:ContactAction")
             ->findBy(['prospector' => $prospector]);
 
-        return array('contact_actions' => $contact_actions);
+        $array = [];
+        foreach ($contact_actions as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -170,7 +190,12 @@ class ContactActionController extends FOSRestController
         $contact_actions = $this->getDoctrine()->getRepository("GRCBundle:ContactAction")
             ->findBy(['prospector' => $this->getUser()]);
 
-        return array('contact_actions' => $contact_actions);
+        $array = [];
+        foreach ($contact_actions as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -198,7 +223,7 @@ class ContactActionController extends FOSRestController
     public function getContactActionAction(ContactAction $contact_action)
     {
 
-        return array('contact_action' => $contact_action);
+        return $contact_action;
 
     }
 
@@ -242,7 +267,7 @@ class ContactActionController extends FOSRestController
             $em->persist($contact_action);
             $em->flush();
 
-            return array("contact_action" => $contact_action);
+            return $contact_action;
 
         }
 
@@ -292,7 +317,7 @@ class ContactActionController extends FOSRestController
             $em->persist($contact_action);
             $em->flush();
 
-            return array("contact_action" => $contact_action);
+            return $contact_action;
         }
 
         return array(

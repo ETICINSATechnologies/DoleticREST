@@ -44,7 +44,12 @@ class ProjectOriginController extends FOSRestController
         $project_origins = $this->getDoctrine()->getRepository("UABundle:ProjectOrigin")
             ->findAll();
 
-        return array('project_origins' => $project_origins);
+        $array = [];
+        foreach ($project_origins as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -72,7 +77,7 @@ class ProjectOriginController extends FOSRestController
     public function getProjectOriginAction(ProjectOrigin $project_origin)
     {
 
-        return array('project_origin' => $project_origin);
+        return $project_origin;
 
     }
 
@@ -101,7 +106,7 @@ class ProjectOriginController extends FOSRestController
     {
 
         $project_origin = $this->getDoctrine()->getRepository('UABundle:ProjectOrigin')->findOneBy(['label' => $label]);
-        return array('project_origin' => $project_origin);
+        return $project_origin;
     }
 
     /**
@@ -140,7 +145,7 @@ class ProjectOriginController extends FOSRestController
             $em->persist($project_origin);
             $em->flush();
 
-            return array("project_origin" => $project_origin);
+            return $project_origin;
 
         }
 
@@ -188,7 +193,7 @@ class ProjectOriginController extends FOSRestController
             $em->persist($project_origin);
             $em->flush();
 
-            return array("project_origin" => $project_origin);
+            return $project_origin;
         }
         return array(
             'form' => $form,

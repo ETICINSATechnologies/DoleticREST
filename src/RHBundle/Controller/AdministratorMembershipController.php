@@ -46,7 +46,12 @@ class AdministratorMembershipController extends FOSRestController
         $administrator_memberships = $this->getDoctrine()->getRepository("RHBundle:AdministratorMembership")
             ->findAll();
 
-        return array('administrator_memberships' => $administrator_memberships);
+        $array = [];
+        foreach ($administrator_memberships as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -78,7 +83,12 @@ class AdministratorMembershipController extends FOSRestController
         $administrator_memberships = $this->getDoctrine()->getRepository("RHBundle:AdministratorMembership")
             ->findBy(['user' => $user]);
 
-        return array('administrator_memberships' => $administrator_memberships);
+        $array = [];
+        foreach ($administrator_memberships as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -107,7 +117,7 @@ class AdministratorMembershipController extends FOSRestController
 
         $this->denyAccessUnlessGranted('ROLE_RH_ADMIN');
 
-        return array('administrator_membership' => $administrator_membership);
+        return $administrator_membership;
 
     }
 
@@ -147,7 +157,7 @@ class AdministratorMembershipController extends FOSRestController
             $em->persist($administrator_membership);
             $em->flush();
 
-            return array("administrator_membership" => $administrator_membership);
+            return $administrator_membership;
 
         }
 
@@ -195,7 +205,7 @@ class AdministratorMembershipController extends FOSRestController
             $em->persist($administrator_membership);
             $em->flush();
 
-            return array("administrator_membership" => $administrator_membership);
+            return $administrator_membership;
         }
 
         return array(
