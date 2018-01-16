@@ -47,7 +47,12 @@ class ConsultantDocumentTemplateController extends FOSRestController
         $consultant_document_templates = $this->getDoctrine()->getRepository("UABundle:ConsultantDocumentTemplate")
             ->findAll();
 
-        return array('consultant_document_templates' => $consultant_document_templates);
+        $array = [];
+        foreach ($consultant_document_templates as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -75,7 +80,7 @@ class ConsultantDocumentTemplateController extends FOSRestController
     public function getConsultantDocumentTemplateAction(ConsultantDocumentTemplate $consultant_document_template)
     {
 
-        return array('consultant_document_template' => $consultant_document_template);
+        return $consultant_document_template;
 
     }
 
@@ -115,7 +120,7 @@ class ConsultantDocumentTemplateController extends FOSRestController
             $em->persist($consultant_document_template);
             $em->flush();
 
-            return array("consultant_document_template" => $consultant_document_template);
+            return $consultant_document_template;
 
         }
 
@@ -163,7 +168,7 @@ class ConsultantDocumentTemplateController extends FOSRestController
             $em->persist($consultant_document_template);
             $em->flush();
 
-            return array("consultant_document_template" => $consultant_document_template);
+            return $consultant_document_template;
         }
 
         return array(

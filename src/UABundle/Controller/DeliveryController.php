@@ -47,7 +47,12 @@ class DeliveryController extends FOSRestController
         $deliveries = $this->getDoctrine()->getRepository("UABundle:Delivery")
             ->findAll();
 
-        return array('deliveries' => $deliveries);
+        $array = [];
+        foreach ($deliveries as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -78,7 +83,12 @@ class DeliveryController extends FOSRestController
         $deliveries = $this->getDoctrine()->getRepository("UABundle:Delivery")
             ->findBy(['task' => $task]);
 
-        return array('deliveries' => $deliveries);
+        $array = [];
+        foreach ($deliveries as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -109,7 +119,12 @@ class DeliveryController extends FOSRestController
         $deliveries = $this->getDoctrine()->getRepository("UABundle:Delivery")
             ->findByProject($project);
 
-        return array('deliveries' => $deliveries);
+        $array = [];
+        foreach ($deliveries as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -137,7 +152,7 @@ class DeliveryController extends FOSRestController
     public function getDeliveryAction(Delivery $delivery)
     {
 
-        return array('delivery' => $delivery);
+        return $delivery;
 
     }
 
@@ -180,7 +195,7 @@ class DeliveryController extends FOSRestController
             $em->persist($delivery);
             $em->flush();
 
-            return array("delivery" => $delivery);
+            return $delivery;
 
         }
 
@@ -230,7 +245,7 @@ class DeliveryController extends FOSRestController
             $em->persist($delivery);
             $em->flush();
 
-            return array("delivery" => $delivery);
+            return $delivery;
         }
 
         return array(
@@ -279,7 +294,7 @@ class DeliveryController extends FOSRestController
             $em->persist($delivery);
             $em->flush();
 
-            return array("delivery" => $delivery);
+            return $delivery;
         }
 
         return array(
@@ -324,7 +339,7 @@ class DeliveryController extends FOSRestController
         $em->persist($delivery);
         $em->flush();
 
-        return array("delivery" => $delivery);
+        return $delivery;
     }
 
     /**
@@ -368,7 +383,7 @@ class DeliveryController extends FOSRestController
             $em->persist($delivery);
             $em->flush();
 
-            return array("delivery" => $delivery);
+            return $delivery;
         }
 
         return array(
@@ -413,7 +428,7 @@ class DeliveryController extends FOSRestController
         $em->persist($delivery);
         $em->flush();
 
-        return array("delivery" => $delivery);
+        return $delivery;
     }
 
     /**

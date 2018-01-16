@@ -45,7 +45,12 @@ class DivisionController extends FOSRestController
         $divisions = $this->getDoctrine()->getRepository("KernelBundle:Division")
             ->findAll();
 
-        return array('divisions' => $divisions);
+        $array = [];
+        foreach ($divisions as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -74,7 +79,12 @@ class DivisionController extends FOSRestController
         $divisions = $this->getDoctrine()->getRepository("KernelBundle:Division")
             ->findBy(['enabled' => true]);
 
-        return array('divisions' => $divisions);
+        $array = [];
+        foreach ($divisions as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -102,7 +112,7 @@ class DivisionController extends FOSRestController
     public function getDivisionAction(Division $division)
     {
 
-        return array('division' => $division);
+        return $division;
 
     }
 
@@ -131,7 +141,7 @@ class DivisionController extends FOSRestController
     {
 
         $division = $this->getDoctrine()->getRepository('KernelBundle:Division')->findOneBy(['label' => $label]);
-        return array('division' => $division);
+        return $division;
 
     }
 
@@ -171,7 +181,7 @@ class DivisionController extends FOSRestController
             $em->persist($division);
             $em->flush();
 
-            return array("division" => $division);
+            return $division;
 
         }
 
@@ -219,7 +229,7 @@ class DivisionController extends FOSRestController
             $em->persist($division);
             $em->flush();
 
-            return array("division" => $division);
+            return $division;
         }
 
         return array(
@@ -261,7 +271,7 @@ class DivisionController extends FOSRestController
         $em->persist($division);
         $em->flush();
 
-        return array("division" => $division);
+        return $division;
     }
 
     /**
@@ -298,7 +308,7 @@ class DivisionController extends FOSRestController
         $em->persist($division);
         $em->flush();
 
-        return array("division" => $division);
+        return $division;
     }
 
     /**

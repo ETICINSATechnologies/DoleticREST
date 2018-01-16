@@ -45,7 +45,12 @@ class ProjectFieldController extends FOSRestController
         $project_fields = $this->getDoctrine()->getRepository("UABundle:ProjectField")
             ->findAll();
 
-        return array('project_fields' => $project_fields);
+        $array = [];
+        foreach ($project_fields as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -74,7 +79,12 @@ class ProjectFieldController extends FOSRestController
         $project_fields = $this->getDoctrine()->getRepository("UABundle:ProjectField")
             ->findBy(['enabled' => true]);
 
-        return array('project_fields' => $project_fields);
+        $array = [];
+        foreach ($project_fields as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -102,7 +112,7 @@ class ProjectFieldController extends FOSRestController
     public function getProjectFieldAction(ProjectField $project_field)
     {
 
-        return array('project_field' => $project_field);
+        return $project_field;
 
     }
 
@@ -131,7 +141,7 @@ class ProjectFieldController extends FOSRestController
     {
 
         $project_field = $this->getDoctrine()->getRepository('UABundle:ProjectField')->findOneBy(['label' => $label]);
-        return array('project_field' => $project_field);
+        return $project_field;
     }
 
     /**
@@ -170,7 +180,7 @@ class ProjectFieldController extends FOSRestController
             $em->persist($project_field);
             $em->flush();
 
-            return array("project_field" => $project_field);
+            return $project_field;
 
         }
 
@@ -218,7 +228,7 @@ class ProjectFieldController extends FOSRestController
             $em->persist($project_field);
             $em->flush();
 
-            return array("project_field" => $project_field);
+            return $project_field;
         }
 
         return array(
@@ -260,7 +270,7 @@ class ProjectFieldController extends FOSRestController
         $em->persist($project_field);
         $em->flush();
 
-        return array("project_field" => $project_field);
+        return $project_field;
     }
 
     /**
@@ -297,7 +307,7 @@ class ProjectFieldController extends FOSRestController
         $em->persist($project_field);
         $em->flush();
 
-        return array("project_field" => $project_field);
+        return $project_field;
     }
 
     /**

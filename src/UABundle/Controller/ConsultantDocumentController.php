@@ -51,7 +51,12 @@ class ConsultantDocumentController extends FOSRestController
         $consultant_documents = $this->getDoctrine()->getRepository("UABundle:ConsultantDocument")
             ->findAll();
 
-        return array('consultant_documents' => $consultant_documents);
+        $array = [];
+        foreach ($consultant_documents as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -82,7 +87,12 @@ class ConsultantDocumentController extends FOSRestController
         $consultant_documents = $this->getDoctrine()->getRepository("UABundle:ConsultantDocument")
             ->findBy(['consultant' => $consultant]);
 
-        return array('consultant_documents' => $consultant_documents);
+        $array = [];
+        foreach ($consultant_documents as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -113,7 +123,12 @@ class ConsultantDocumentController extends FOSRestController
         $consultant_documents = $this->getDoctrine()->getRepository("UABundle:ConsultantDocument")
             ->findBy(['template' => $template]);
 
-        return array('consultant_documents' => $consultant_documents);
+        $array = [];
+        foreach ($consultant_documents as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -144,7 +159,12 @@ class ConsultantDocumentController extends FOSRestController
         $consultant_documents = $this->getDoctrine()->getRepository("UABundle:ConsultantDocument")
             ->findBy(['auditor' => $auditor]);
 
-        return array('consultant_documents' => $consultant_documents);
+        $array = [];
+        foreach ($consultant_documents as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -173,7 +193,12 @@ class ConsultantDocumentController extends FOSRestController
         $consultant_documents = $this->getDoctrine()->getRepository("UABundle:ConsultantDocument")
             ->findBy(['auditor' => $this->getUser()]);
 
-        return array('consultant_documents' => $consultant_documents);
+        $array = [];
+        foreach ($consultant_documents as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -201,7 +226,7 @@ class ConsultantDocumentController extends FOSRestController
     public function getConsultantDocumentAction(ConsultantDocument $consultant_document)
     {
 
-        return array('consultant_document' => $consultant_document);
+        return $consultant_document;
 
     }
 
@@ -277,7 +302,7 @@ class ConsultantDocumentController extends FOSRestController
             $em->persist($consultant_document);
             $em->flush();
 
-            return array("consultant_document" => $consultant_document);
+            return $consultant_document;
 
         }
 
@@ -329,7 +354,7 @@ class ConsultantDocumentController extends FOSRestController
             $em->persist($consultant_document);
             $em->flush();
 
-            return array("consultant_document" => $consultant_document);
+            return $consultant_document;
         }
 
         return array(

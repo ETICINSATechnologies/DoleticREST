@@ -44,7 +44,12 @@ class AmendmentTypeController extends FOSRestController
         $amendment_types = $this->getDoctrine()->getRepository("UABundle:AmendmentType")
             ->findAll();
 
-        return array('amendment_types' => $amendment_types);
+        $array = [];
+        foreach ($amendment_types as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -72,7 +77,7 @@ class AmendmentTypeController extends FOSRestController
     public function getAmendmentTypeAction(AmendmentType $amendment_type)
     {
 
-        return array('amendment_type' => $amendment_type);
+        return $amendment_type;
 
     }
 
@@ -101,7 +106,7 @@ class AmendmentTypeController extends FOSRestController
     {
 
         $amendment_type = $this->getDoctrine()->getRepository('UABundle:AmendmentType')->findOneBy(['label' => $label]);
-        return array('amendment_type' => $amendment_type);
+        return $amendment_type;
     }
 
     /**
@@ -140,7 +145,7 @@ class AmendmentTypeController extends FOSRestController
             $em->persist($amendment_type);
             $em->flush();
 
-            return array("amendment_type" => $amendment_type);
+            return $amendment_type;
 
         }
 
@@ -188,7 +193,7 @@ class AmendmentTypeController extends FOSRestController
             $em->persist($amendment_type);
             $em->flush();
 
-            return array("amendment_type" => $amendment_type);
+            return $amendment_type;
         }
 
         return array(

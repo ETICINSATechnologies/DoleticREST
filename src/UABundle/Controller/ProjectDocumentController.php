@@ -52,7 +52,12 @@ class ProjectDocumentController extends FOSRestController
         $project_documents = $this->getDoctrine()->getRepository("UABundle:ProjectDocument")
             ->findAll();
 
-        return array('project_documents' => $project_documents);
+        $array = [];
+        foreach ($project_documents as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -83,7 +88,12 @@ class ProjectDocumentController extends FOSRestController
         $project_documents = $this->getDoctrine()->getRepository("UABundle:ProjectDocument")
             ->findBy(['project' => $project]);
 
-        return array('project_documents' => $project_documents);
+        $array = [];
+        foreach ($project_documents as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -114,7 +124,12 @@ class ProjectDocumentController extends FOSRestController
         $project_documents = $this->getDoctrine()->getRepository("UABundle:ProjectDocument")
             ->findBy(['template' => $template]);
 
-        return array('project_documents' => $project_documents);
+        $array = [];
+        foreach ($project_documents as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -145,7 +160,12 @@ class ProjectDocumentController extends FOSRestController
         $project_documents = $this->getDoctrine()->getRepository("UABundle:ProjectDocument")
             ->findBy(['auditor' => $auditor]);
 
-        return array('project_documents' => $project_documents);
+        $array = [];
+        foreach ($project_documents as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -174,7 +194,12 @@ class ProjectDocumentController extends FOSRestController
         $project_documents = $this->getDoctrine()->getRepository("UABundle:ProjectDocument")
             ->findBy(['auditor' => $this->getUser()]);
 
-        return array('project_documents' => $project_documents);
+        $array = [];
+        foreach ($project_documents as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -202,7 +227,7 @@ class ProjectDocumentController extends FOSRestController
     public function getProjectDocumentAction(ProjectDocument $project_document)
     {
 
-        return array('project_document' => $project_document);
+        return $project_document;
 
     }
 
@@ -278,7 +303,7 @@ class ProjectDocumentController extends FOSRestController
             $em->persist($project_document);
             $em->flush();
 
-            return array("project_document" => $project_document);
+            return $project_document;
 
         }
 
@@ -330,7 +355,7 @@ class ProjectDocumentController extends FOSRestController
             $em->persist($project_document);
             $em->flush();
 
-            return array("project_document" => $project_document);
+            return $project_document;
         }
 
         return array(

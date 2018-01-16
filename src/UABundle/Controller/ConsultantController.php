@@ -47,7 +47,12 @@ class ConsultantController extends FOSRestController
         $consultants = $this->getDoctrine()->getRepository("UABundle:Consultant")
             ->findBy([], ['number' => 'ASC']);
 
-        return array('consultants' => $consultants);
+        $array = [];
+        foreach ($consultants as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -78,7 +83,12 @@ class ConsultantController extends FOSRestController
         $consultants = $this->getDoctrine()->getRepository("UABundle:Consultant")
             ->findBy(['project' => $project]);
 
-        return array('consultants' => $consultants);
+        $array = [];
+        foreach ($consultants as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -109,7 +119,12 @@ class ConsultantController extends FOSRestController
         $consultants = $this->getDoctrine()->getRepository("UABundle:Consultant")
             ->findBy(['user' => $user]);
 
-        return array('consultants' => $consultants);
+        $array = [];
+        foreach ($consultants as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -137,7 +152,7 @@ class ConsultantController extends FOSRestController
     public function getConsultantAction(Consultant $consultant)
     {
 
-        return array('consultant' => $consultant);
+        return $consultant;
 
     }
 
@@ -179,7 +194,7 @@ class ConsultantController extends FOSRestController
             $em->persist($consultant);
             $em->flush();
 
-            return array("consultant" => $consultant);
+            return $consultant;
 
         }
 
@@ -229,7 +244,7 @@ class ConsultantController extends FOSRestController
             $em->persist($consultant);
             $em->flush();
 
-            return array("consultant" => $consultant);
+            return $consultant;
         }
 
         return array(

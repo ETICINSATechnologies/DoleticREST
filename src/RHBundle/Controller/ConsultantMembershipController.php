@@ -47,7 +47,12 @@ class ConsultantMembershipController extends FOSRestController
         $consultant_memberships = $this->getDoctrine()->getRepository("RHBundle:ConsultantMembership")
             ->findAll();
 
-        return array('consultant_memberships' => $consultant_memberships);
+        $array = [];
+        foreach ($consultant_memberships as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -80,7 +85,12 @@ class ConsultantMembershipController extends FOSRestController
         $consultant_memberships = $this->getDoctrine()->getRepository("RHBundle:ConsultantMembership")
             ->findBy(['user' => $user]);
 
-        return array('consultant_memberships' => $consultant_memberships);
+        $array = [];
+        foreach ($consultant_memberships as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -109,7 +119,7 @@ class ConsultantMembershipController extends FOSRestController
     {
         $this->denyAccessUnlessGranted('ROLE_RH_ADMIN');
 
-        return array('consultant_membership' => $consultant_membership);
+        return $consultant_membership;
 
     }
 
@@ -149,7 +159,7 @@ class ConsultantMembershipController extends FOSRestController
             $em->persist($consultant_membership);
             $em->flush();
 
-            return array("consultant_membership" => $consultant_membership);
+            return $consultant_membership;
 
         }
 
@@ -197,7 +207,7 @@ class ConsultantMembershipController extends FOSRestController
             $em->persist($consultant_membership);
             $em->flush();
 
-            return array("consultant_membership" => $consultant_membership);
+            return $consultant_membership;
         }
 
         return array(

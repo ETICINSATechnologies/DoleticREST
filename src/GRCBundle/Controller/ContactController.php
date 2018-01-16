@@ -48,7 +48,12 @@ class ContactController extends FOSRestController
         $contacts = $this->getDoctrine()->getRepository("GRCBundle:Contact")
             ->findAll();
 
-        return array('contacts' => $contacts);
+        $array = [];
+        foreach ($contacts as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -79,7 +84,12 @@ class ContactController extends FOSRestController
         $contacts = $this->getDoctrine()->getRepository("GRCBundle:Contact")
             ->findBy(['type' => $type]);
 
-        return array('contacts' => $contacts);
+        $array = [];
+        foreach ($contacts as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -110,7 +120,12 @@ class ContactController extends FOSRestController
         $contacts = $this->getDoctrine()->getRepository("GRCBundle:Contact")
             ->findBy(['firm' => $firm]);
 
-        return array('contacts' => $contacts);
+        $array = [];
+        foreach ($contacts as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -141,7 +156,12 @@ class ContactController extends FOSRestController
         $contacts = $this->getDoctrine()->getRepository("GRCBundle:Contact")
             ->findBy(['creator' => $creator]);
 
-        return array('contacts' => $contacts);
+        $array = [];
+        foreach ($contacts as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -170,7 +190,12 @@ class ContactController extends FOSRestController
         $contacts = $this->getDoctrine()->getRepository("GRCBundle:Contact")
             ->findBy(['prospector' => $this->getUser()]);
 
-        return array('contacts' => $contacts);
+        $array = [];
+        foreach ($contacts as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -198,7 +223,7 @@ class ContactController extends FOSRestController
     public function getContactAction(Contact $contact)
     {
 
-        return array('contact' => $contact);
+        return $contact;
 
     }
 
@@ -238,7 +263,7 @@ class ContactController extends FOSRestController
             $em->persist($contact);
             $em->flush();
 
-            return array("contact" => $contact);
+            return $contact;
 
         }
 
@@ -286,7 +311,7 @@ class ContactController extends FOSRestController
             $em->persist($contact);
             $em->flush();
 
-            return array("contact" => $contact);
+            return $contact;
         }
 
         return array(
@@ -330,7 +355,7 @@ class ContactController extends FOSRestController
         $em->persist($contact);
         $em->flush();
 
-        return ['contact' => $contact];
+        return $contact;
     }
 
     /**

@@ -44,7 +44,12 @@ class DocumentTemplateController extends FOSRestController
         $templates = $this->getDoctrine()->getRepository("KernelBundle:DocumentTemplate")
             ->findAll();
 
-        return array('templates' => $templates);
+        $array = [];
+        foreach ($templates as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -72,7 +77,7 @@ class DocumentTemplateController extends FOSRestController
     public function getDocumentTemplateAction(DocumentTemplate $template)
     {
 
-        return array('template' => $template);
+        return $template;
 
     }
 
@@ -101,7 +106,7 @@ class DocumentTemplateController extends FOSRestController
     {
 
         $template = $this->getDoctrine()->getRepository('KernelBundle:DocumentTemplate')->findOneBy(['label' => $label]);
-        return array('template' => $template);
+        return $template;
 
     }
 

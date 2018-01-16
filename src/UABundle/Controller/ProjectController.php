@@ -51,7 +51,12 @@ class ProjectController extends FOSRestController
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
             ->findBy([], ['number' => 'DESC']);
 
-        return array('projects' => $projects);
+        $array = [];
+        foreach ($projects as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -82,7 +87,12 @@ class ProjectController extends FOSRestController
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
             ->findBy(['origin' => $origin], ['number' => 'DESC']);
 
-        return array('projects' => $projects);
+        $array = [];
+        foreach ($projects as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -113,7 +123,12 @@ class ProjectController extends FOSRestController
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
             ->findBy(['field' => $field], ['number' => 'DESC']);
 
-        return array('projects' => $projects);
+        $array = [];
+        foreach ($projects as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -144,7 +159,12 @@ class ProjectController extends FOSRestController
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
             ->findBy(['firm' => $firm], ['number' => 'DESC']);
 
-        return array('projects' => $projects);
+        $array = [];
+        foreach ($projects as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -175,7 +195,12 @@ class ProjectController extends FOSRestController
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
             ->findBy(['auditor' => $auditor], ['number' => 'DESC']);
 
-        return array('projects' => $projects);
+        $array = [];
+        foreach ($projects as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -206,7 +231,12 @@ class ProjectController extends FOSRestController
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
             ->findByManager($manager);
 
-        return array('projects' => $projects);
+        $array = [];
+        foreach ($projects as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -237,7 +267,12 @@ class ProjectController extends FOSRestController
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
             ->findByConsultant($consultant);
 
-        return array('projects' => $projects);
+        $array = [];
+        foreach ($projects as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -268,7 +303,12 @@ class ProjectController extends FOSRestController
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
             ->findByContact($contact);
 
-        return array('projects' => $projects);
+        $array = [];
+        foreach ($projects as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -297,7 +337,12 @@ class ProjectController extends FOSRestController
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
             ->findUnsigned();
 
-        return array('projects' => $projects);
+        $array = [];
+        foreach ($projects as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -326,7 +371,12 @@ class ProjectController extends FOSRestController
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
             ->findCurrent();
 
-        return array('projects' => $projects);
+        $array = [];
+        foreach ($projects as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -355,7 +405,12 @@ class ProjectController extends FOSRestController
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
             ->findBy(['disabled' => true]);
 
-        return array('projects' => $projects);
+        $array = [];
+        foreach ($projects as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -384,7 +439,12 @@ class ProjectController extends FOSRestController
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
             ->findBy(['archived' => true, 'disabled' => false]);
 
-        return array('projects' => $projects);
+        $array = [];
+        foreach ($projects as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -412,7 +472,7 @@ class ProjectController extends FOSRestController
     public function getProjectAction(Project $project)
     {
 
-        return array('project' => $project);
+        return $project;
 
     }
 
@@ -441,7 +501,7 @@ class ProjectController extends FOSRestController
     {
 
         $project = $this->getDoctrine()->getRepository('UABundle:Project')->findOneBy(['number' => $number]);
-        return array('project' => $project);
+        return $project;
     }
 
     /**
@@ -498,7 +558,7 @@ class ProjectController extends FOSRestController
             }
             $em->flush();
 
-            return array("project" => $project);
+            return $project;
 
         }
 
@@ -548,7 +608,7 @@ class ProjectController extends FOSRestController
             $em->persist($project);
             $em->flush();
 
-            return array("project" => $project);
+            return $project;
         }
 
         return array(
@@ -597,7 +657,7 @@ class ProjectController extends FOSRestController
             $em->persist($project);
             $em->flush();
 
-            return array("project" => $project);
+            return $project;
         }
 
         return array(
@@ -653,7 +713,7 @@ class ProjectController extends FOSRestController
             $em->persist($project);
             $em->flush();
 
-            return array("project" => $project);
+            return $project;
         }
 
         return array(
@@ -712,7 +772,7 @@ class ProjectController extends FOSRestController
             $em->persist($project);
             $em->flush();
 
-            return array("project" => $project);
+            return $project;
         }
 
         return array(
@@ -767,7 +827,7 @@ class ProjectController extends FOSRestController
         $em->persist($project);
         $em->flush();
 
-        return array("project" => $project);
+        return $project;
     }
 
     /**
@@ -818,7 +878,7 @@ class ProjectController extends FOSRestController
         $em->persist($project);
         $em->flush();
 
-        return array("project" => $project);
+        return $project;
     }
 
     /**
@@ -865,7 +925,7 @@ class ProjectController extends FOSRestController
         $em->persist($project);
         $em->flush();
 
-        return array("project" => $project);
+        return $project;
     }
 
     /**
@@ -912,7 +972,7 @@ class ProjectController extends FOSRestController
         $em->persist($project);
         $em->flush();
 
-        return array("project" => $project);
+        return $project;
     }
 
     /**
@@ -959,7 +1019,7 @@ class ProjectController extends FOSRestController
         $em->persist($project);
         $em->flush();
 
-        return array("project" => $project);
+        return $project;
     }
 
     /**
@@ -1009,7 +1069,7 @@ class ProjectController extends FOSRestController
             $em->persist($project);
             $em->flush();
 
-            return array("project" => $project);
+            return $project;
         }
 
         return array(

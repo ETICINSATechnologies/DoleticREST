@@ -48,7 +48,12 @@ class ProjectDocumentTemplateController extends FOSRestController
         $project_document_templates = $this->getDoctrine()->getRepository("UABundle:ProjectDocumentTemplate")
             ->findAll();
 
-        return array('project_document_templates' => $project_document_templates);
+        $array = [];
+        foreach ($project_document_templates as $c){
+            $array[] =$c;
+        }
+
+        return $array;;
     }
 
     /**
@@ -76,7 +81,7 @@ class ProjectDocumentTemplateController extends FOSRestController
     public function getProjectDocumentTemplateAction(ProjectDocumentTemplate $project_document_template)
     {
 
-        return array('project_document_template' => $project_document_template);
+        return $project_document_template;
 
     }
 
@@ -116,7 +121,7 @@ class ProjectDocumentTemplateController extends FOSRestController
             $em->persist($project_document_template);
             $em->flush();
 
-            return array("project_document_template" => $project_document_template);
+            return $project_document_template;
 
         }
 
@@ -164,7 +169,7 @@ class ProjectDocumentTemplateController extends FOSRestController
             $em->persist($project_document_template);
             $em->flush();
 
-            return array("project_document_template" => $project_document_template);
+            return $project_document_template;
         }
 
         return array(

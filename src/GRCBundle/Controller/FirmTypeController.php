@@ -44,7 +44,12 @@ class FirmTypeController extends FOSRestController
         $firm_types = $this->getDoctrine()->getRepository("GRCBundle:FirmType")
             ->findAll();
 
-        return array('firm_types' => $firm_types);
+        $array = [];
+        foreach ($firm_types as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -72,7 +77,7 @@ class FirmTypeController extends FOSRestController
     public function getFirmTypeAction(FirmType $firm_type)
     {
 
-        return array('firm_type' => $firm_type);
+        return $firm_type;
 
     }
 
@@ -101,7 +106,7 @@ class FirmTypeController extends FOSRestController
     {
 
         $firm_type = $this->getDoctrine()->getRepository('GRCBundle:FirmType')->findOneBy(['label' => $label]);
-        return array('firm_type' => $firm_type);
+        return $firm_type;
     }
 
     /**
@@ -140,7 +145,7 @@ class FirmTypeController extends FOSRestController
             $em->persist($firm_type);
             $em->flush();
 
-            return array("firm_type" => $firm_type);
+            return $firm_type;
 
         }
 
@@ -188,7 +193,7 @@ class FirmTypeController extends FOSRestController
             $em->persist($firm_type);
             $em->flush();
 
-            return array("firm_type" => $firm_type);
+            return $firm_type;
         }
 
         return array(

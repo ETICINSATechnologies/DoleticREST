@@ -49,7 +49,12 @@ class UserController extends FOSRestController
         $users = $this->getDoctrine()->getRepository("KernelBundle:User")
             ->findAll();
 
-        return array('users' => $users);
+        $array = [];
+        foreach ($users as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -78,7 +83,12 @@ class UserController extends FOSRestController
         $users = $this->getDoctrine()->getRepository("KernelBundle:User")
             ->findUsersByOld(false);
 
-        return array('users' => $users);
+        $array = [];
+        foreach ($users as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -107,7 +117,12 @@ class UserController extends FOSRestController
         $users = $this->getDoctrine()->getRepository("KernelBundle:User")
             ->findUsersByOld(true);
 
-        return array('users' => $users);
+        $array = [];
+        foreach ($users as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -136,7 +151,12 @@ class UserController extends FOSRestController
         $users = $this->getDoctrine()->getRepository("KernelBundle:User")
             ->findBy(['enabled' => false]);
 
-        return array('users' => $users);
+        $array = [];
+        foreach ($users as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -164,7 +184,7 @@ class UserController extends FOSRestController
 
         $user = $this->getUser();
 
-        return array('user' => $user);
+        return $user;
     }
 
     /**
@@ -192,7 +212,7 @@ class UserController extends FOSRestController
     public function getUserAction(User $user)
     {
 
-        return array('user' => $user);
+        return $user;
 
     }
 
@@ -221,7 +241,7 @@ class UserController extends FOSRestController
     {
 
         $user = $this->getDoctrine()->getRepository('KernelBundle:User')->findOneBy(['email' => $email]);
-        return array('user' => $user);
+        return $user;
 
     }
 
@@ -258,7 +278,7 @@ class UserController extends FOSRestController
     {
 
         $user = $this->getDoctrine()->getRepository('KernelBundle:User')->findOneBy(['username' => $username]);
-        return array('user' => $user);
+        return $user;
 
     }
 
@@ -308,7 +328,7 @@ class UserController extends FOSRestController
             }
             $em->flush();
 
-            return array("user" => $user);
+            return $user;
 
         }
 
@@ -357,7 +377,7 @@ class UserController extends FOSRestController
             $em->persist($user);
             $em->flush();
 
-            return array("user" => $user);
+            return $user;
         }
 
         return array(
@@ -402,7 +422,7 @@ class UserController extends FOSRestController
             $em->persist($user);
             $em->flush();
 
-            return array("user" => $user);
+            return $user;
         }
 
         return array(
@@ -505,7 +525,7 @@ class UserController extends FOSRestController
         $em->persist($user);
         $em->flush();
 
-        return array("user" => $user);
+        return $user;
     }
 
     /**
@@ -541,7 +561,7 @@ class UserController extends FOSRestController
         $em->persist($user);
         $em->flush();
 
-        return array("user" => $user);
+        return $user;
     }
 
 

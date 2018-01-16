@@ -44,7 +44,12 @@ class ContactTypeController extends FOSRestController
         $contact_types = $this->getDoctrine()->getRepository("GRCBundle:ContactType")
             ->findAll();
 
-        return array('contact_types' => $contact_types);
+        $array = [];
+        foreach ($contact_types as $c){
+            $array[] =$c;
+        }
+
+        return $array;
     }
 
     /**
@@ -72,7 +77,7 @@ class ContactTypeController extends FOSRestController
     public function getContactTypeAction(ContactType $contact_type)
     {
 
-        return array('contact_type' => $contact_type);
+        return $contact_type;
 
     }
 
@@ -101,7 +106,7 @@ class ContactTypeController extends FOSRestController
     {
 
         $contact_type = $this->getDoctrine()->getRepository('GRCBundle:ContactType')->findOneBy(['label' => $label]);
-        return array('contact_type' => $contact_type);
+        return $contact_type;
     }
 
     /**
@@ -140,7 +145,7 @@ class ContactTypeController extends FOSRestController
             $em->persist($contact_type);
             $em->flush();
 
-            return array("contact_type" => $contact_type);
+            return $contact_type;
 
         }
 
@@ -188,7 +193,7 @@ class ContactTypeController extends FOSRestController
             $em->persist($contact_type);
             $em->flush();
 
-            return array("contact_type" => $contact_type);
+            return $contact_type;
         }
 
         return array(
