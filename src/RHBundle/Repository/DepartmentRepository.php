@@ -12,4 +12,12 @@ use KernelBundle\Repository\DoleticRepository;
  */
 class DepartmentRepository extends DoleticRepository
 {
+    public function getDepartmentConsultantRepartition()
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQuery(
+            'select dep.label as name, count(u_p.id) as value from KernelBundle:UserPosition as u_p, KernelBundle:Position as p, KernelBundle:Division as d, KernelBundle:User as u, RHBundle:Department as dep where u_p.position = p.id and p.division = d.id and u_p.user = u.id and u.department = dep.id and d.label = \'Consultant\' group by dep.label'
+        );
+        return $qb->getResult();
+    }
 }

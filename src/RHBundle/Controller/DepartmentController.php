@@ -3,6 +3,7 @@
 namespace RHBundle\Controller;
 
 
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Delete;
@@ -17,7 +18,6 @@ use RHBundle\Form\DepartmentType;
 
 class DepartmentController extends FOSRestController
 {
-
     /**
      * Get all the departments
      * @return array
@@ -51,6 +51,32 @@ class DepartmentController extends FOSRestController
         }
 
         return $array;
+    }
+
+
+    /**
+     * Get consultant repartition departments
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="Department",
+     *  description="Get consultant repartition departments",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/departments/consultants")
+     */
+    public function getDepartmentsConsultantRepartitionAction()
+    {
+        //$this->denyAccessUnlessGranted('ROLE_RH_SUPERADMIN');
+        return $this->getDoctrine()->getRepository("RHBundle:Department")->getDepartmentConsultantRepartition();
     }
 
     /**

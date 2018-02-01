@@ -12,4 +12,13 @@ use KernelBundle\Repository\DoleticRepository;
  */
 class RecruitmentEventRepository extends DoleticRepository
 {
+    //select date_format(r.date, "%M %Y") as Date, r.presence as Présents, count(u.id) as Recrutés from kernel_user as u, rh_recruitment_event as r where u.recruitment_event_id = r.id group by r.date
+    public function getRecruitmentInfo()
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQuery(
+            'select r.date as date , r.presence as presents , count(u.id) as recrutes from KernelBundle:User as u, RHBundle:RecruitmentEvent as r where u.recruitmentEvent = r.id  group by r.date order by r.date asc'
+        );
+        return $qb->getResult();
+    }
 }

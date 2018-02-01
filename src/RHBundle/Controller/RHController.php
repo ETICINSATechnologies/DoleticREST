@@ -11,7 +11,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class RHController extends FOSRestController
 {
 
-    
+
     /**
      * Get current user rights
      * @return array

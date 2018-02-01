@@ -24,6 +24,31 @@ class UserController extends FOSRestController
 {
 
     /**
+     * Check if user is logged
+     * @return boolean
+     *
+     * @ApiDoc(
+     *  section="User",
+     *  description="Check if user is logged",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "kernel" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/user/logged")
+     */
+    public function getLoggedAction()
+    {
+        return true;
+    }
+
+    /**
      * Get all the users
      * @return array
      *
