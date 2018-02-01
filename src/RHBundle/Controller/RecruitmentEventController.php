@@ -19,6 +19,44 @@ class RecruitmentEventController extends FOSRestController
 {
 
     /**
+     * Get stat recruitment events
+     * @return array
+     *
+     * @ApiDoc(
+     *  section="RecruitmentEvent",
+     *  description="Get stat recruitment events",
+     *  statusCodes={
+     *         200="Returned when successful"
+     *  },
+     *  tags={
+     *   "stable" = "#4A7023",
+     *   "rh" = "#0033ff",
+     *   "guest" = "#85d893"
+     *  }
+     * )
+     *
+     * @View()
+     * @Get("/recruitment_events/stats")
+     */
+    public function getRecruitmentEventsStatsAction(){
+
+        $stats = $this->getDoctrine()->getRepository("RHBundle:RecruitmentEvent")
+            ->getRecruitmentInfo();
+
+        $array = [];
+
+        $array[0] = array("name" => "Présents", "series" => []);
+        $array[1] = array("name" => "Recrutés", "series" => []);
+
+        foreach ($stats as $s){
+            $date = date_format($s["date"], 'F Y');
+            array_push($array[0]["series"], array("name" => $date, "value" => $s["presents"]));
+            array_push($array[1]["series"], array("name" => $date, "value" => intval($s["recrutes"])));
+        }
+
+        return $array;
+    }
+    /**
      * Get all the recruitment_events
      * @return array
      *

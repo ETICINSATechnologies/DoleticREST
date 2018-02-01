@@ -19,6 +19,25 @@ class DivisionController extends FOSRestController
 {
 
     /**
+     * Get number of user peer division
+     * @return array
+     *
+     * @ApiDoc(
+     *     section="Division",
+     *     description="Get number of user peer division",
+     *     statusCodes={200="Returned when successful"}
+     * )
+     *
+     * @View()
+     * @Get("/divisions/repartition")
+     */
+    public function getDivisionRepartitionAction()
+    {
+        //$this->denyAccessUnlessGranted()
+        return $this->getDoctrine()->getRepository("KernelBundle:Division")->getDivisionRepartition();
+    }
+
+    /**
      * Get all the divisions
      * @return array
      *
