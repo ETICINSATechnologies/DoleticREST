@@ -82,14 +82,6 @@ class Delivery
     private $paymentDate;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="DeliveryDocument", mappedBy="delivery"))
-     */
-    private $documents;
-
-
-    /**
      * Get id
      *
      * @return integer
@@ -278,24 +270,4 @@ class Delivery
 
         return $this;
     }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getDocuments()
-    {
-        return $this->documents;
-    }
-
-    /**
-     * @param ArrayCollection $documents
-     * @return Delivery
-     */
-    public function setDocuments($documents)
-    {
-        $this->documents = $documents;
-
-        return $this;
-    }
-
 }

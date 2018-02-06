@@ -63,13 +63,6 @@ class Consultant
     private $payByJeh;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="ConsultantDocument", mappedBy="consultant"))
-     */
-    private $documents;
-
-    /**
      * @var string
      *
      * @SerializedName("consultantFullName")

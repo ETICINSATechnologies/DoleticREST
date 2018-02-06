@@ -80,7 +80,7 @@ class Task
      * @var \DateTime
      *
      * @SerializedName("endDate")
-     * @ORM\Column(name="end_date", type="date")
+     * @ORM\Column(name="end_date", type="date", nullable=true)
      */
     private $endDate;
 

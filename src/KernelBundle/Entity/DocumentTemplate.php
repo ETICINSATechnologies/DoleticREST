@@ -10,12 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="kernel_document_template")
  * @ORM\Entity(repositoryClass="KernelBundle\Repository\DocumentTemplateRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({
- *     "project" = "UABundle\Entity\ProjectDocumentTemplate",
- *     "consultant" = "UABundle\Entity\ConsultantDocumentTemplate",
- *     "delivery" = "UABundle\Entity\DeliveryDocumentTemplate"
- * })
  */
 abstract class DocumentTemplate
 {
@@ -29,73 +23,89 @@ abstract class DocumentTemplate
     private $id;
 
     /**
-     * @var string
+     * @var Upload
      *
-     * @ORM\Column(name="label", type="string", length=255, unique=true)
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\Upload")
      */
-    protected $label;
+    private $upload;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
-    protected $path;
-
+    protected $name;
 
     /**
-     * Get id
+     * @var string
      *
-     * @return integer
+     * @ORM\Column(name="type", type="string", length=255)
+     */
+    protected $type;
+
+    /**
+     * @return int
      */
     public function getId()
     {
         return $this->id;
     }
 
+
     /**
-     * Set label
-     *
-     * @param string $label
+     * @return Upload
+     */
+    public function getUpload()
+    {
+        return $this->upload;
+    }
+
+    /**
+     * @param Upload $upload
      * @return DocumentTemplate
      */
-    public function setLabel($label)
+    public function setUpload($upload)
     {
-        $this->label = $label;
-
+        $this->upload = $upload;
         return $this;
     }
 
     /**
-     * Get label
-     *
      * @return string
      */
-    public function getLabel()
+    public function getName()
     {
-        return $this->label;
+        return $this->name;
     }
 
     /**
-     * Set path
-     *
-     * @param string $path
+     * @param string $name
      * @return DocumentTemplate
      */
-    public function setPath($path)
+    public function setName($name)
     {
-        $this->path = $path;
-
+        $this->name = $name;
         return $this;
     }
 
     /**
-     * Get path
-     *
      * @return string
      */
-    public function getPath()
+    public function getType()
     {
-        return $this->path;
+        return $this->type;
     }
+
+    /**
+     * @param string $type
+     * @return DocumentTemplate
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+
+
 }

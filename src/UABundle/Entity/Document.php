@@ -4,6 +4,7 @@ namespace UABundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use KernelBundle\Entity\DocumentTemplate;
+use KernelBundle\Entity\Upload;
 use KernelBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,8 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="ua_document")
  * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"project" = "ProjectDocument", "consultant" = "ConsultantDocument", "delivery" = "DeliveryDocument" })
  * @ORM\Entity(repositoryClass="UABundle\Repository\DocumentRepository")
  */
 abstract class Document
@@ -28,11 +27,26 @@ abstract class Document
     private $id;
 
     /**
-     * @var User
+     * @var Project
      *
-     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Project")
+     *
      */
-    private $auditor;
+    private $project;
+
+    /**
+     * @var DocumentTemplate
+     *
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\DocumentTemplate")
+     */
+    private $template;
+
+    /**
+     * @var Upload
+     *
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\Upload")
+     */
+    private $upload;
 
     /**
      * @var bool
@@ -42,17 +56,14 @@ abstract class Document
     private $valid;
 
     /**
-     * @ORM\Column(type="string")
+     * @var User
      *
-     * @Assert\NotBlank(message="Merci d'uploader un fichier au format PDF")
-     * @Assert\File(mimeTypes={ "application/pdf" })
+     * @ORM\ManyToOne(targetEntity="KernelBundle\Entity\User")
      */
-    private $file;
+    private $auditor;
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -60,26 +71,75 @@ abstract class Document
     }
 
     /**
-     * Set valid
-     *
-     * @param boolean $valid
+     * @return Project
+     */
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    /**
+     * @param Project $project
+     * @return Document
+     */
+    public function setProject($project)
+    {
+        $this->project = $project;
+        return $this;
+    }
+
+    /**
+     * @return DocumentTemplate
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param DocumentTemplate $template
+     * @return Document
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+        return $this;
+    }
+
+    /**
+     * @return Upload
+     */
+    public function getUpload()
+    {
+        return $this->upload;
+    }
+
+    /**
+     * @param Upload $upload
+     * @return Document
+     */
+    public function setUpload($upload)
+    {
+        $this->upload = $upload;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid()
+    {
+        return $this->valid;
+    }
+
+    /**
+     * @param bool $valid
      * @return Document
      */
     public function setValid($valid)
     {
         $this->valid = $valid;
-
         return $this;
-    }
-
-    /**
-     * Get valid
-     *
-     * @return boolean
-     */
-    public function getValid()
-    {
-        return $this->valid;
     }
 
     /**
@@ -97,26 +157,6 @@ abstract class Document
     public function setAuditor($auditor)
     {
         $this->auditor = $auditor;
-
         return $this;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getFile()
-    {
-        return $this->file;
-    }
-
-    /**
-     * @param mixed $file
-     * @return Document
-     */
-    public function setFile($file)
-    {
-        $this->file = $file;
-        return $this;
-    }
-
 }
