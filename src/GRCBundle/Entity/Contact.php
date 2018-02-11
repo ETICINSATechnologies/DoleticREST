@@ -95,7 +95,7 @@ class Contact
     /**
      * @var boolean
      *
-     * @ORM\Column(name="satisfied", type="boolean")
+     * @ORM\Column(name="satisfied", type="boolean", nullable=true)
      */
     private $satisfied;
 
