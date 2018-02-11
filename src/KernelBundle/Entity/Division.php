@@ -32,7 +32,7 @@ class Division
     /**
      * @var string
      *
-     * @ORM\Column(name="detail", type="string", length=255)
+     * @ORM\Column(name="detail", type="string", length=255, nullable=true)
      */
     private $detail;
 
