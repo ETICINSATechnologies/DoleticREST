@@ -391,7 +391,7 @@ class UserController extends FOSRestController
     public function putUserAction(Request $request, User $user)
     {
 
-        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+        //$this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $form = $this->createForm(new UserType(), $user, ['mode' => UserType::EDIT_MODE]);
         $form->handleRequest($request);
@@ -494,7 +494,7 @@ class UserController extends FOSRestController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $user->setPlainPassword($data['new']);
+            $user->setPlainPassword($data['newPass']);
             $this->get('fos_user.user_manager')->updateUser($user);
             if ($this->container->getParameter('mailer_password') !== null) {
                 $message = new \Swift_Message();

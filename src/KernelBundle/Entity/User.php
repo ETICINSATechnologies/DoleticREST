@@ -62,9 +62,9 @@ class User extends BaseUser
     private $birthDate;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="tel", type="integer", nullable=true)
+     * @ORM\Column(name="tel", type="string", nullable=true)
      */
     private $tel;
 
