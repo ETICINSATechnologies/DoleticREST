@@ -21,7 +21,7 @@ class ChangePasswordType extends AbstractType
     {
         $builder
             ->add('old', PasswordType::class, ['constraints' => [new CorrectPassword()]])
-            ->add('new', RepeatedType::class, [
+            ->add('newPass', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_name' => 'first',
                 'second_name' => 'second',
