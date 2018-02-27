@@ -391,7 +391,7 @@ class UserController extends FOSRestController
     public function putUserAction(Request $request, User $user)
     {
 
-        //$this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
+        $this->denyAccessUnlessGranted('ROLE_KERNEL_SUPERADMIN');
 
         $form = $this->createForm(new UserType(), $user, ['mode' => UserType::EDIT_MODE]);
         $form->handleRequest($request);
