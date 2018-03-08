@@ -80,16 +80,7 @@ class ContactController extends FOSRestController
      */
     public function getContactsByTypeAction(Type $type)
     {
-
-        $contacts = $this->getDoctrine()->getRepository("GRCBundle:Contact")
-            ->findBy(['type' => $type]);
-
-        $array = [];
-        foreach ($contacts as $c){
-            $array[] =$c;
-        }
-
-        return $array;
+        return $this->getDoctrine()->getRepository("GRCBundle:Contact")->getContactsByType($type);
     }
 
     /**
