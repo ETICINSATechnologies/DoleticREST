@@ -12,4 +12,14 @@ use KernelBundle\Repository\DoleticRepository;
  */
 class ContactRepository extends DoleticRepository
 {
+    public function getContactsByType($type)
+{
+    $em = $this->getEntityManager();
+
+    $qb = $em->createQuery(
+
+        'select c from GRCBundle:Contact as c, GRCBundle:ContactType as ct where ct.id = ?1 and c.type = ct'
+    )->setParameter(1, $type);
+    return $qb->getResult();
+}
 }
