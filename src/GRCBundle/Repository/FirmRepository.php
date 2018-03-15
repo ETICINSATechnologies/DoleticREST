@@ -12,4 +12,24 @@ use KernelBundle\Repository\DoleticRepository;
  */
 class FirmRepository extends DoleticRepository
 {
+    public function getFirmsForTab()
+    {
+        $em = $this->getEntityManager();
+
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('f.id')
+            ->addSelect('f.name')
+            ->addSelect('f.siret')
+            ->addSelect('t.label as type')
+            ->addSelect('f.address')
+            ->addSelect('f.postalCode')
+            ->addSelect('f.city')
+            ->addSelect('c.label as country')
+            ->from('GRCBundle:Firm', 'f')
+            ->join('f.type', 't')
+            ->join('f.country', 'c');
+
+        return $qb->getQuery()->getResult();
+    }
 }
