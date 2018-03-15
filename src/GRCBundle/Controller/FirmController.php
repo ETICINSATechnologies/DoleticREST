@@ -43,15 +43,16 @@ class FirmController extends FOSRestController
     public function getFirmsAction()
     {
 
-        $firms = $this->getDoctrine()->getRepository("GRCBundle:Firm")
-            ->findAll();
 
-        $array = [];
+        $firms = $this->getDoctrine()->getRepository("GRCBundle:Firm")
+            ->getFirmsForTab();
+
+        /*$array = [];
         foreach ($firms as $c){
             $array[] =$c;
-        }
+        }*/
 
-        return $array;
+        return $firms;
     }
 
     /**
