@@ -51,6 +51,17 @@ class ProjectRepository extends DoleticRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findArchived()
+    {
+        $qb = $this->createQueryBuilder('q')
+            ->select('p')
+            ->from($this->getClassName(), 'p', 'p.id');
+        $qb->andWhere('p.disabled = ?1')
+            ->andWhere('p.archived = ?2')
+            ->setParameters([1 => true, 2 => true]);
+        return $qb->getQuery()->getResult();
+    }
+
     public function findCurrent()
     {
         $qb = $this->createQueryBuilder('q')
@@ -61,5 +72,16 @@ class ProjectRepository extends DoleticRepository
             ->andWhere('p.archived = ?2')
             ->setParameters([1 => false, 2 => false]);
         return $qb->getQuery()->getResult();
+    }
+
+    public function getAllProjects()
+    {
+        $em = $this->getEntityManager();
+
+        $qb = $em->createQuery(
+
+            'select p from UABundle:Project as p ORDER BY p.number DESC '
+        );
+        return $qb->getResult();
     }
 }

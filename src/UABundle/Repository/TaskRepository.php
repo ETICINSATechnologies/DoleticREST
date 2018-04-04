@@ -12,4 +12,14 @@ use KernelBundle\Repository\DoleticRepository;
  */
 class TaskRepository extends DoleticRepository
 {
+    public function getAllTasks()
+    {
+        $em = $this->getEntityManager();
+
+        $qb = $em->createQuery(
+
+            'select t from UABundle:Task as t ORDER BY t.number'
+        )->setMaxResults(100);
+        return $qb->getResult();
+    }
 }

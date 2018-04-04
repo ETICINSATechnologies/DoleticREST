@@ -42,15 +42,7 @@ class UserPositionController extends FOSRestController
     public function getUserPositionsAction()
     {
 
-        $user_positions = $this->getDoctrine()->getRepository("KernelBundle:UserPosition")
-            ->findAll();
-
-        $array = [];
-        foreach ($user_positions as $c){
-            $array[] =$c;
-        }
-
-        return $array;
+        return $this->getDoctrine()->getRepository("KernelBundle:UserPosition")->getAllUserPositions();
     }
 
     /**

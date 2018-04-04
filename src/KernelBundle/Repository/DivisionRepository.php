@@ -1,6 +1,8 @@
 <?php
 
 namespace KernelBundle\Repository;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
 /**
  * DivisionRepository
@@ -10,12 +12,24 @@ namespace KernelBundle\Repository;
  */
 class DivisionRepository extends DoleticRepository
 {
-    public function getDivisionRepartition()
+    public function getDivisionRepartition($page, $max)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQuery(
             'select d.label as name, count(u_p.id) as value from KernelBundle:UserPosition as u_p, KernelBundle:Position as p, KernelBundle:Division as d where u_p.position = p.id and p.division = d.id and d.label != \'Ancien\' group by d.label'
         );
-        return $qb->getResult();
+        $adaptater = new DoctrineORMAdapter($qb,true,false);
+        $pagerfanta = new Pagerfanta($adaptater);
+
+
+        $page = min($pagerfanta->getNbPages(), $page);
+        $max = min($pagerfanta->getNbResults(), $max);
+
+        $entities = $pagerfanta
+            ->setMaxPerPage($max)
+            ->setCurrentPage($page)
+            ->getCurrentPageResults();
+
+        return iterator_to_array($entities);
     }
 }

@@ -3,6 +3,8 @@
 namespace GRCBundle\Repository;
 
 use KernelBundle\Repository\DoleticRepository;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
 /**
  * FirmRepository
@@ -12,7 +14,7 @@ use KernelBundle\Repository\DoleticRepository;
  */
 class FirmRepository extends DoleticRepository
 {
-    public function getFirmsForTab()
+    public function getFirmsForTab($page, $max)
     {
         $em = $this->getEntityManager();
 
@@ -30,6 +32,18 @@ class FirmRepository extends DoleticRepository
             ->join('f.type', 't')
             ->join('f.country', 'c');
 
-        return $qb->getQuery()->getResult();
+        $adaptater = new DoctrineORMAdapter($qb,true,false);
+        $pagerfanta = new Pagerfanta($adaptater);
+
+
+        $max = min($pagerfanta->getNbResults(), $max);
+        $page = min($pagerfanta->getNbPages(), $page);
+
+        $entities = $pagerfanta
+            ->setMaxPerPage($max)
+            ->setCurrentPage($page)
+            ->getCurrentPageResults();
+
+        return iterator_to_array($entities);
     }
 }

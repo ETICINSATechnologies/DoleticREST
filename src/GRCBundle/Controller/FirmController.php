@@ -8,6 +8,7 @@ use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\FOSRestController;
 use KernelBundle\Entity\Country;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -39,19 +40,15 @@ class FirmController extends FOSRestController
      *
      * @View()
      * @Get("/firms")
+     * @QueryParam(name="page", requirements="\d+", default="1", description="Page of the overview")
+     * @QueryParam(name="max", requirements="\d+", default="10", description="Max of result of the overview")
      */
-    public function getFirmsAction()
+    public function getFirmsAction($page, $max)
     {
 
 
         $firms = $this->getDoctrine()->getRepository("GRCBundle:Firm")
-            ->getFirmsForTab();
-
-        /*$array = [];
-        foreach ($firms as $c){
-            $array[] =$c;
-        }*/
-
+            ->getFirmsForTab(intval($page), intval($max));
         return $firms;
     }
 

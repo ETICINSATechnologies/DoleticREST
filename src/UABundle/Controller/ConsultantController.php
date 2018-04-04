@@ -44,15 +44,7 @@ class ConsultantController extends FOSRestController
     public function getConsultantsAction()
     {
 
-        $consultants = $this->getDoctrine()->getRepository("UABundle:Consultant")
-            ->findBy([], ['number' => 'ASC']);
-
-        $array = [];
-        foreach ($consultants as $c){
-            $array[] =$c;
-        }
-
-        return $array;
+        return $this->getDoctrine()->getRepository("UABundle:Consultant")->getAllConsultants();
     }
 
     /**
