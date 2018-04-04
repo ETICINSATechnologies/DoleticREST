@@ -1,95 +1,41 @@
 DoleticREST
 =========
 
-Ce projet est une refactorisation complète du backend de Doletic sous la forme d'une API REST sécurisée et maintenable. A terme, cette API remplacera totalement le backend de Doletic. Un frontend AngularJS est également planifié.
+Ce projet est une refactorisation complète du backend de Doletic sous la forme d'une API REST sécurisée et maintenable. A terme, cette API remplacera totalement le backend de Doletic. Cette API fonctionne conjointement avec un front-end Angular4
 
 ## Comment utiliser l'API
+### Installation du projet :
 
-### Intaller les dépendances et générer les paramètres
+1. Installer [xampp](https://www.apachefriends.org/fr/index.html) ou [wamp](http://www.wampserver.com/) avec php 7.1.XXX
 
-Les dépendances de l'application sont gérées via composer. Une fois le dépôt forké et cloné, téléchargez les dépendances avec la commande :
+2. Créer une base de données doleticrest en utf8-general-ci sur phpmyadmin ou autre gestionnaire de base de données.
 
-```
-composer install
-```
+3. Dans le php.ini situé à `C:\xampp\php\php.ini` si vous utilisez xammp. Modifiez la variable `upload_max_filesize` à 5M.
 
-(Si vous n'avez pas composer sur votre PC, il peut être installé facilement en suivant les instruction de son site officiel.)
+4. Remplir la base de données doleticrest avec le fichier `doleticrest.sql` situé à la racine du projet.
 
-Une fois les dépendances installées, composer vous demandera d'entrer les paramètres de l'application. Les paramètres les plus importants sont ceux concernant la base de donnée (utilisateur et mot de passe) qui doivent correspondre à vos installation de mysql. Les valeurs par défauts sont :
+5. [Forker](https://guides.github.com/activities/forking/) le repo Git DoleticRest
 
-```
-login : root
-mot de passe : test
-```
+6. Cloner son fork localement
 
-Si les logins correspondent bien, composer va automatiquement générer la base de données.
+7. Installer [composer](https://getcomposer.org/) sur son PC.
 
-### Initialiser la base de données
+8. Effectuer `composer install` à la racine du projet.
+	* **Si pas d’extension php.7.1-xml, l’installer**
+	* database_host : adresse du serveur de dev, par défaut localhost ou 127.0.0.1
+	* database_port : port d’écoute du serveur mysql, par défaut 3306
+	* database_name : doleticrest
+	* database_user : user tel que configuré, par défaut root
+	* database_password : password tel que configuré, par défaut test
+	* les autres champs, appuyer sur entrer
 
-Une fois la base créée, il faut créer son schéma, en utilisant la commande Symfony :
+9. Créez un client avec la commande `php app/console oauth:client:create <nom du client> <adresse de redirection> password`, récupérez le secret qui doit être inséré dans DoleticRest/app/config/parameters.yml. Récupérer également le public id qui sera utilisé par le front.
 
-```
-php app/console doctrine:schema:update --force
-```
+## Utilisation du server
 
-Cette commande peut s'abréger en :
+Lancez le serveur back-end avec la commande  `php app/console server:run` votre serveur écoute maintenant sur `http://localhost:8000/`.
 
-```
-php app/console d:s:u --force
-```
-
-Sans le flag --force, la requête SQL de création de la base ne sera pas exécutée.
-
-
-### Insérer des données de test (optionnel)
-
-Dans un environnement de développement, il peut être pratique d'insérer de "fausses" données de test. Pour cela, exécutez la commande :
-
-```
-php app/console doctrine:fixture:load
-```
-
-Ou en abrégé :
-
-```
-php app/console do:fi:lo
-```
-
-Cette commande crééra notemment un utilisateur ayant pour login et mot de passe "test". Cet utilisateur a tous les droits sur l'application et peut être utilisé pour tester les routes.
-
-Si vous chargez ces données, l'étape suivante (Créer un utilisateur) est inutile.
-
-
-
-### Créer un utilisateur (optionnel)
-
-Cette étape est inutile si vous avez exécuté l'étape précédente (dans un environnement de test).
-
-Si vous souhaitez tester l'API sans la relier directement à une application qui gèrera la création des utilisateurs, il peut être utile de créer un utilisateur via une commande. Pour cela, exécutez à la racine du projet :
-
-```
-php app/console fos:user:create <nom d'utilisateur> <email> <mot de passe>
-```
-
-Cet utilisateur basique pourra être utilisé pour accéder à tout ce qui requiert une authentification complète.
-
-### Créer un client
-Pour créer un client de test (une pseudo application qui va requêter l'API), placez-vous à la racine du projet et lancer la commande :
-
-```
-php app/console oauth:client:create <nom du client> <adresse de redirection> password
-```
-
-Nom du client : Nom de l'application à titre indicatif.
-
-Adresse de redirection :  Adresse vers laquelle rediriger après l'authentification. Pour tester, localhost convient.
-
-Cette commande devrait vous permettre d'obtenir :
-
-+ Une Public key (identifiant client)
-+ Un secret
-
-Ces deux paramètres seront utilisés pour utiliser l'API.
+Si vous modifiez un fichier alors que le serveur est en marche il recompilera directement sans que vous ayez besoin de le relancer.
 
 
 ### Demander un token d'accès
@@ -123,6 +69,8 @@ Ou, de façon plus pratique, l'extension POSTMan de Google Chrome, ou un client 
 
 
 ### Documentation des routes
+
+[La documentation](http://localhost/api/doc) est disponible à l'adresse `http://localhost:8000/api/doc`.
 
 Chaque route devra être documentée en utilisant nelmio/apidoc-bundle. Les tags à indiquer sont les suivants :
 - La stabilité
