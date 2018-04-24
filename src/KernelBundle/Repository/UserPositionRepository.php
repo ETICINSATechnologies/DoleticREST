@@ -10,4 +10,14 @@ namespace KernelBundle\Repository;
  */
 class UserPositionRepository extends DoleticRepository
 {
+    public function getAllUserPositions()
+    {
+        $em = $this->getEntityManager();
+
+        $qb = $em->createQuery(
+
+            'select up from KernelBundle:UserPosition as up'
+        );
+        return $qb->getResult();
+    }
 }

@@ -62,4 +62,26 @@ class UserRepository extends DoleticRepository
             ->join('up.position', 'p', Join::WITH, $qb->expr()->eq('p.old', $old ? 1 : 0));
         return $qb->getQuery()->getResult();
     }
+
+    public function getAllUsers()
+    {
+        $em = $this->getEntityManager();
+
+        $qb = $em->createQuery(
+
+            'select u from KernelBundle:User as u'
+        );
+        return $qb->getResult();
+    }
+
+    public function getAllCurrentUsers()
+    {
+        $em = $this->getEntityManager();
+
+        $qb = $em->createQuery(
+
+            'select u from KernelBundle:User as u, KernelBundle:UserPosition as up, KernelBundle:Position as p where u.enabled=true and up.user=u.id and up.active=1 and up.position=p.id and p.old = 0'
+        );
+        return $qb->getResult();
+    }
 }

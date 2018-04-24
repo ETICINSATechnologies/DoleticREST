@@ -71,15 +71,7 @@ class UserController extends FOSRestController
     public function getUsersAction()
     {
 
-        $users = $this->getDoctrine()->getRepository("KernelBundle:User")
-            ->findAll();
-
-        $array = [];
-        foreach ($users as $c){
-            $array[] =$c;
-        }
-
-        return $array;
+        return $this->getDoctrine()->getRepository("KernelBundle:User")->getAllUsers();
     }
 
     /**
@@ -105,15 +97,7 @@ class UserController extends FOSRestController
     public function getCurrentUsersAction()
     {
 
-        $users = $this->getDoctrine()->getRepository("KernelBundle:User")
-            ->findUsersByOld(false);
-
-        $array = [];
-        foreach ($users as $c){
-            $array[] =$c;
-        }
-
-        return $array;
+        return $this->getDoctrine()->getRepository("KernelBundle:User")->getAllCurrentUsers();
     }
 
     /**

@@ -44,16 +44,7 @@ class ContactController extends FOSRestController
      */
     public function getContactsAction()
     {
-
-        $contacts = $this->getDoctrine()->getRepository("GRCBundle:Contact")
-            ->findAll();
-
-        $array = [];
-        foreach ($contacts as $c){
-            $array[] =$c;
-        }
-
-        return $array;
+       return $this->getDoctrine()->getRepository("GRCBundle:Contact")->getAllContacts();
     }
 
     /**

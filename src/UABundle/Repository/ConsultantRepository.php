@@ -12,4 +12,14 @@ use KernelBundle\Repository\DoleticRepository;
  */
 class ConsultantRepository extends DoleticRepository
 {
+    public function getAllConsultants()
+    {
+        $em = $this->getEntityManager();
+
+        $qb = $em->createQuery(
+
+            'select c from UABundle:Consultant as c ORDER BY c.number'
+        );
+        return $qb->getResult();
+    }
 }

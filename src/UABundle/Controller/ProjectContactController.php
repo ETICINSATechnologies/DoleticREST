@@ -43,15 +43,7 @@ class ProjectContactController extends FOSRestController
     public function getProjectContactsAction()
     {
 
-        $project_contacts = $this->getDoctrine()->getRepository("UABundle:ProjectContact")
-            ->findAll();
-
-        $array = [];
-        foreach ($project_contacts as $c){
-            $array[] =$c;
-        }
-
-        return $array;
+        return $this->getDoctrine()->getRepository("UABundle:ProjectContact")->getAllProjectContacts();
     }
 
     /**

@@ -12,4 +12,14 @@ use KernelBundle\Repository\DoleticRepository;
  */
 class ProjectContactRepository extends DoleticRepository
 {
+    public function getAllProjectContacts()
+    {
+        $em = $this->getEntityManager();
+
+        $qb = $em->createQuery(
+
+            'select p from UABundle:ProjectContact as p'
+        );
+        return $qb->getResult();
+    }
 }
