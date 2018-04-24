@@ -22,4 +22,15 @@ class ContactRepository extends DoleticRepository
         )->setParameter(1, $type);
         return $qb->getResult();
     }
+
+    public function getAllContacts()
+    {
+        $em = $this->getEntityManager();
+
+        $qb = $em->createQuery(
+
+            'select c from GRCBundle:Contact as c'
+        );
+        return $qb->getResult();
+    }
 }

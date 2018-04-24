@@ -48,15 +48,7 @@ class ProjectController extends FOSRestController
     public function getProjectsAction()
     {
 
-        $projects = $this->getDoctrine()->getRepository("UABundle:Project")
-            ->findBy([], ['number' => 'DESC']);
-
-        $array = [];
-        foreach ($projects as $c){
-            $array[] =$c;
-        }
-
-        return $array;
+        return $this->getDoctrine()->getRepository("UABundle:Project")->getAllProjects();
     }
 
     /**
@@ -437,7 +429,7 @@ class ProjectController extends FOSRestController
     {
 
         $projects = $this->getDoctrine()->getRepository("UABundle:Project")
-            ->findBy(['archived' => true, 'disabled' => false]);
+            ->findArchived();
 
         $array = [];
         foreach ($projects as $c){

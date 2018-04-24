@@ -43,15 +43,7 @@ class TaskController extends FOSRestController
     public function getTasksAction()
     {
 
-        $tasks = $this->getDoctrine()->getRepository("UABundle:Task")
-            ->findBy([], ['number' => 'ASC']);
-
-        $array = [];
-        foreach ($tasks as $c){
-            $array[] =$c;
-        }
-
-        return $array;
+        return $this->getDoctrine()->getRepository("UABundle:Task")->getAllTasks();
     }
 
     /**
