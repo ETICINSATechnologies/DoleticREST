@@ -7,6 +7,7 @@ use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Put;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use GRCBundle\Entity\Firm;
@@ -41,10 +42,12 @@ class ContactController extends FOSRestController
      *
      * @View()
      * @Get("/contacts")
+     * @QueryParam(name="page", requirements="\d+", default="1", description="Page of the overview")
+     * @QueryParam(name="max", requirements="\d+", default="10", description="Max of result of the overview")
      */
-    public function getContactsAction()
+    public function getContactsAction($page, $max)
     {
-       return $this->getDoctrine()->getRepository("GRCBundle:Contact")->getAllContacts();
+       return $this->getDoctrine()->getRepository("GRCBundle:Contact")->getAllContacts(intval($page), intval($max));
     }
 
     /**
@@ -68,10 +71,12 @@ class ContactController extends FOSRestController
      * @View()
      * @ParamConverter("type", class="GRCBundle:ContactType")
      * @Get("/contacts/type/{id}", requirements={"id" = "\d+"})
+     * @QueryParam(name="page", requirements="\d+", default="1", description="Page of the overview")
+     * @QueryParam(name="max", requirements="\d+", default="10", description="Max of result of the overview")
      */
-    public function getContactsByTypeAction(Type $type)
+    public function getContactsByTypeAction(Type $type, $page, $max)
     {
-        return $this->getDoctrine()->getRepository("GRCBundle:Contact")->getContactsByType($type);
+        return $this->getDoctrine()->getRepository("GRCBundle:Contact")->getContactsByType($type, intval($page), intval($max));
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace GRCBundle\Repository;
 
 use KernelBundle\Repository\DoleticRepository;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
 /**
  * ContactRepository
@@ -12,7 +14,7 @@ use KernelBundle\Repository\DoleticRepository;
  */
 class ContactRepository extends DoleticRepository
 {
-    public function getContactsByType($type)
+    public function getContactsByType($type, $page, $max)
     {
         $em = $this->getEntityManager();
 
@@ -20,10 +22,23 @@ class ContactRepository extends DoleticRepository
 
             'select c from GRCBundle:Contact as c, GRCBundle:ContactType as ct where ct.id = ?1 and c.type = ct'
         )->setParameter(1, $type);
-        return $qb->getResult();
+
+        $adaptater = new DoctrineORMAdapter($qb,true,false);
+        $pagerfanta = new Pagerfanta($adaptater);
+
+
+        $max = min($pagerfanta->getNbResults(), $max);
+        $page = min($pagerfanta->getNbPages(), $page);
+
+        $entities = $pagerfanta
+            ->setMaxPerPage($max)
+            ->setCurrentPage($page)
+            ->getCurrentPageResults();
+
+        return iterator_to_array($entities);
     }
 
-    public function getAllContacts()
+    public function getAllContacts($page, $max)
     {
         $em = $this->getEntityManager();
 
@@ -31,6 +46,19 @@ class ContactRepository extends DoleticRepository
 
             'select c from GRCBundle:Contact as c'
         );
-        return $qb->getResult();
+
+        $adaptater = new DoctrineORMAdapter($qb,true,false);
+        $pagerfanta = new Pagerfanta($adaptater);
+
+
+        $max = min($pagerfanta->getNbResults(), $max);
+        $page = min($pagerfanta->getNbPages(), $page);
+
+        $entities = $pagerfanta
+            ->setMaxPerPage($max)
+            ->setCurrentPage($page)
+            ->getCurrentPageResults();
+
+        return iterator_to_array($entities);
     }
 }

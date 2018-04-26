@@ -74,7 +74,7 @@ swiftmailer:
 
 fos_rest:
     disable_csrf_role: ROLE_API
-    param_fetcher_listener: true
+    param_fetcher_listener: force
     body_listener: true
     allowed_methods_listener: true
     unauthorized_challenge: "Basic realm=\"Restricted Area\""

@@ -7,6 +7,7 @@ use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Put;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -30,11 +31,13 @@ class DivisionController extends FOSRestController
      *
      * @View()
      * @Get("/divisions/repartition")
+     * @QueryParam(name="page", requirements="\d+", default="1", description="Page of the overview")
+     * @QueryParam(name="max", requirements="\d+", default="10", description="Max of result of the overview")
      */
-    public function getDivisionRepartitionAction()
+    public function getDivisionRepartitionAction($page, $max)
     {
         //$this->denyAccessUnlessGranted()
-        return $this->getDoctrine()->getRepository("KernelBundle:Division")->getDivisionRepartition();
+        return $this->getDoctrine()->getRepository("KernelBundle:Division")->getDivisionRepartition($page, $max);
     }
 
     /**
