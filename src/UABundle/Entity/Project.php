@@ -242,20 +242,6 @@ class Project
     private $amendments;
 
     /**
-     * @var array
-     *
-     * @ORM\OneToMany(targetEntity="ProjectDocument", mappedBy="project", fetch="EXTRA_LAZY", cascade={"remove"})
-     */
-    private $documents;
-
-    /**
-     * @var array
-     *
-     * @ORM\OneToMany(targetEntity="ProjectFile", mappedBy="project", fetch="EXTRA_LAZY", cascade={"remove"})
-     */
-    private $files;
-
-    /**
      * @var boolean
      *
      * @SerializedName("userHasRights")

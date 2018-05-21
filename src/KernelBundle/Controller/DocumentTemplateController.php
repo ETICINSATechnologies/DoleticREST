@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use KernelBundle\Entity\DocumentTemplate;
 use KernelBundle\Form\DocumentTemplateType;
+use KernelBundle\Form\PublishDocumentType;
 
 class DocumentTemplateController extends FOSRestController
 {
@@ -143,5 +144,4 @@ class DocumentTemplateController extends FOSRestController
 
         return array("status" => "Deleted");
     }
-
 }
