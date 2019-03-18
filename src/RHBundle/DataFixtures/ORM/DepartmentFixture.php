@@ -11,12 +11,26 @@ class DepartmentFixture extends AbstractFixture implements OrderedFixtureInterfa
 {
     public function load(ObjectManager $manager)
     {
-        $department = new Department();
-        $department
-            ->setLabel('IF')
-            ->setDetail('Informatique');
+        $departmentArray = array(
+            "IF" => "Informatique",
+            "TC" => "Télécommunication",
+            "GI" => "Génie industriel",
+            "GE" => "Génie électrique",
+            "BS" => "Biosciences",
+            "GCU" => "Génie civil et urbanisme",
+            "GEN" => "Génie environnement et nucléaire",
+            "PC" => "Premier cycle",
+            "GM" => "Génie Mécanique"
+        );
 
-        $manager->persist($department);
+        foreach($departmentArray as $label => $description){
+            $department = new Department();
+            $department
+                ->setLabel($label)
+                ->setDetail($description);
+            $manager->persist($department);
+        }
+
         $manager->flush();
 
         $this->addReference('department', $department);

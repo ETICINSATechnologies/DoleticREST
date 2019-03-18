@@ -69,6 +69,10 @@ class UserListener
             }
         }
         $this->setMemberships($user);
+
+        //Creation gmail account throught gmail api
+        $this->createGMailAccount($user);
+
     }
 
     public function postUpdate(User $user, LifecycleEventArgs $event)
@@ -84,6 +88,35 @@ class UserListener
             }
         }
         $this->setMemberships($user);
+    }
+
+    public function createGMailAccount(User $user){
+        //first request to get token
+
+        //second request with token to create account
+        /*$postdata = http_build_query('{
+                                        "primaryEmail": "test@etic-insa.com",
+                                        "name": {
+                                                    "givenName": "test",
+                                         "familyName": "test"
+                                        },
+                                        "password": "test"
+                                    }');
+
+        $opts = array('http' =>
+            array(
+                'method'  => 'POST',
+                'header'  => 'Content-type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            )
+        );
+
+        $context  = stream_context_create($opts);
+        $result = file_get_contents('https://www.googleapis.com/admin/directory/v1/users', false, $context);
+
+        var_dump($result);
+
+        */
     }
 
     public function postLoad(User $user, LifecycleEventArgs $event)

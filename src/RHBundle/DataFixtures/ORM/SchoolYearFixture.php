@@ -11,10 +11,14 @@ class SchoolYearFixture extends AbstractFixture implements OrderedFixtureInterfa
 {
     public function load(ObjectManager $manager)
     {
-        $year = new SchoolYear();
-        $year->setYear(4);
+        $yearArray = array(1, 2, 3, 4, 5);
 
-        $manager->persist($year);
+        foreach($yearArray as $i) {
+            $year = new SchoolYear();
+            $year->setYear($i);
+            $manager->persist($year);
+        }
+
         $manager->flush();
 
         $this->addReference('year', $year);
